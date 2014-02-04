@@ -3,8 +3,8 @@
 #
 
 MAIN = nodegroups
-DEPH =
-DEPCPP =
+DEPH = tgroups.h
+DEPCPP = tgroups.cpp
 
 
 #
