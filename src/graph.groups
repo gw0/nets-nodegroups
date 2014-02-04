@@ -1,204 +1,204 @@
 # Input: graph.edgelist
-# Nodes: 265    Edges: 277
+# Nodes:    265 Edges: 277
 # Groups: 10
-# NId	GroupId
-17	0
-21	0
-40	0
-42	0
-47	0
-58	0
-60	0
-65	0
-69	0
-86	0
-90	0
-137	0
-146	0
-181	0
-185	0
-188	0
-190	0
-224	0
-279	0
-304	0
-8	1
-11	1
-13	1
-14	1
-21	1
-22	1
-23	1
-35	1
-40	1
-41	1
-43	1
-47	1
-48	1
-49	1
-52	1
-58	1
-87	1
-88	1
-118	1
-304	1
-21	2
-58	2
-63	2
-64	2
-66	2
-67	2
-71	2
-72	2
-74	2
-76	2
-77	2
-78	2
-80	2
-84	2
-85	2
-95	2
-183	2
-192	2
-193	2
-245	2
-18	3
-100	3
-120	3
-122	3
-128	3
-129	3
-141	3
-142	3
-143	3
-144	3
-145	3
-146	3
-148	3
-149	3
-152	3
-159	3
-165	3
-173	3
-177	3
-279	3
-18	4
-40	4
-41	4
-53	4
-69	4
-137	4
-180	4
-186	4
-187	4
-196	4
-203	4
-233	4
-244	4
-247	4
-248	4
-249	4
-262	4
-273	4
-279	4
-304	4
-0	5
-17	5
-21	5
-34	5
-42	5
-44	5
-47	5
-71	5
-72	5
-74	5
-76	5
-80	5
-85	5
-95	5
-234	5
-243	5
-245	5
-279	5
-303	5
-304	5
-81	6
-131	6
-153	6
-156	6
-162	6
-166	6
-167	6
-171	6
-172	6
-173	6
-175	6
-190	6
-194	6
-204	6
-205	6
-207	6
-210	6
-213	6
-248	6
-249	6
-117	7
-188	7
-189	7
-194	7
-197	7
-198	7
-199	7
-200	7
-202	7
-203	7
-205	7
-210	7
-213	7
-219	7
-223	7
-224	7
-229	7
-271	7
-276	7
-279	7
-19	8
-41	8
-43	8
-50	8
-54	8
-101	8
-102	8
-103	8
-104	8
-105	8
-107	8
-108	8
-116	8
-135	8
-136	8
-139	8
-146	8
-191	8
-273	8
-279	8
-10	9
-16	9
-67	9
-70	9
-91	9
-104	9
-108	9
-115	9
-129	9
-132	9
-142	9
-148	9
-149	9
-180	9
-191	9
-210	9
-232	9
-238	9
-272	9
-304	9
+# NId	GroupId	NLabel
+17	0	com.bulletphysics.collision.broadphase.BroadphaseInterface       
+21	0	com.bulletphysics.collision.broadphase.BroadphaseProxy       
+40	0	com.bulletphysics.collision.broadphase.Dispatcher       
+42	0	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache       
+47	0	com.bulletphysics.collision.broadphase.OverlappingPairCache       
+58	0	com.bulletphysics.collision.dispatch.CollisionObject       
+60	0	com.bulletphysics.collision.dispatch.CollisionWorld       
+65	0	com.bulletphysics.collision.dispatch.CollisionWorld$ConvexResultCallback       
+69	0	com.bulletphysics.collision.dispatch.CollisionWorld$RayResultCallback       
+86	0	com.bulletphysics.collision.dispatch.GhostObject       
+90	0	com.bulletphysics.collision.dispatch.PairCachingGhostObject       
+137	0	com.bulletphysics.collision.shapes.CollisionShape       
+146	0	com.bulletphysics.collision.shapes.ConvexShape       
+181	0	com.bulletphysics.dynamics.DiscreteDynamicsWorld       
+185	0	com.bulletphysics.dynamics.DynamicsWorld       
+188	0	com.bulletphysics.dynamics.RigidBody       
+190	0	com.bulletphysics.dynamics.SimpleDynamicsWorld       
+224	0	com.bulletphysics.dynamics.vehicle.RaycastVehicle       
+279	0	com.bulletphysics.linearmath.Transform       
+304	0	com.bulletphysics.util.ObjectArrayList       
+8	1	com.bulletphysics.collision.broadphase.AxisSweep3       
+11	1	com.bulletphysics.collision.broadphase.AxisSweep3Internal       
+13	1	com.bulletphysics.collision.broadphase.AxisSweep3Internal$Handle       
+14	1	com.bulletphysics.collision.broadphase.AxisSweep3_32       
+21	1	com.bulletphysics.collision.broadphase.BroadphaseProxy       
+22	1	com.bulletphysics.collision.broadphase.CollisionAlgorithm       
+23	1	com.bulletphysics.collision.broadphase.CollisionAlgorithmConstructionInfo       
+35	1	com.bulletphysics.collision.broadphase.DbvtBroadphase       
+40	1	com.bulletphysics.collision.broadphase.Dispatcher       
+41	1	com.bulletphysics.collision.broadphase.DispatcherInfo       
+43	1	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$CleanPairCallback       
+47	1	com.bulletphysics.collision.broadphase.OverlappingPairCache       
+48	1	com.bulletphysics.collision.broadphase.OverlappingPairCallback       
+49	1	com.bulletphysics.collision.broadphase.SimpleBroadphase       
+52	1	com.bulletphysics.collision.dispatch.CollisionAlgorithmCreateFunc       
+58	1	com.bulletphysics.collision.dispatch.CollisionObject       
+87	1	com.bulletphysics.collision.dispatch.GhostPairCallback       
+88	1	com.bulletphysics.collision.dispatch.ManifoldResult       
+118	1	com.bulletphysics.collision.narrowphase.PersistentManifold       
+304	1	com.bulletphysics.util.ObjectArrayList       
+21	2	com.bulletphysics.collision.broadphase.BroadphaseProxy       
+58	2	com.bulletphysics.collision.dispatch.CollisionObject       
+63	2	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestConvexResultCallback       
+64	2	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestRayResultCallback       
+66	2	com.bulletphysics.collision.dispatch.CollisionWorld$LocalConvexResult       
+67	2	com.bulletphysics.collision.dispatch.CollisionWorld$LocalRayResult       
+71	2	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$CreateFunc       
+72	2	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$SwappedCreateFunc       
+74	2	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$CreateFunc       
+76	2	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$SwappedCreateFunc       
+77	2	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm       
+78	2	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm$CreateFunc       
+80	2	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm$CreateFunc       
+84	2	com.bulletphysics.collision.dispatch.EmptyAlgorithm       
+85	2	com.bulletphysics.collision.dispatch.EmptyAlgorithm$CreateFunc       
+95	2	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm$CreateFunc       
+183	2	com.bulletphysics.dynamics.DiscreteDynamicsWorld$ClosestNotMeConvexResultCallback       
+192	2	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeConvexResultCallback       
+193	2	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeRayResultCallback       
+245	2	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm$CreateFunc       
+18	3	com.bulletphysics.collision.broadphase.BroadphaseNativeType       
+100	3	com.bulletphysics.collision.narrowphase.ConvexCast       
+120	3	com.bulletphysics.collision.narrowphase.SimplexSolverInterface       
+122	3	com.bulletphysics.collision.narrowphase.TriangleConvexcastCallback       
+128	3	com.bulletphysics.collision.shapes.BU_Simplex1to4       
+129	3	com.bulletphysics.collision.shapes.BoxShape       
+141	3	com.bulletphysics.collision.shapes.ConeShape       
+142	3	com.bulletphysics.collision.shapes.ConeShapeX       
+143	3	com.bulletphysics.collision.shapes.ConeShapeZ       
+144	3	com.bulletphysics.collision.shapes.ConvexHullShape       
+145	3	com.bulletphysics.collision.shapes.ConvexInternalShape       
+146	3	com.bulletphysics.collision.shapes.ConvexShape       
+148	3	com.bulletphysics.collision.shapes.CylinderShapeX       
+149	3	com.bulletphysics.collision.shapes.CylinderShapeZ       
+152	3	com.bulletphysics.collision.shapes.MinkowskiSumShape       
+159	3	com.bulletphysics.collision.shapes.PolyhedralConvexShape       
+165	3	com.bulletphysics.collision.shapes.SphereShape       
+173	3	com.bulletphysics.collision.shapes.TriangleMeshShape       
+177	3	com.bulletphysics.collision.shapes.UniformScalingShape       
+279	3	com.bulletphysics.linearmath.Transform       
+18	4	com.bulletphysics.collision.broadphase.BroadphaseNativeType       
+40	4	com.bulletphysics.collision.broadphase.Dispatcher       
+41	4	com.bulletphysics.collision.broadphase.DispatcherInfo       
+53	4	com.bulletphysics.collision.dispatch.CollisionConfiguration       
+69	4	com.bulletphysics.collision.dispatch.CollisionWorld$RayResultCallback       
+137	4	com.bulletphysics.collision.shapes.CollisionShape       
+180	4	com.bulletphysics.dynamics.ActionInterface       
+186	4	com.bulletphysics.dynamics.DynamicsWorldType       
+187	4	com.bulletphysics.dynamics.InternalTickCallback       
+196	4	com.bulletphysics.dynamics.constraintsolver.ConstraintSolver       
+203	4	com.bulletphysics.dynamics.constraintsolver.ContactSolverInfo       
+233	4	com.bulletphysics.extras.gimpact.BoxCollision$AABB       
+244	4	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm       
+247	4	com.bulletphysics.extras.gimpact.GImpactMeshShape       
+248	4	com.bulletphysics.extras.gimpact.GImpactMeshShapePart       
+249	4	com.bulletphysics.extras.gimpact.GImpactShapeInterface       
+262	4	com.bulletphysics.extras.gimpact.TriangleShapeEx       
+273	4	com.bulletphysics.linearmath.IDebugDraw       
+279	4	com.bulletphysics.linearmath.Transform       
+304	4	com.bulletphysics.util.ObjectArrayList       
+0	5	com.bulletphysics.$Stack       
+17	5	com.bulletphysics.collision.broadphase.BroadphaseInterface       
+21	5	com.bulletphysics.collision.broadphase.BroadphaseProxy       
+34	5	com.bulletphysics.collision.broadphase.DbvtAabbMm       
+42	5	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache       
+44	5	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$RemovePairCallback       
+47	5	com.bulletphysics.collision.broadphase.OverlappingPairCache       
+71	5	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$CreateFunc       
+72	5	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$SwappedCreateFunc       
+74	5	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$CreateFunc       
+76	5	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$SwappedCreateFunc       
+80	5	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm$CreateFunc       
+85	5	com.bulletphysics.collision.dispatch.EmptyAlgorithm$CreateFunc       
+95	5	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm$CreateFunc       
+234	5	com.bulletphysics.extras.gimpact.BoxCollision$BoxBoxTransformCache       
+243	5	com.bulletphysics.extras.gimpact.GImpactBvh       
+245	5	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm$CreateFunc       
+279	5	com.bulletphysics.linearmath.Transform       
+303	5	com.bulletphysics.util.IntArrayList       
+304	5	com.bulletphysics.util.ObjectArrayList       
+81	6	com.bulletphysics.collision.dispatch.ConvexTriangleCallback       
+131	6	com.bulletphysics.collision.shapes.BvhTriangleMeshShape       
+153	6	com.bulletphysics.collision.shapes.NodeOverlapCallback       
+156	6	com.bulletphysics.collision.shapes.OptimizedBvh$NodeTriangleCallback       
+162	6	com.bulletphysics.collision.shapes.ScaledBvhTriangleMeshShape       
+166	6	com.bulletphysics.collision.shapes.StaticPlaneShape       
+167	6	com.bulletphysics.collision.shapes.StridingMeshInterface       
+171	6	com.bulletphysics.collision.shapes.TriangleCallback       
+172	6	com.bulletphysics.collision.shapes.TriangleIndexVertexArray       
+173	6	com.bulletphysics.collision.shapes.TriangleMeshShape       
+175	6	com.bulletphysics.collision.shapes.TriangleMeshShape$SupportVertexCallback       
+190	6	com.bulletphysics.dynamics.SimpleDynamicsWorld       
+194	6	com.bulletphysics.dynamics.constraintsolver.ConeTwistConstraint       
+204	6	com.bulletphysics.dynamics.constraintsolver.Generic6DofConstraint       
+205	6	com.bulletphysics.dynamics.constraintsolver.HingeConstraint       
+207	6	com.bulletphysics.dynamics.constraintsolver.Point2PointConstraint       
+210	6	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver       
+213	6	com.bulletphysics.dynamics.constraintsolver.SliderConstraint       
+248	6	com.bulletphysics.extras.gimpact.GImpactMeshShapePart       
+249	6	com.bulletphysics.extras.gimpact.GImpactShapeInterface       
+117	7	com.bulletphysics.collision.narrowphase.ManifoldPoint       
+188	7	com.bulletphysics.dynamics.RigidBody       
+189	7	com.bulletphysics.dynamics.RigidBodyConstructionInfo       
+194	7	com.bulletphysics.dynamics.constraintsolver.ConeTwistConstraint       
+197	7	com.bulletphysics.dynamics.constraintsolver.ContactConstraint       
+198	7	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$1       
+199	7	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$2       
+200	7	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$3       
+202	7	com.bulletphysics.dynamics.constraintsolver.ContactSolverFunc       
+203	7	com.bulletphysics.dynamics.constraintsolver.ContactSolverInfo       
+205	7	com.bulletphysics.dynamics.constraintsolver.HingeConstraint       
+210	7	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver       
+213	7	com.bulletphysics.dynamics.constraintsolver.SliderConstraint       
+219	7	com.bulletphysics.dynamics.constraintsolver.TypedConstraint       
+223	7	com.bulletphysics.dynamics.vehicle.DefaultVehicleRaycaster       
+224	7	com.bulletphysics.dynamics.vehicle.RaycastVehicle       
+229	7	com.bulletphysics.dynamics.vehicle.WheelInfo       
+271	7	com.bulletphysics.linearmath.DefaultMotionState       
+276	7	com.bulletphysics.linearmath.MotionState       
+279	7	com.bulletphysics.linearmath.Transform       
+19	8	com.bulletphysics.collision.broadphase.BroadphasePair       
+41	8	com.bulletphysics.collision.broadphase.DispatcherInfo       
+43	8	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$CleanPairCallback       
+50	8	com.bulletphysics.collision.broadphase.SimpleBroadphaseProxy       
+54	8	com.bulletphysics.collision.dispatch.CollisionDispatcher       
+101	8	com.bulletphysics.collision.narrowphase.ConvexCast$CastResult       
+102	8	com.bulletphysics.collision.narrowphase.ConvexPenetrationDepthSolver       
+103	8	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface       
+104	8	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$ClosestPointInput       
+105	8	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$Result       
+107	8	com.bulletphysics.collision.narrowphase.GjkEpaPenetrationDepthSolver       
+108	8	com.bulletphysics.collision.narrowphase.GjkEpaSolver       
+116	8	com.bulletphysics.collision.narrowphase.GjkPairDetector       
+135	8	com.bulletphysics.collision.shapes.CapsuleShapeX       
+136	8	com.bulletphysics.collision.shapes.CapsuleShapeZ       
+139	8	com.bulletphysics.collision.shapes.CompoundShapeChild       
+146	8	com.bulletphysics.collision.shapes.ConvexShape       
+191	8	com.bulletphysics.dynamics.character.KinematicCharacterController       
+273	8	com.bulletphysics.linearmath.IDebugDraw       
+279	8	com.bulletphysics.linearmath.Transform       
+10	9	com.bulletphysics.collision.broadphase.AxisSweep3$HandleImpl       
+16	9	com.bulletphysics.collision.broadphase.AxisSweep3_32$HandleImpl       
+67	9	com.bulletphysics.collision.dispatch.CollisionWorld$LocalRayResult       
+70	9	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm       
+91	9	com.bulletphysics.collision.dispatch.SimulationIslandManager       
+104	9	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$ClosestPointInput       
+108	9	com.bulletphysics.collision.narrowphase.GjkEpaSolver       
+115	9	com.bulletphysics.collision.narrowphase.GjkEpaSolver$ResultsStatus       
+129	9	com.bulletphysics.collision.shapes.BoxShape       
+132	9	com.bulletphysics.collision.shapes.BvhTriangleMeshShape$MyNodeOverlapCallback       
+142	9	com.bulletphysics.collision.shapes.ConeShapeX       
+148	9	com.bulletphysics.collision.shapes.CylinderShapeX       
+149	9	com.bulletphysics.collision.shapes.CylinderShapeZ       
+180	9	com.bulletphysics.dynamics.ActionInterface       
+191	9	com.bulletphysics.dynamics.character.KinematicCharacterController       
+210	9	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver       
+232	9	com.bulletphysics.extras.gimpact.BoxCollision       
+238	9	com.bulletphysics.extras.gimpact.ClipPolygon       
+272	9	com.bulletphysics.linearmath.GeometryUtil       
+304	9	com.bulletphysics.util.ObjectArrayList       

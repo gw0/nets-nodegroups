@@ -273,6 +273,15 @@ int main(int argc, char* argv[]) {
   // Input
   PUNGraph Graph = TSnap::LoadEdgeList<PUNGraph>(InFNm, false);
   //PUNGraph Graph = TSnap::GenRndGnm<PUNGraph>(5000, 10000); // generate a random graph
+  TIntStrH NIDNameH;
+  if (LabelFNm.Len() > 0) {
+    TSsParser Ss(LabelFNm, ssfTabSep);
+    while (Ss.Next()) {
+      if (Ss.Len() > 0) {
+        NIDNameH.AddDat(Ss.GetInt(0), Ss.GetFld(1));
+      }
+    }
+  }
 
   // Run node group extraction framework
   TCnComV GroupsV;
@@ -285,10 +294,15 @@ int main(int argc, char* argv[]) {
   fprintf(F, "# Input: %s\n", InFNm.CStr());
   fprintf(F, "# Nodes: %d    Edges: %d\n", Graph->GetNodes(), Graph->GetEdges());
   fprintf(F, "# Groups: %d\n", GroupsV.Len());
-  fprintf(F, "# NId\tGroupId\n");
+  fprintf(F, "# NId\tGroupId\tNLabel\n");
   for (int c = 0; c < GroupsV.Len(); c++) {
     for (int i = 0; i < GroupsV[c].Len(); i++) {
-      fprintf(F, "%d\t%d\n", GroupsV[c][i].Val, c);
+      int NId = GroupsV[c][i].Val;
+      if (NIDNameH.IsKey(NId)) {
+        fprintf(F, "%d\t%d\t%s\n", NId, c, NIDNameH.GetDat(NId).CStr());
+      } else {
+        fprintf(F, "%d\t%d\t-\n", NId, c);
+      }
     }
   }
   fclose(F);
