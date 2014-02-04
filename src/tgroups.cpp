@@ -228,7 +228,7 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
   }*/
 
   // Greedy descent optimization with fast estimation
-  /*for (int i = 0; i < Steps; ++i) {
+  for (int i = 0; i < Steps; ++i) {
     // Select node to add or delete in either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
@@ -259,10 +259,10 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
       LinksST = LinksSTBest;
       LinksSInvT = LinksSInvTBest;
     }
-  }*/
+  }
 
   // Steepest descent optimization with fast estimation
-  for (int i = 0; i < (Steps / Graph->GetNodes() + 1); ++i) {
+  /*for (int i = 0; i < (Steps / Graph->GetNodes() + 1); ++i) {
     // Select either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
@@ -300,6 +300,39 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
       WNorm = WNormBest;
       LinksST = LinksSTBest;
       LinksSInvT = LinksSInvTBest;
+    }
+  }*/
+
+  return NodesSBest;
+}
+
+
+/**
+ * Rerunner of node group extraction algorithm
+ *
+ * @param Graph Input graph
+ * @param Iters Number of reruns
+ * @param Steps Number of optimization steps
+ * @param[out] WBest Output best group criterion W
+ * @param[out] NodesSBest Output list of nodes IDs in best subgraph S
+ * @param[out] NodesTBest Output list of nodes IDs in best subgraph T
+ * @return List of nodes IDs in best subgraph S
+ */
+TIntV GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
+
+  PUNGraph GraphBest = Graph;
+  WBest = -INFINITY;
+
+  // iterations for rerunning
+  for (int i = 0; i < Iters; ++i) {
+    double W;
+    TIntV NodesS, NodesT;
+    GroupExtract(Graph, Steps, W, NodesS, NodesT);
+
+    if (W > WBest) {
+      WBest = W;
+      NodesSBest = NodesS;
+      NodesTBest = NodesT;
     }
   }
 

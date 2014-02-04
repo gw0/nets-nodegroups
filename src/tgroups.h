@@ -35,6 +35,7 @@ double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, double& WNorm, doub
 double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT);
 double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, int SwapNId, double& WNorm, double& LinksST, double& LinksSInvT);
 TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest);
+TIntV GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest);
 
 /////////////////////////////////////////////////
 
