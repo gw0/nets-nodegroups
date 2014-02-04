@@ -72,7 +72,7 @@ double GroupLinks(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT) {
  * @param Wnorm Output W normalization factor
  * @param Lst Output number of links between S and T
  * @param Lsinvt Output number of links between S and inverse T
- * @return Computed value of group critetion
+ * @return Computed value of group critetion W
  */
 double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, double& Wnorm, double& Lst, double& Lsinvt) {
   int Len = Graph->GetEdges();
@@ -108,7 +108,7 @@ double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT) {
  * @param Wnorm Precomputed W normalization factor
  * @param Lst Output number of links between estimated S and T
  * @param Lsinvt Output number of links between estimated S and inverse T
- * @return Estimated value of group critetion
+ * @return Estimated value of group critetion W
  */
 double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, int DelNId, int AddNId, double& Wnorm, double& Lst, double& Lsinvt) {
   int Len = Graph->GetEdges();
@@ -154,10 +154,13 @@ double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, i
  * Node group extraction algorithm
  *
  * @param Graph Input graph (edges will be removed)
- * @param OptIters Number of optimization iterations
+ * @param LenS Size of subgraph S
+ * @param LenT Size of subgraph T
+ * @param Iters Number of optimization iterations
+ * @param WBest Output best group criterion W
  * @return List of node IDs in extracted group
  */
-TIntV GroupExtract(PUNGraph& Graph, int LenS=20, int LenT=20, int OptIters=1000) {
+TIntV GroupExtract(PUNGraph& Graph, int LenS, int LenT, int Iters, double& WBest) {
   // Initial random subgraph S and T
   TIntV NodesS;
   for (int i = 0; NodesS.Len() < LenS; ++i) {
@@ -170,12 +173,12 @@ TIntV GroupExtract(PUNGraph& Graph, int LenS=20, int LenT=20, int OptIters=1000)
 
   // Initial group criterion
   double W, Wnorm, Lst, Lsinvt;
-  double WBest = GroupW(Graph, NodesS, NodesT, Wnorm, Lst, Lsinvt);
+  WBest = GroupW(Graph, NodesS, NodesT, Wnorm, Lst, Lsinvt);
   TIntV NodesSBest = NodesS;
   TIntV NodesTBest = NodesT;
 
   // Inefficient random walk optimization
-  /*for (int i = 0; i < OptIters; ++i) {
+  /*for (int i = 0; i < Iters; ++i) {
     // Select nodes to swap in either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
@@ -202,8 +205,8 @@ TIntV GroupExtract(PUNGraph& Graph, int LenS=20, int LenT=20, int OptIters=1000)
     }
   }*/
 
-  // Gradient descent optimization with fast estimate of group criterion
-  for (int i = 0; i < OptIters; ++i) {
+  // Greedy descent optimization with fast estimate of group criterion
+  for (int i = 0; i < Iters; ++i) {
     // Select nodes to swap in either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
@@ -231,27 +234,62 @@ TIntV GroupExtract(PUNGraph& Graph, int LenS=20, int LenT=20, int OptIters=1000)
     }
   }
 
-  W = WBest;
-  NodesS = NodesSBest;
-  NodesT = NodesTBest;
-  printf("%f %d %d\n", W, NodesS.Len(), NodesT.Len());
+  printf("%f %d %d\n", WBest, NodesSBest.Len(), NodesTBest.Len());
 
   // Delete edges between S and T
   // iterate through S
-  for (int s = 0; s < NodesS.Len(); ++s) {
-    TUNGraph::TNodeI NI = Graph->GetNI(NodesS[s]);
+  for (int s = 0; s < NodesSBest.Len(); ++s) {
+    TUNGraph::TNodeI NI = Graph->GetNI(NodesSBest[s]);
 
     // iterate through its out-edges
     for (int e = 0; e < NI.GetOutDeg(); ++e) {
       // check if endpoint is inside T or not
-      if (NodesT.IsIn(NI.GetOutNId(e))) {
+      if (NodesTBest.IsIn(NI.GetOutNId(e))) {
         //printf("edge (%d %d)\n", NI.GetId(), NI.GetOutNId(e));
-        Graph->DelEdge(NodesS[s], NI.GetOutNId(e));
+        Graph->DelEdge(NodesSBest[s], NI.GetOutNId(e));
       }
     }
   }
 
-  return NodesS;
+  return NodesSBest;
+}
+
+
+/**
+ * Estimate average W in Erdos-Renyi random graph
+ *
+ * @param N Number of nodes in Erdos-Renyi random graph
+ * @param M Number of edges in Erdos-Renyi random graph
+ * @param LenS Size of subgraph S
+ * @param LenT Size of subgraph T
+ * @param Iters Number of iterations for average
+ * @return Average value of group critetion W
+ */
+double RndWErdosRenyi(int N, int M, int LenS, int LenT, int Iters) {
+  PUNGraph GraphER;
+  TIntV NodesS, NodesT;
+  double RndW = 0.0;
+
+  // iterations for average
+  for (int i = 0; i < Iters; ++i) {
+    // Generate Erdos-Renyi random graph
+    GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
+
+    // Select random subgraphs S and T
+    NodesS.Clr();
+    for (int i = 0; NodesS.Len() < LenS; ++i) {
+      NodesS.AddMerged(GraphER->GetRndNId());
+    }
+    NodesT.Clr();
+    for (int i = 0; NodesT.Len() < LenT; ++i) {
+      NodesT.AddMerged(GraphER->GetRndNId());
+    }
+
+    // Compute group criterion W
+    RndW += GroupW(GraphER, NodesS, NodesT);
+  }
+
+  return RndW / Iters;
 }
 
 
@@ -284,10 +322,12 @@ int main(int argc, char* argv[]) {
   }
 
   // Run node group extraction framework
+  double RndW = RndWErdosRenyi(Graph->GetNodes(), Graph->GetEdges(), 20, 20, 1000);
+  double W;
   TCnComV GroupsV;
-  for (int i = 0; i < 10; ++i) {
-    GroupsV.Add(TCnCom(GroupExtract(Graph, 20, 20, 100000)));
-  }
+  do {
+    GroupsV.Add(TCnCom(GroupExtract(Graph, 20, 20, 100000, W)));
+  } while(W > RndW);
 
   // Output
   FILE *F = fopen(OutFNm.CStr(), "wt");
