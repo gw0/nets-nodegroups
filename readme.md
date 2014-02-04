@@ -1,7 +1,7 @@
-Node group structure
-====================
+nodegroups - Node group structures
+==================================
 
-Implementation of the *node group extraction framework* enables the exploration of node group structure of different networks, such as communities, modules, hubs and similar. Description of the algorithm can be found in:
+Implementation of the *node group extraction framework* enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
 
 - L. Šubelj, N. Blagus, and M. Bajec, "Group extraction for real-world networks: The case of communities, modules, and hubs and spokes," in Proc. of NetSci '13, 2013, p. 152.
 - L. Šubelj, S. Žitnik, N. Blagus, and M. Bajec, "Node mixing and group structure of complex software networks," Adv. Complex Syst., 2014.
@@ -31,9 +31,9 @@ Usage
 Parameters:
 
     -i: Input graph (list of undirected edges) (default:'graph.edgelist')
-    -l: Optional input node labels (node ID, node label)
+    -l: Optional input node labels (node ID, node label)  (default:'graph.labels')
     -o: Output extracted group assignments (default:'graph.groups')
 
 Example:
 
-    ./ngs -i:bullet.edgelist
+    ./ngs -i:bullet.edgelist -l:bullet.labels

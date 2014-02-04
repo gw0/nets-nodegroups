@@ -1,8 +1,8 @@
 #
-# Makefile for Node group structure
+# Makefile for nodegroups
 #
 
-MAIN = ngs
+MAIN = nodegroups
 DEPH =
 DEPCPP =
 
