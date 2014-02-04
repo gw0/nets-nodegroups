@@ -98,13 +98,13 @@ double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, double& WNorm, doub
   int NodesSLen = NodesS.Len();
   int NodesTLen = NodesT.Len();
 
+  // Count edges/links between subgraphs L(S,T)
+  GroupLinks(Graph, NodesS, NodesT, false, LinksST, LinksSInvT);
+
   // Normalization factor (geometric mean of s and t)
   double W2st = 2.0 * NodesSLen * NodesTLen;
   double Wnst = N * (NodesSLen + NodesTLen);
   WNorm = W2st * (Wnst - W2st) / Wnst;
-
-  // Count edges/links between subgraphs L(S,T)
-  GroupLinks(Graph, NodesS, NodesT, false, LinksST, LinksSInvT);
 
   // Group criterion
   return WNorm * (LinksST / NodesTLen - LinksSInvT / (N - NodesTLen)) / NodesSLen;
@@ -116,56 +116,71 @@ double GroupW(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT) {
 
 
 /**
- * Fast estimate of group criterion W(S,T) after swapping nodes
+ * Fast estimate of group criterion W after swapping a single node
  *
  * @param Graph Input graph
  * @param NodesS List of node IDs in subgraph S
  * @param NodesT List of node IDs in subgraph T
  * @param IfSwapS Estimate swap in S or T
- * @param DelNId Node ID to estimate deletion
- * @param AddNId Node ID to estimate addition
- * @param WNorm Precomputed W normalization factor
+ * @param SwapNId Node ID to add or delete from either S or T
+ * @param WNorm Output W normalization factor
  * @param LinksST Output number of links between estimated S and T
  * @param LinksSInvT Output number of links between estimated S and inverse T
  * @return Estimated value of group critetion W
  */
-double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, int DelNId, int AddNId, double& WNorm, double& LinksST, double& LinksSInvT) {
-  int Len = Graph->GetNodes();
+double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, int SwapNId, double& WNorm, double& LinksST, double& LinksSInvT) {
+  int N = Graph->GetNodes();
   int NodesSLen = NodesS.Len();
   int NodesTLen = NodesT.Len();
 
-  // Correction for removing node DelNId
+  double LinksSTDiff, LinksSInvTDiff;
   TIntV TmpNIdV;
-  double LinksSTTmp, LinksSInvTTmp;
   TmpNIdV.Clr();
-  TmpNIdV.Add(DelNId);
-  if (IfSwapS) {  // swap in S
-    GroupLinks(Graph, TmpNIdV, NodesT, false, LinksSTTmp, LinksSInvTTmp);
-    LinksST -= LinksSTTmp;
-    LinksSInvT -= LinksSInvTTmp;
+  TmpNIdV.Add(SwapNId);
+  if (IfSwapS) {  // single swap in S
+    if (NodesS.IsIn(SwapNId)) {  // delete node from S
+      if (NodesSLen > 1) {
+        NodesSLen -= 1;
+        GroupLinks(Graph, TmpNIdV, NodesT, false, LinksSTDiff, LinksSInvTDiff);
+        LinksST -= LinksSTDiff;
+        LinksSInvT -= LinksSInvTDiff;
+      }
 
-  } else {  // swap in T
-    GroupLinks(Graph, TmpNIdV, NodesS, false, LinksSTTmp, LinksSInvTTmp);
-    LinksST -= LinksSTTmp;
-    LinksSInvT += LinksSTTmp;
+    } else {  // add node into S
+      if (NodesSLen + 1 < N) {
+        NodesSLen += 1;
+        GroupLinks(Graph, TmpNIdV, NodesT, false, LinksSTDiff, LinksSInvTDiff);
+        LinksST += LinksSTDiff;
+        LinksSInvT += LinksSInvTDiff;
+      }
+    }
+
+  } else {  // single swap in T
+    if (NodesT.IsIn(SwapNId)) {  // delete node from T
+      if (NodesTLen > 1) {
+        NodesTLen -= 1;
+        GroupLinks(Graph, TmpNIdV, NodesS, false, LinksSTDiff, LinksSInvTDiff);
+        LinksST -= LinksSTDiff;
+        LinksSInvT += LinksSTDiff;
+      }
+
+    } else {  // add node into T
+      if(NodesTLen + 1 < N) {
+        NodesTLen += 1;
+        GroupLinks(Graph, TmpNIdV, NodesS, false, LinksSTDiff, LinksSInvTDiff);
+        LinksST += LinksSTDiff;
+        LinksSInvT -= LinksSTDiff;
+      }
+    }
   }
 
-  // Correction for adding node AddNId
-  TmpNIdV.Clr();
-  TmpNIdV.Add(AddNId);
-  if (IfSwapS) {  // swap in S
-    GroupLinks(Graph, TmpNIdV, NodesT, false, LinksSTTmp, LinksSInvTTmp);
-    LinksST += LinksSTTmp;
-    LinksSInvT += LinksSInvTTmp;
-
-  } else {  // swap in T
-    GroupLinks(Graph, TmpNIdV, NodesS, false, LinksSTTmp, LinksSInvTTmp);
-    LinksST += LinksSTTmp;
-    LinksSInvT -= LinksSTTmp;      
-  }
+  // Normalization factor (geometric mean of s and t)
+  double W2st = 2.0 * NodesSLen * NodesTLen;
+  double Wnst = N * (NodesSLen + NodesTLen);
+  WNorm = W2st * (Wnst - W2st) / Wnst;
 
   // Corrected group criterion
-  return WNorm * (LinksST / NodesTLen - LinksSInvT / (Len - NodesTLen)) / NodesSLen;
+  return WNorm * (LinksST / NodesTLen - LinksSInvT / (N - NodesTLen)) / NodesSLen;
 }
 
 
@@ -173,109 +188,162 @@ double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, i
  * Node group extraction algorithm
  *
  * @param Graph Input graph
- * @param Iters Number of optimization iterations
+ * @param Steps Number of optimization steps
  * @param WBest Output best group criterion W
  * @param NodesSBest Output list of nodes IDs in best subgraph S
  * @param NodesTBest Output list of nodes IDs in best subgraph T
  * @return List of nodes IDs in best subgraph S
  */
-TIntV GroupExtract(PUNGraph& Graph, int Iters, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
-  // Initial random subgraph S and T (not empty or whole)
-  int N = Graph->GetNodes();
+TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
+  // Initial random subgraph S and T (with one node)
   TIntV NodesS;
-  for (int i = 1 + TInt::GetRnd(N - 2); i > 0; --i) {
-    NodesS.AddMerged(Graph->GetRndNId());
-  }
+  NodesS.AddMerged(Graph->GetRndNId());
   TIntV NodesT;
-  for (int i = 1 + TInt::GetRnd(N - 2); i > 0; --i) {
-    NodesT.AddMerged(Graph->GetRndNId());
-  }
+  NodesT.AddMerged(Graph->GetRndNId());
 
   // Initial group criterion
-  double W, WNorm, LinksST, LinksSInvT;
+  double W, WNorm, WNormBest, LinksST, LinksSTBest, LinksSInvT, LinksSInvTBest;
   WBest = GroupW(Graph, NodesS, NodesT, WNorm, LinksST, LinksSInvT);
   NodesSBest = NodesS;
   NodesTBest = NodesT;
+  WNormBest = WNorm;
+  LinksSTBest = LinksST;
+  LinksSInvTBest = LinksSInvT;
 
-  // Inefficient random walk optimization
-  for (int i = 0; i < Iters; ++i) {
+  // Random walk optimization
+  /*for (int i = 0; i < Steps; ++i) {
     // Select node to add or delete in either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
     int SwapNId = Graph->GetRndNId();
 
-    // Add or delete node and recompute group criterion
-    if (NodesX.IsIn(SwapNId) && NodesX.Len() > 1) {  // delete node
-      NodesX.DelAll(SwapNId);
-    } else if(NodesX.Len() + 1 < N) {  // add node
-      NodesX.AddMerged(SwapNId);
+    // Swap single node and recompute group criterion W
+    if (NodesX.IsIn(SwapNId)) {  // delete node
+      if (NodesX.Len() > 1) {
+        NodesX.DelAll(SwapNId);
+      }
+    } else {  // add node
+      if (NodesX.Len() + 1 < Graph->GetNodes()) {
+        NodesX.AddMerged(SwapNId);
+      }
     }
     W = GroupW(Graph, NodesS, NodesT, WNorm, LinksST, LinksSInvT);
 
     if (W > WBest) {
-      //printf("%f %f %f %f\n", W, WNorm, LinksST, LinksSInvT);
+      //printf("%f %f %.0f %.0f\n", W, WNorm, LinksST, LinksSInvT);
       WBest = W;
+      WNormBest = WNorm;
+      LinksSTBest = LinksST;
+      LinksSInvTBest = LinksSInvT;
       NodesSBest = NodesS;
       NodesTBest = NodesT;
 
-    } else if (false) {  // enable to use greedy descent
+    } else if (true) {  // enable to use greedy descent
       if (NodesX.IsIn(SwapNId)) {  // delete node again
         NodesX.DelAll(SwapNId);
       } else {  // add node again
         NodesX.AddMerged(SwapNId);
       }
     }
-  }
+  }*/
 
-  // Greedy descent optimization with fast estimate of group criterion
-  /*for (int i = 0; i < Iters; ++i) {
-    // Select nodes to swap in either S or T
+  // Greedy descent optimization with fast estimation
+  /*for (int i = 0; i < Steps; ++i) {
+    // Select node to add or delete in either S or T
     bool IfSwapS = TBool::GetRnd();
     TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
-    int DelI = TUInt::GetRnd(NodesX.Len());
-    int AddNId;
-    do {
-      AddNId = Graph->GetRndNId();
-    } while(NodesX.IsIn(AddNId));
+    int SwapNId = Graph->GetRndNId();
 
-    // Fast estimate of group criterion after swapping nodes
+    // Fast estimate of group criterion W after swapping a single node
+    double WNormNew = WNorm;
     double LinksSTNew = LinksST;
     double LinksSInvTNew = LinksSInvT;
-    W = GroupWFast(Graph, NodesS, NodesT, IfSwapS, NodesX[DelI], AddNId, WNorm, LinksSTNew, LinksSInvTNew);
+    W = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
 
     if (W > WBest) {
-      NodesX.Del(DelI);
-      NodesX.AddMerged(AddNId);
-      LinksST = LinksSTNew;
-      LinksSInvT = LinksSInvTNew;
-
-      //printf("%f %f %f %f\n", W, WNorm, LinksSTNew, LinksSInvTNew);
+      //printf("%f %f %.0f %.0f\n", W, WNorm, LinksST, LinksSInvT);
       WBest = W;
+      WNormBest = WNormNew;
+      LinksSTBest = LinksSTNew;
+      LinksSInvTBest = LinksSInvTNew;
+
+      // Actually swap best node
+      if (NodesX.IsIn(SwapNId)) {  // delete node
+        NodesX.DelAll(SwapNId);
+      } else {  // add node
+        NodesX.AddMerged(SwapNId);
+      }
       NodesSBest = NodesS;
       NodesTBest = NodesT;
+      WNorm = WNormBest;
+      LinksST = LinksSTBest;
+      LinksSInvT = LinksSInvTBest;
     }
   }*/
+
+  // Steepest descent optimization with fast estimation
+  for (int i = 0; i < (Steps / Graph->GetNodes() + 1); ++i) {
+    // Select either S or T
+    bool IfSwapS = TBool::GetRnd();
+    TIntV& NodesX = (IfSwapS) ? NodesS : NodesT;
+    int SwapNIdBest = -1;
+
+    // iterate through all nodes in Graph
+    for (TUNGraph::TNodeI NI = Graph->BegNI(); NI < Graph->EndNI(); NI++) {
+      int SwapNId = NI.GetId();
+
+      // Fast estimate of group criterion W after swapping a single node
+      double WNormNew = WNorm;
+      double LinksSTNew = LinksST;
+      double LinksSInvTNew = LinksSInvT;
+      W = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
+
+      if (W > WBest) {
+        SwapNIdBest = SwapNId;
+        WBest = W;
+        WNormBest = WNormNew;
+        LinksSTBest = LinksSTNew;
+        LinksSInvTBest = LinksSInvTNew;
+      }
+    }
+
+    if (SwapNIdBest != -1) {
+      //printf("%f %f %.0f %.0f\n", WBest, WNormBest, LinksSTBest, LinksSInvTBest);
+      // Actually swap best node
+      if (NodesX.IsIn(SwapNIdBest)) {  // delete node
+        NodesX.DelAll(SwapNIdBest);
+      } else {  // add node
+        NodesX.AddMerged(SwapNIdBest);
+      }
+      NodesSBest = NodesS;
+      NodesTBest = NodesT;
+      WNorm = WNormBest;
+      LinksST = LinksSTBest;
+      LinksSInvT = LinksSInvTBest;
+    }
+  }
 
   return NodesSBest;
 }
 
 
 /**
- * Estimate average W in Erdos-Renyi random graph
+ * Estimate maximum W in Erdos-Renyi random graph
  *
  * @param N Number of nodes in Erdos-Renyi random graph
  * @param M Number of edges in Erdos-Renyi random graph
  * @param NodesSLen Number of nodes in subgraph S
  * @param NodesTLen Number of nodes in subgraph T
- * @param Iters Number of iterations for average
- * @return Average value of group critetion W
+ * @param Iters Number of iterations for finding maximum
+ * @return Maximum value of group critetion W
  */
 double WRndErdosRenyi(int N, int M, int NodesSLen, int NodesTLen, int Iters) {
   PUNGraph GraphER;
   TIntV NodesS, NodesT;
-  double WRnd = 0.0;
+  double W;
+  double WRnd = -INFINITY;
 
-  // iterations for average
+  // iterations for finding maximum
   for (int i = 0; i < Iters; ++i) {
     // Generate Erdos-Renyi random graph
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
@@ -291,10 +359,13 @@ double WRndErdosRenyi(int N, int M, int NodesSLen, int NodesTLen, int Iters) {
     }
 
     // Compute group criterion W
-    WRnd += GroupW(GraphER, NodesS, NodesT);
+    W = GroupW(GraphER, NodesS, NodesT);
+    if (W > WRnd) {
+      WRnd = W;
+    }
   }
 
-  return WRnd / Iters;
+  return WRnd;
 }
 
 
@@ -328,9 +399,10 @@ int main(int argc, char* argv[]) {
 
   // Run node group extraction framework
   TGroupV GroupV;
-  TGroup g;
+  TGroup g, r;
   double AlphaW = 0.01;
-  double WRnd = INFINITY;
+  r.W = INFINITY;
+  r.LinksST = 0;
   do {
     // Extract group criterion W and subgraphs S and T
     GroupExtract(Graph, 1000000, g.W, g.NodesS, g.NodesT);
@@ -342,20 +414,20 @@ int main(int argc, char* argv[]) {
     g.Tau = GroupTau(Graph, g.NodesS, g.NodesT);
 
     // Recompute corresponding Erdos-Renyi random graph
-    if (g.W < WRnd && WRnd > 0.0) {
-      WRnd = WRndErdosRenyi(g.N, g.M, g.NodesSLen, g.NodesTLen, 1000);
-      if (WRnd < 0.0) {
-        WRnd = 0.0;
-      }
+    if (g.W < r.W || r.LinksST < g.LinksST) {
+      r = g;  // remember when it was built
+      r.W = WRndErdosRenyi(r.N, r.M, r.NodesSLen, r.NodesTLen, 10000);
+      if (r.W < 0.0)
+        r.W = 0.0;
     }
 
     // Print status
-    printf("%d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f ; WRnd=%-12.6f\n", GroupV.Len(), g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau, WRnd);
+    printf("%d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f ; r.W=%-12.6f\n", GroupV.Len(), g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau, r.W);
     GroupV.Add(g);
 
     // Delete edges between S and T
     GroupLinks(Graph, g.NodesS, g.NodesT, true);
-  } while(g.W * (1.0 - AlphaW) > WRnd);
+  } while(g.W * (1.0 - AlphaW) > r.W);
 
   // Output status and groups
   FILE *F = fopen(OutFNm.CStr(), "wt");
