@@ -334,6 +334,24 @@ double GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest
     double W;
     NodesS.Clr();
     NodesT.Clr();
+    // uncomment to start with random nodes in S and T
+    for (int i = TInt::GetRnd(Graph->GetNodes()); i > 0; --i) {
+      NodesS.AddMerged(Graph->GetRndNId());
+    }
+    for (int i = TInt::GetRnd(Graph->GetNodes()); i > 0; --i) {
+      NodesT.AddMerged(Graph->GetRndNId());
+    }
+    // uncomment to start with all but one node
+    /*int SkipSNId = TInt::GetRnd(Graph->GetNodes());
+    int SkipTNId = TInt::GetRnd(Graph->GetNodes());
+    for (TUNGraph::TNodeI NI = Graph->BegNI(); NI < Graph->EndNI(); NI++) {
+      if (NI.GetId() != SkipSNId) {
+        NodesS.AddMerged(NI.GetId());
+      }
+      if (NI.GetId() != SkipTNId) {
+        NodesT.AddMerged(NI.GetId());
+      }
+    }*/
     GroupExtract(Graph, Steps, W, NodesS, NodesT);
 
     if (W > WBest) {
