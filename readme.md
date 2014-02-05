@@ -36,4 +36,4 @@ Parameters:
 
 Example:
 
-    ./ngs -i:bullet.edgelist -l:bullet.labels
+    ./nodegroups -i:bullet.edgelist -l:bullet.labels

@@ -1,4 +1,10 @@
-*.o
-java_lovro/
+.*
+
+*.swp
+*~
+
 snap/
-src/ngs
+java_*/
+
+*.o
+src/nodegroups
