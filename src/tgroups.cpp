@@ -169,26 +169,28 @@ double GroupWFast(PUNGraph& Graph, TIntV& NodesS, TIntV& NodesT, bool IfSwapS, i
  *
  * @param Graph Input graph
  * @param Steps Number of optimization steps
- * @param[out] WBest Output best group criterion W
- * @param[out] NodesSBest Output list of nodes IDs in best subgraph S
- * @param[out] NodesTBest Output list of nodes IDs in best subgraph T
- * @return List of nodes IDs in best subgraph S
+ * @param[out] W Output best group criterion W
+ * @param[in,out] NodesS Initial and output list of nodes IDs in best subgraph S
+ * @param[in,out] NodesT Initial and output list of nodes IDs in best subgraph T
+ * @return Best group criterion W
  */
-TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
-  // Initial random subgraph S and T (with one node)
-  TIntV NodesS;
-  NodesS.AddMerged(Graph->GetRndNId());
-  TIntV NodesT;
-  NodesT.AddMerged(Graph->GetRndNId());
+double GroupExtract(PUNGraph& Graph, int Steps, double& W, TIntV& NodesS, TIntV& NodesT) {
+  // Initial random subgraph S and T should containt at least one node
+  if (NodesS.Len() < 1)
+    NodesS.AddMerged(Graph->GetRndNId());
+  if (NodesT.Len() < 1)
+    NodesT.AddMerged(Graph->GetRndNId());
 
-  // Initial group criterion
-  double W, WNorm, WNormBest, LinksST, LinksSTBest, LinksSInvT, LinksSInvTBest;
+  // Initial group criterion W
+  double WNorm, LinksST, LinksSInvT;
+  double WBest, WNormBest, LinksSTBest, LinksSInvTBest;
+  TIntV NodesSBest, NodesTBest;
   WBest = GroupW(Graph, NodesS, NodesT, WNorm, LinksST, LinksSInvT);
-  NodesSBest = NodesS;
-  NodesTBest = NodesT;
   WNormBest = WNorm;
   LinksSTBest = LinksST;
   LinksSInvTBest = LinksSInvT;
+  NodesSBest = NodesS;
+  NodesTBest = NodesT;
 
   // Random walk optimization
   /*for (int i = 0; i < Steps; ++i) {
@@ -238,11 +240,11 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
     double WNormNew = WNorm;
     double LinksSTNew = LinksST;
     double LinksSInvTNew = LinksSInvT;
-    W = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
+    double WNew = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
 
-    if (W > WBest) {
-      //printf("%f %f %.0f %.0f\n", W, WNorm, LinksST, LinksSInvT);
-      WBest = W;
+    if (WNew > WBest) {
+      //printf("%f %f %.0f %.0f\n", WNew, WNormNew, LinksSTNew, LinksSInvTNew);
+      WBest = WNew;
       WNormBest = WNormNew;
       LinksSTBest = LinksSTNew;
       LinksSInvTBest = LinksSInvTNew;
@@ -255,6 +257,7 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
       }
       NodesSBest = NodesS;
       NodesTBest = NodesT;
+      W = WBest;
       WNorm = WNormBest;
       LinksST = LinksSTBest;
       LinksSInvT = LinksSInvTBest;
@@ -276,11 +279,11 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
       double WNormNew = WNorm;
       double LinksSTNew = LinksST;
       double LinksSInvTNew = LinksSInvT;
-      W = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
+      double WNew = GroupWFast(Graph, NodesS, NodesT, IfSwapS, SwapNId, WNormNew, LinksSTNew, LinksSInvTNew);
 
-      if (W > WBest) {
+      if (WNew > WBest) {
         SwapNIdBest = SwapNId;
-        WBest = W;
+        WBest = WNew;
         WNormBest = WNormNew;
         LinksSTBest = LinksSTNew;
         LinksSInvTBest = LinksSInvTNew;
@@ -297,13 +300,17 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
       }
       NodesSBest = NodesS;
       NodesTBest = NodesT;
+      W = WBest;
       WNorm = WNormBest;
       LinksST = LinksSTBest;
       LinksSInvT = LinksSInvTBest;
     }
   }*/
 
-  return NodesSBest;
+  W = WBest;
+  NodesS = NodesSBest;
+  NodesT = NodesTBest;
+  return W;
 }
 
 
@@ -316,17 +323,17 @@ TIntV GroupExtract(PUNGraph& Graph, int Steps, double& WBest, TIntV& NodesSBest,
  * @param[out] WBest Output best group criterion W
  * @param[out] NodesSBest Output list of nodes IDs in best subgraph S
  * @param[out] NodesTBest Output list of nodes IDs in best subgraph T
- * @return List of nodes IDs in best subgraph S
+ * @return Best group criterion W
  */
-TIntV GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
-
-  PUNGraph GraphBest = Graph;
+double GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest, TIntV& NodesSBest, TIntV& NodesTBest) {
+  TIntV NodesS, NodesT;
   WBest = -INFINITY;
 
   // iterations for rerunning
   for (int i = 0; i < Iters; ++i) {
     double W;
-    TIntV NodesS, NodesT;
+    NodesS.Clr();
+    NodesT.Clr();
     GroupExtract(Graph, Steps, W, NodesS, NodesT);
 
     if (W > WBest) {
@@ -336,5 +343,5 @@ TIntV GroupExtractRerunner(PUNGraph& Graph, int Iters, int Steps, double& WBest,
     }
   }
 
-  return NodesSBest;
+  return WBest;
 }

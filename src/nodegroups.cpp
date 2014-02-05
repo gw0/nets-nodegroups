@@ -82,6 +82,8 @@ int main(int argc, char* argv[]) {
   r.LinksST = 0;
   do {
     // Extract group criterion W and subgraphs S and T
+    g.NodesS.Clr();
+    g.NodesT.Clr();
     //GroupExtract(Graph, 1000000, g.W, g.NodesS, g.NodesT);
     GroupExtractRerunner(Graph, 1000, 10000, g.W, g.NodesS, g.NodesT);
     g.N = Graph->GetNodes();
