@@ -15,48 +15,34 @@
 
 
 /**
- * Estimate maximum W in Erdos-Renyi random graph
+ * Estimate average W in Erdos-Renyi random graph
  *
- * @param Iters Number of iterations of different random graphs
+ * @param Iters Number of iterations of different random graphs and reruns
+ * @param Steps Number of iterations of different subgraphs S and T
  * @param N Number of nodes in random graph
  * @param M Number of edges in random graph
- * @param Steps Number of iterations of different subgraphs S and T
- * @param NodesSLen Number of nodes in subgraph S
- * @param NodesTLen Number of nodes in subgraph T
  * @return Maximum value of group critetion W
  */
-double WRndErdosRenyi(int Iters, int N, int M, int Steps, int NodesSLen, int NodesTLen) {
+double WRndErdosRenyi(int Iters, int Steps, int N, int M) {
   PUNGraph GraphER;
   TIntV NodesS, NodesT;
   double W;
-  double WRnd = -INFINITY;
+  double WRnd = 0.0;
 
   // iterations of different random graphs
   for (int i = 0; i < Iters; ++i) {
     // Generate Erdos-Renyi random graph
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
 
-    // iterations of different subgraphs S and T
-    for (int j = 0; j < Steps; ++j) {
-      // Select random subgraphs S and T
-      NodesS.Clr();
-      for (int i = 0; NodesS.Len() < NodesSLen; ++i) {
-        NodesS.AddMerged(GraphER->GetRndNId());
-      }
-      NodesT.Clr();
-      for (int i = 0; NodesT.Len() < NodesTLen; ++i) {
-        NodesT.AddMerged(GraphER->GetRndNId());
-      }
+    // Find best group criterion W
+    NodesS.Clr();
+    NodesT.Clr();
+    GroupExtract(GraphER, Steps, W, NodesS, NodesT);
 
-      // Compute group criterion W
-      W = GroupW(GraphER, NodesS, NodesT);
-      if (W > WRnd) {
-        WRnd = W;
-      }
-    }
+    WRnd += W;
   }
 
-  return WRnd;
+  return WRnd / Iters;
 }
 
 
@@ -108,7 +94,7 @@ int main(int argc, char* argv[]) {
     // Recompute corresponding Erdos-Renyi random graph
     if (g.W < r.W || r.LinksST < g.LinksST) {
       r = g;  // remember when it was built
-      r.W = WRndErdosRenyi(100, r.N, r.M, 1000, r.NodesSLen, r.NodesTLen);
+      r.W = WRndErdosRenyi(100, 10000, r.N, r.M);
       if (r.W < 0.0)
         r.W = 0.0;
     }
