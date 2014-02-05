@@ -21,6 +21,7 @@ struct TGroup {
   int NodesTLen;
   double LinksST;
   double Tau;
+  double ModularityS;
   TIntV NodesS;
   TIntV NodesT;
 };

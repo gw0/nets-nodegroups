@@ -21,7 +21,7 @@
  * @param Steps Number of iterations of different subgraphs S and T
  * @param N Number of nodes in random graph
  * @param M Number of edges in random graph
- * @return Maximum value of group critetion W
+ * @return Average value of group critetion W
  */
 double WRndErdosRenyi(int Iters, int Steps, int N, int M) {
   PUNGraph GraphER;
@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
   }
 
   // Run node group extraction framework
+  Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
+  //Graph = TSnap::GetMxBiCon(Graph);  // largest bi-connected component
   TGroupV GroupV;
   TGroup g, r;
   double AlphaW = 0.01;
@@ -84,7 +86,6 @@ int main(int argc, char* argv[]) {
     // Extract group criterion W and subgraphs S and T
     g.NodesS.Clr();
     g.NodesT.Clr();
-    //GroupExtract(Graph, 1000000, g.W, g.NodesS, g.NodesT);
     GroupExtractRerunner(Graph, 1000, 10000, g.W, g.NodesS, g.NodesT);
     g.N = Graph->GetNodes();
     g.M = Graph->GetEdges();
@@ -92,6 +93,7 @@ int main(int argc, char* argv[]) {
     g.NodesTLen = g.NodesT.Len();
     g.LinksST = GroupLinks(Graph, g.NodesS, g.NodesT);
     g.Tau = GroupTau(Graph, g.NodesS, g.NodesT);
+    g.ModularityS = TSnap::GetModularity(Graph, g.NodesS, g.N);
 
     // Recompute corresponding Erdos-Renyi random graph
     if (g.W < r.W || r.LinksST < g.LinksST) {
@@ -102,11 +104,12 @@ int main(int argc, char* argv[]) {
     }
 
     // Print status
-    printf("%d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f ; r.W=%-12.6f\n", GroupV.Len(), g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau, r.W);
+    printf("%d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f Modu=%-9.6f r.W=%-12.6f\n", GroupV.Len(), g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau, g.ModularityS, r.W);
     GroupV.Add(g);
 
     // Delete edges between S and T
     GroupLinks(Graph, g.NodesS, g.NodesT, true);
+    Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
   } while(g.W * (1.0 - AlphaW) > r.W);
 
   // Output status and groups
@@ -116,7 +119,7 @@ int main(int argc, char* argv[]) {
   fprintf(F, "# Groups: %d\n", GroupV.Len());
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroup& g = GroupV[j];
-    fprintf(F, "#   %d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f\n", j, g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau);
+    fprintf(F, "#   %d  W=%-12.6f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5.0f Tau=%-8.6f Modu=%-9.6f\n", j, g.W, g.N, g.M, g.NodesSLen, g.NodesTLen, g.LinksST, g.Tau, g.ModularityS);
   }
   fprintf(F, "# NId\tGroupId\tNLabel\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
