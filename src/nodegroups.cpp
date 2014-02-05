@@ -17,38 +17,42 @@
 /**
  * Estimate maximum W in Erdos-Renyi random graph
  *
- * @param N Number of nodes in Erdos-Renyi random graph
- * @param M Number of edges in Erdos-Renyi random graph
+ * @param Iters Number of iterations of different random graphs
+ * @param N Number of nodes in random graph
+ * @param M Number of edges in random graph
+ * @param Steps Number of iterations of different subgraphs S and T
  * @param NodesSLen Number of nodes in subgraph S
  * @param NodesTLen Number of nodes in subgraph T
- * @param Iters Number of iterations for finding maximum
  * @return Maximum value of group critetion W
  */
-double WRndErdosRenyi(int N, int M, int NodesSLen, int NodesTLen, int Iters) {
+double WRndErdosRenyi(int Iters, int N, int M, int Steps, int NodesSLen, int NodesTLen) {
   PUNGraph GraphER;
   TIntV NodesS, NodesT;
   double W;
   double WRnd = -INFINITY;
 
-  // iterations for finding maximum
+  // iterations of different random graphs
   for (int i = 0; i < Iters; ++i) {
     // Generate Erdos-Renyi random graph
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
 
-    // Select random subgraphs S and T
-    NodesS.Clr();
-    for (int i = 0; NodesS.Len() < NodesSLen; ++i) {
-      NodesS.AddMerged(GraphER->GetRndNId());
-    }
-    NodesT.Clr();
-    for (int i = 0; NodesT.Len() < NodesTLen; ++i) {
-      NodesT.AddMerged(GraphER->GetRndNId());
-    }
+    // iterations of different subgraphs S and T
+    for (int j = 0; j < Steps; ++j) {
+      // Select random subgraphs S and T
+      NodesS.Clr();
+      for (int i = 0; NodesS.Len() < NodesSLen; ++i) {
+        NodesS.AddMerged(GraphER->GetRndNId());
+      }
+      NodesT.Clr();
+      for (int i = 0; NodesT.Len() < NodesTLen; ++i) {
+        NodesT.AddMerged(GraphER->GetRndNId());
+      }
 
-    // Compute group criterion W
-    W = GroupW(GraphER, NodesS, NodesT);
-    if (W > WRnd) {
-      WRnd = W;
+      // Compute group criterion W
+      W = GroupW(GraphER, NodesS, NodesT);
+      if (W > WRnd) {
+        WRnd = W;
+      }
     }
   }
 
@@ -92,7 +96,8 @@ int main(int argc, char* argv[]) {
   r.LinksST = 0;
   do {
     // Extract group criterion W and subgraphs S and T
-    GroupExtract(Graph, 1000000, g.W, g.NodesS, g.NodesT);
+    //GroupExtract(Graph, 1000000, g.W, g.NodesS, g.NodesT);
+    GroupExtractRerunner(Graph, 1000, 10000, g.W, g.NodesS, g.NodesT);
     g.N = Graph->GetNodes();
     g.M = Graph->GetEdges();
     g.NodesSLen = g.NodesS.Len();
@@ -103,7 +108,7 @@ int main(int argc, char* argv[]) {
     // Recompute corresponding Erdos-Renyi random graph
     if (g.W < r.W || r.LinksST < g.LinksST) {
       r = g;  // remember when it was built
-      r.W = WRndErdosRenyi(r.N, r.M, r.NodesSLen, r.NodesTLen, 10000);
+      r.W = WRndErdosRenyi(100, r.N, r.M, 1000, r.NodesSLen, r.NodesTLen);
       if (r.W < 0.0)
         r.W = 0.0;
     }
