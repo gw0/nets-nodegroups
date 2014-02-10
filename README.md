@@ -17,11 +17,20 @@ Testing environment:
 - Debian 7.3
 - *build-essential* (~11.5)
 - *g++* (~4:4.7.2-1)
-- SNAP (~2.1) (download from <http://snap.stanford.edu/snap/download.html>)
+- *SNAP* (~2.1) (newest from <https://github.com/snap-stanford/snap>)
 
-Compile from console using GCC:
+Compile *SNAP* from console using GCC:
 
-    cd src
+    wget http://snap.stanford.edu/releases/Snap-2.1.zip
+    unzip Snap-2.1.zip
+    mv Snap-2.1 snap
+    cd ./snap
+    make all
+    cd ..
+
+Compile *nodegroups* from console using GCC:
+
+    cd ./src
     make all
 
 
@@ -36,4 +45,18 @@ Parameters:
 
 Example:
 
-    ./nodegroups -i:bullet.edgelist -l:bullet.labels
+    ./nodegroups -i:graph.edgelist
+
+
+Feedback
+--------
+
+If you encounter any bugs or have feature requests, please file them in the [issue tracker](https://github.com/gw0/nodegroups/issues), or even develop it yourself and submit a pull request over [GitHub](https://github.com/gw0/nodegroups).
+
+
+License
+-------
+
+Copyright (c) 2014 - *gw0* [<http://gw.tnode.com/>] &lt;<gw.2014@tnode.com>&gt;
+
+This library is licensed under the [GNU Affero General Public License 3.0+](LICENSE_AGPL-3.0.txt) (AGPL-3.0+). Note that it is mandatory to make all modifications and complete source code of this library publicly available to any user.
