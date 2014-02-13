@@ -2,22 +2,22 @@
  * nodegroups - Group structures header file
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
- * @version 0.2
+ * @version 0.22
  */
 
 #ifndef group_h
 #define group_h
-#define group_h_VERSION 0.2
+#define group_h_VERSION 0.22
 
 #include "Snap.h"
 
 /////////////////////////////////////////////////
 
-#define DEF_OptRestarts 1000  /* 1000 */
+#define DEF_OptRestarts 2000  /* 2000 */
 #define DEF_OptMxSteps 100000  /* 100000 */
 #define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
-#define DEF_OptInitSample 0  /* random: 0, add: >0, del: <0 */
-#define DEF_RndRestarts 100  /* 100 */
+#define DEF_OptInitSample 1  /* random: 0, specified: >0, all but specified: <0 */
+#define DEF_RndRestarts (DEF_OptRestarts / 10)  /* 200 */
 #define DEF_RndRecompW INFINITY  /* 1.1, disable: INFINITY */
 #define DEF_RndStopW 1.1  /* 1.1 */
 
