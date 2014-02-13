@@ -228,8 +228,11 @@ double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, con
 double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
   // Initialize random groups S and T
   TGroupST G = {};
-  if (OptInitSample == 0) {  // random initial size
-    OptInitSample = TInt::GetRnd(Graph->GetNodes() - 2) + 1;
+  G.N = Graph->GetNodes();
+  if (G.N < 2 || OptInitSample > G.N - 1 || -OptInitSample > G.N - 1) {  // invalid case
+    OptInitSample = 1;
+  } else if (OptInitSample == 0) {  // random initial size
+    OptInitSample = TInt::GetRnd(G.N - 1) + 1;
   }
   if (OptInitSample > 0) {  // initial size as specified
     for (int i = 0; i < OptInitSample; ++i) {
