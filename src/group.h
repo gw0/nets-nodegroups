@@ -2,10 +2,12 @@
  * nodegroups - Group structures header file
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
+ * @version 0.2
  */
 
 #ifndef group_h
 #define group_h
+#define group_h_VERSION 0.2
 
 #include "Snap.h"
 

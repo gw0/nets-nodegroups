@@ -9,13 +9,11 @@
  * The adopted group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group S with the corresponding linking pattern T. After extraction edges between S and T are removed and the whole process repeated on the largest weakly-connected component until the group criterion W is larger than expected on a Erdös-Rényi random graph.
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
- * @version 0.2
+ * @version (see group_h_VERSION)
  */
 
 #include "Snap.h"
 #include "group.h"
-
-#define VERSION 0.2
 
 
 /**
@@ -24,7 +22,7 @@
 int main(int argc, char* argv[]) {
   // Header
   Env = TEnv(argc, argv, TNotify::StdNotify);
-  Env.PrepArgs(TStr::Fmt("nodegroups. Build: %.2f, %s, %s. Time: %s", VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
+  Env.PrepArgs(TStr::Fmt("nodegroups. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
   TExeTm ExeTm;
   Try
 
