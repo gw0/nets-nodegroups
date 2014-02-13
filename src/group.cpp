@@ -2,6 +2,7 @@
  * nodegroups - Group structures functions
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
+ * @version (see group_h_VERSION)
  */
 
 #include "group.h"
@@ -85,12 +86,10 @@ double LinksCnt(int& LinksST, int& LinksSTc, const PUNGraph& Graph, const TIntV&
       TNId = NI.GetOutNId(e);
 
       if (SubTNIdV.IsInBin(TNId)) {  // endpoint is inside T
-        if (SNId < TNId || !SubSNIdV.IsInBin(TNId)) {  // prevent double counting
-          //printf("edge (%d %d)\n", SNId, TNId);
-          LinksST += 1;
-          if (DoDelEdges) {  // delete edge between S and T
-            Graph->DelEdge(SNId, TNId);
-          }
+        //printf("edge (%d %d)\n", SNId, TNId);
+        LinksST += 1;
+        if (DoDelEdges) {  // delete edge between S and T
+          Graph->DelEdge(SNId, TNId);
         }
 
       } else {  // endpoint is not inside T
@@ -136,13 +135,11 @@ double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTN
  */
 double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc) {
   // Normalization factor (geometric mean of |S| and |T|)
-  double W2st = 2.0 * SubSN * SubTN;
-  double Wnst = N * (SubSN + SubTN);
-  double WNorm = W2st * (Wnst - W2st) / (Wnst * Wnst);
+  double WMean = 2.0 * SubSN * SubTN / (SubSN + SubTN);
 
   // Main group criterion W
   double WMain = ((double)LinksST / SubTN - (double)LinksSTc / (N - SubTN)) / SubSN;
-  return WNorm * WMain;
+  return WMean * (N - WMean) * WMain;
 }
 double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
   // Recompute essential fields
