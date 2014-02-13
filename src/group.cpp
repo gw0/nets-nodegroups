@@ -222,31 +222,36 @@ double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, con
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
+ * @param OptInitSample Initial random-sample size of S ant T (0 for random)
  * @return Best value of group critetion W
  */
-double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/) {
+double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
   // Initialize random groups S and T
   TGroupST G = {};
-  G.SubSNIdV.AddMerged(Graph->GetRndNId());
-  G.SubTNIdV.AddMerged(Graph->GetRndNId());
-  // uncomment to start with random nodes in S and T
-  //for (int i = TInt::GetRnd(Graph->GetNodes()); i > 0; --i) {
-  //  NodesS.AddMerged(Graph->GetRndNId());
-  //}
-  //for (int i = TInt::GetRnd(Graph->GetNodes()); i > 0; --i) {
-  //  NodesT.AddMerged(Graph->GetRndNId());
-  //}
-  // uncomment to start with all but one node
-  //int SkipSNId = TInt::GetRnd(Graph->GetNodes());
-  //int SkipTNId = TInt::GetRnd(Graph->GetNodes());
-  //for (TUNGraph::TNodeI NI = Graph->BegNI(); NI < Graph->EndNI(); NI++) {
-  //  if (NI.GetId() != SkipSNId) {
-  //    NodesS.AddMerged(NI.GetId());
-  //  }
-  //  if (NI.GetId() != SkipTNId) {
-  //    NodesT.AddMerged(NI.GetId());
-  //  }
-  //}
+  if (OptInitSample == 0) {  // random initial size
+    OptInitSample = TInt::GetRnd(Graph->GetNodes() - 2) + 1;
+  }
+  if (OptInitSample > 0) {  // initial size as specified
+    for (int i = 0; i < OptInitSample; ++i) {
+      G.SubSNIdV.AddMerged(Graph->GetRndNId());
+      G.SubTNIdV.AddMerged(Graph->GetRndNId());
+    }
+  } else {  // initial size as all but specified
+    TIntV SubSInvNIdV, SubTInvNIdV;
+    for (int i = 0; i < -OptInitSample; ++i) {
+      SubSInvNIdV.AddMerged(Graph->GetRndNId());
+      SubTInvNIdV.AddMerged(Graph->GetRndNId());
+    }
+    for (TUNGraph::TNodeI NI = Graph->BegNI(); NI < Graph->EndNI(); NI++) {
+      if (!SubSInvNIdV.IsInBin(NI.GetId())) {
+        G.SubSNIdV.AddMerged(NI.GetId());
+      }
+      if (!SubTInvNIdV.IsInBin(NI.GetId())) {
+        G.SubTNIdV.AddMerged(NI.GetId());
+      }
+    }
+  }
+
   GroupW(G, Graph, G.SubSNIdV, G.SubTNIdV);
   double WBestPrev1, WBestPrev2;
   WBestPrev1 = WBestPrev2 = -INFINITY;
@@ -358,15 +363,16 @@ double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
+ * @param OptInitSample Initial random-sample size of S ant T (0 for random)
  * @return Best value of group critetion W
  */
-double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/) {
+double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
   TGroupST G = {};
   GBest.W = -INFINITY;
 
   for (int i = 0; i < OptRestarts; ++i) {
     // Find node group extraction (into S, T)
-    GroupExtractSingle(G, Graph, OptMxSteps, OptStopSteps);
+    GroupExtractSingle(G, Graph, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Evaluate for best
     if (G.W > GBest.W) {
@@ -387,9 +393,10 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
  * @param RndRestarts Number of restarts on Erdos-Renyi random graphs
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
+ * @param OptInitSample Initial random-sample size of S ant T (0 for random)
  * @return Average value of group critetion W
  */
-double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF_RndRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/) {
+double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF_RndRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
   PUNGraph GraphER;
   TGroupST R = {};
   double WSum = 0.0;
@@ -401,7 +408,7 @@ double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
 
     // Find node group extraction (into S, T)
-    GroupExtractSingle(R, GraphER, OptMxSteps, OptStopSteps);
+    GroupExtractSingle(R, GraphER, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Evaluate for average
     WSum += R.W;
@@ -428,23 +435,24 @@ double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
+ * @param OptInitSample Initial random-sample size of S ant T (0 for random)
  * @param RndRestarts Number of restarts on Erdos-Renyi random graphs
  * @param RndRecompW Force recomputation on random graphs if relative W difference smaller
  * @param RndStopW Stop group extraction if relative W difference smaller
  * @return Number of extracted groups
  */
-int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/, double RndStopW/*=DEF_RndStopW*/) {
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/, double RndStopW/*=DEF_RndStopW*/) {
   Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
   TGroupST G = {}, R = {};
   R.W = INFINITY;
 
   do {
     // Find node group extraction (into S, T)
-    GroupExtractRestarter(G, Graph, OptRestarts, OptMxSteps, OptStopSteps);
+    GroupExtractRestarter(G, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Recompute on corresponding Erdos-Renyi random graphs
     if (G.W < RndRecompW * R.W || G.LinksST > R.LinksST) {
-      R.W = GroupExtractAvgRndGnm(R, G.N, G.M, RndRestarts, OptMxSteps, OptStopSteps);
+      R.W = GroupExtractAvgRndGnm(R, G.N, G.M, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
       if (R.W < 0.0)
         R.W = 0.0;
     }

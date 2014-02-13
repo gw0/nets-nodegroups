@@ -14,6 +14,7 @@
 #define DEF_OptRestarts 1000  /* 1000 */
 #define DEF_OptMxSteps 100000  /* 100000 */
 #define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
+#define DEF_OptInitSample 0  /* random: 0, add: >0, del: <0 */
 #define DEF_RndRestarts 100  /* 100 */
 #define DEF_RndRecompW 1.1  /* 1.1, disable: INFINITY */
 #define DEF_RndStopW 1.01  /* 1.01 */
@@ -55,10 +56,10 @@ double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTN
 double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTInv);
 double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
 double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTInv);
-double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
-double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
-double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
-int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
+double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
+double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
+double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
 
 /////////////////////////////////////////////////
 

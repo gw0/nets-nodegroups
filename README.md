@@ -48,6 +48,7 @@ Parameters:
     -n:  Number of restarts of the optimization algorithm (default:1000)
     -sm: Maximal number of steps in each optimization run (default:100000)
     -sw: Stop optimization if no W improvement in steps (default:1000)
+    -ss: Initial random sample size of S ant T (0=random) (default:0)
     -rn: Number of restarts on Erdos-Renyi random graphs (default:100)
     -rf: Force recomputation on random graphs if relative W difference smaller (default:1.1)
     -rw: Stop group extraction if relative W difference smaller (default:1.01)
