@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
   // Input
   PUNGraph Graph = TSnap::LoadEdgeList<PUNGraph>(InFNm, false);
   TIntStrH NIdLabelH;
-  if (!LabelFNm.Empty()) {
+  if (TFile::Exists(LabelFNm)) {  // optional labels
     TSsParser Ss(LabelFNm, ssfTabSep);
     while (Ss.Next()) {
       if (Ss.GetFlds() > 0) {
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
     TGroupST& G = GroupV[j];
     fprintf(F, "#   %-3d %s\n", j, G.GetStr().CStr());
   }
-  fprintf(F, "# NId\tGroupId\tNLabel\n");
+  fprintf(F, "# NId\tGroupS\tGroupT\tNLabel\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
     for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
       int NId = GroupV[j].SubSNIdV[i].Val;
@@ -74,7 +74,21 @@ int main(int argc, char* argv[]) {
       if (NIdLabelH.IsKey(NId))
         NIdLabel = NIdLabelH.GetDat(NId);
 
-      fprintf(F, "%d\t%d\t%s\n", NId, j, NIdLabel.CStr());
+      if (GroupV[j].SubTNIdV.IsInBin(NId)) {  // in S and T
+        fprintf(F, "%d\t%d\t%d\t%s\n", NId, j, j, NIdLabel.CStr());
+      } else {  // in S, but not T
+        fprintf(F, "%d\t%d\t-1\t%s\n", NId, j, NIdLabel.CStr());
+      }
+    }
+    for (int i = 0; i < GroupV[j].SubTNIdV.Len(); ++i) {
+      int NId = GroupV[j].SubTNIdV[i].Val;
+      TStr NIdLabel = TStr("-");
+      if (NIdLabelH.IsKey(NId))
+        NIdLabel = NIdLabelH.GetDat(NId);
+
+      if (!GroupV[j].SubSNIdV.IsInBin(NId)) {  // in T, but not S
+        fprintf(F, "%d\t-1\t%d\t%s\n", NId, j, NIdLabel.CStr());
+      }
     }
   }
   fclose(F);

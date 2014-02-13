@@ -69,12 +69,12 @@ Example input `graph.edgelist` (`-i:`):
 
 Example output `graph.groups` (`-og:`):
 
-    # NId GroupSId GroupTId NLabel
-    0      0        0       foo
-    1      0        0       bar
-    2      0        0       foobar
-    3      1       -1       -
-    2     -1        1       -
+    # NId GroupS GroupT NLabel
+    0     0      0      foo
+    1     0      0      bar
+    2     0      0      foobar
+    3     1      -1     -
+    2     -1     1      -
     ...
 
 
