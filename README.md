@@ -50,8 +50,8 @@ Parameters:
     -sw: Stop optimization if no W improvement in steps (default:1000)
     -ss: Initial random sample size of S ant T (0=random) (default:0)
     -rn: Number of restarts on Erdos-Renyi random graphs (default:100)
-    -rf: Force recomputation on random graphs if relative W difference smaller (default:1.1)
-    -rw: Stop group extraction if relative W difference smaller (default:1.01)
+    -rf: Force recomputation on random graphs if relative W difference smaller (default:inf)
+    -rw: Stop group extraction if relative W difference smaller (default:1.1)
 
 Example command:
 

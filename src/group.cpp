@@ -71,20 +71,26 @@ void TGroupST::RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, con
  * @return Number of edges L(S,T) between groups S and T
  */
 double LinksCnt(int& LinksST, int& LinksSTc, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges/*=false*/) {
+  int SNId, TNId;
   LinksST = 0;
   LinksSTc = 0;
 
   // iterate through S
   for (int s = 0; s < SubSNIdV.Len(); ++s) {
-    TUNGraph::TNodeI NI = Graph->GetNI(SubSNIdV[s]);
+    SNId = SubSNIdV[s];
+    TUNGraph::TNodeI NI = Graph->GetNI(SNId);
 
     // iterate through its out-edges
     for (int e = 0; e < NI.GetOutDeg(); ++e) {
-      if (SubTNIdV.IsInBin(NI.GetOutNId(e))) {  // endpoint is inside T
-        //printf("edge (%d %d)\n", NI.GetId(), NI.GetOutNId(e));
-        LinksST += 1;
-        if (DoDelEdges) {  // delete edge between S and T
-          Graph->DelEdge(SubSNIdV[s], NI.GetOutNId(e));
+      TNId = NI.GetOutNId(e);
+
+      if (SubTNIdV.IsInBin(TNId)) {  // endpoint is inside T
+        if (SNId < TNId || !SubSNIdV.IsInBin(TNId)) {  // prevent double counting
+          //printf("edge (%d %d)\n", SNId, TNId);
+          LinksST += 1;
+          if (DoDelEdges) {  // delete edge between S and T
+            Graph->DelEdge(SNId, TNId);
+          }
         }
 
       } else {  // endpoint is not inside T
@@ -132,7 +138,7 @@ double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc) {
   // Normalization factor (geometric mean of |S| and |T|)
   double W2st = 2.0 * SubSN * SubTN;
   double Wnst = N * (SubSN + SubTN);
-  double WNorm = W2st * (Wnst - W2st) / Wnst;
+  double WNorm = W2st * (Wnst - W2st) / (Wnst * Wnst);
 
   // Main group criterion W
   double WMain = ((double)LinksST / SubTN - (double)LinksSTc / (N - SubTN)) / SubSN;

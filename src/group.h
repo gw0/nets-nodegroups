@@ -18,32 +18,32 @@
 #define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
 #define DEF_OptInitSample 0  /* random: 0, add: >0, del: <0 */
 #define DEF_RndRestarts 100  /* 100 */
-#define DEF_RndRecompW 1.1  /* 1.1, disable: INFINITY */
-#define DEF_RndStopW 1.01  /* 1.01 */
+#define DEF_RndRecompW INFINITY  /* 1.1, disable: INFINITY */
+#define DEF_RndStopW 1.1  /* 1.1 */
 
 /** Results of node group extraction (into S, T) */
 class TGroupST {
 public:
-  int N;  // number of nodes in graph
-  int M;  // number of edges in graph
+  int N;  // N - number of nodes in graph
+  int M;  // M - number of edges in graph
 
-  int SubSN;  // number of nodes in subgraph on S
-  int SubSM;  // number of edges in subgraph on S
+  int SubSN;  // N_S - number of nodes in subgraph on S
+  int SubSM;  // M_S - number of edges in subgraph on S (not used)
   TIntV SubSNIdV;  // list of node IDs in group S
 
-  int SubTN;  // number of nodes in subgraph on T
-  int SubTM;  // number of edges in subgraph on T
+  int SubTN;  // N_T - number of nodes in subgraph on T
+  int SubTM;  // M_T - number of edges in subgraph on T (not used)
   TIntV SubTNIdV;  // list of node IDs in group T
 
-  int SubSTN;  // number of nodes in subgraph on S and T
-  int SubSTM;  // number of edges in subgraph on S and T
-  int LinksST;  // number of edges L(S,T) between groups S and T
-  int LinksSTc;  // number of edges L(S,-T) between groups S and complement T
+  int SubSTN;  // N_ST - number of nodes in subgraph on S and T intersection (not used)
+  int SubSTM;  // M_ST - number of edges in subgraph on S and T intersection (not used)
+  int LinksST;  // L_ST - number of edges L(S,T) between groups S and T
+  int LinksSTc;  // L_STc - number of edges L(S,-T) between groups S and complement T
 
-  double Tau;  // group type parameter Tau(S,T)
-  double W;  // group critetion W(S,T)
-  double ModularityS;  // modularity measure on group S
-  double ModularityT;  // modularity measure on group T
+  double Tau;  // Tau - group type parameter Tau(S,T)
+  double W;  // W - group critetion W(S,T)
+  double ModularityS;  // Mod_S - modularity measure on group S (not used)
+  double ModularityT;  // Mod_T - modularity measure on group T (not used)
 
   TStr GetStr(bool Verbose=true);
   void RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, const TIntV& NewSubTNIdV);
