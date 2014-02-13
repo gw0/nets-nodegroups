@@ -1,0 +1,65 @@
+/**
+ * nodegroups - Group structures header file
+ *
+ * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
+ */
+
+#ifndef group_h
+#define group_h
+
+#include "Snap.h"
+
+/////////////////////////////////////////////////
+
+#define DEF_OptRestarts 1000  /* 1000 */
+#define DEF_OptMxSteps 10000  /* 100000 */
+#define DEF_OptStopSteps 10000  /* 1000, disable: DEF_OptMxSteps */
+#define DEF_RndRestarts 100  /* 100 */
+#define DEF_RndRecompW 1.1  /* 1.1, disable: INFINITY */
+#define DEF_RndStopW 1.01  /* 1.01 */
+
+/** Results of node group extraction (into S, T) */
+class TGroupST {
+public:
+  int N;  // number of nodes in graph
+  int M;  // number of edges in graph
+
+  int SubSN;  // number of nodes in subgraph on S
+  int SubSM;  // number of edges in subgraph on S
+  TIntV SubSNIdV;  // list of node IDs in group S
+
+  int SubTN;  // number of nodes in subgraph on T
+  int SubTM;  // number of edges in subgraph on T
+  TIntV SubTNIdV;  // list of node IDs in group T
+
+  int SubSTN;  // number of nodes in subgraph on S and T
+  int SubSTM;  // number of edges in subgraph on S and T
+  int LinksST;  // number of edges L(S,T) between groups S and T
+  int LinksSTInv;  // number of edges L(S,-T) between groups S and inverse T
+
+  double Tau;  // group type parameter Tau(S,T)
+  double W;  // group critetion W(S,T)
+  double ModularityS;  // modularity measure on group S
+  double ModularityT;  // modularity measure on group T
+
+  TStr GetStr(bool Verbose=true);
+  void RecomputeAll(PUNGraph& Graph, TIntV& NewSubSNIdV, TIntV& NewSubTNIdV);
+};
+typedef TVec<TGroupST> TGroupSTV;
+
+/////////////////////////////////////////////////
+
+double LinksCnt(int& LinksST, int& LinksSTInv, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, bool DoDelEdges=false);
+double LinksCnt(PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, bool DoDelEdges=false);
+double GroupTau(PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV);
+double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTInv);
+double GroupW(TGroupST& G, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV);
+double GroupWFast(TGroupST& G, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, TIntV& AddSNIdV, TIntV& DelSNIdV, TIntV& AddTNIdV, TIntV& DelTNIdV, int LinksST, int LinksSTInv);
+double GroupExtractSingle(TGroupST& GBest, PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
+double GroupExtractRestarter(TGroupST& GBest, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
+double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
+
+/////////////////////////////////////////////////
+
+#endif
