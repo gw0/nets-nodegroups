@@ -6,6 +6,7 @@ MAIN = nodegroups
 DEPH = group.h
 DEPCPP = group.cpp
 
+TEST1 = test1
 
 #
 # Global configuration for SNAP makefiles
@@ -70,11 +71,14 @@ endif
 # Makefile for non-Microsoft compilers
 #
 
-all: $(MAIN)
+all: $(MAIN) $(TEST1)
 
 # COMPILE
 $(MAIN): $(MAIN).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o 
 	$(CC) $(CXXFLAGS) -o $(MAIN) $(MAIN).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
+
+$(TEST1): $(TEST1).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o
+	$(CC) $(CXXFLAGS) -o $(TEST1) $(TEST1).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
 
 $(EXSNAP)/Snap.o: 
 	make -C $(EXSNAP)

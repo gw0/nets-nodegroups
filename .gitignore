@@ -8,3 +8,4 @@ java_*/
 
 *.o
 src/nodegroups
+src/test1
