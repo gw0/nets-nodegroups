@@ -36,7 +36,7 @@ public:
   int SubSTN;  // number of nodes in subgraph on S and T
   int SubSTM;  // number of edges in subgraph on S and T
   int LinksST;  // number of edges L(S,T) between groups S and T
-  int LinksSTInv;  // number of edges L(S,-T) between groups S and inverse T
+  int LinksSTc;  // number of edges L(S,-T) between groups S and complement T
 
   double Tau;  // group type parameter Tau(S,T)
   double W;  // group critetion W(S,T)
@@ -50,12 +50,12 @@ typedef TVec<TGroupST> TGroupSTV;
 
 /////////////////////////////////////////////////
 
-double LinksCnt(int& LinksST, int& LinksSTInv, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
+double LinksCnt(int& LinksST, int& LinksSTc, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
 double LinksCnt(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
 double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
-double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTInv);
+double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc);
 double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
-double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTInv);
+double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTc);
 double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
 double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
 double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);

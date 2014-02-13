@@ -15,7 +15,7 @@
  */
 TStr TGroupST::GetStr(bool Verbose/*=true*/) {
   if (Verbose) {
-    return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_ST-=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTInv, W, Tau, ModularityS, ModularityT);
+    return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_STc=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
 
   } else {
     return TStr::Fmt("W=%-10.4f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5d Tau=%-6.4f Mod(S)=%-7.4f", W, N, M, SubSN, SubTN, LinksST, Tau, ModularityS);
@@ -50,10 +50,10 @@ void TGroupST::RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, con
   PUNGraph SubST = TSnap::GetSubGraph(Graph, SubSTNIdV);
   SubSTN = SubST->GetNodes();  // or SubSNIdV.IntrsLen(SubTNIdV)
   SubSTM = SubST->GetEdges();
-  LinksCnt(LinksST, LinksSTInv, Graph, SubSNIdV, SubTNIdV, false);
+  LinksCnt(LinksST, LinksSTc, Graph, SubSNIdV, SubTNIdV, false);
 
   Tau = GroupTau(Graph, SubSNIdV, SubTNIdV);
-  W = GroupW(N, SubSN, SubTN, LinksST, LinksSTInv);
+  W = GroupW(N, SubSN, SubTN, LinksST, LinksSTc);
   ModularityS = TSnap::GetModularity(Graph, SubSNIdV, N);
   ModularityT = TSnap::GetModularity(Graph, SubTNIdV, N);
 }
@@ -63,16 +63,16 @@ void TGroupST::RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, con
  * Count edges L(S,T) between groups S and T
  *
  * @param[out] LinksST Number of edges L(S,T) between groups S and T
- * @param[out] LinksSTInv Number of edges L(S,T) between groups S and inverse T
+ * @param[out] LinksSTc Number of edges L(S,T) between groups S and complement T
  * @param Graph Input graph
  * @param SubSNIdV List of node IDs in group S
  * @param SubTNIdV List of node IDs in group T
  * @param DoDelEdges Delete found edges between S and T
  * @return Number of edges L(S,T) between groups S and T
  */
-double LinksCnt(int& LinksST, int& LinksSTInv, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges/*=false*/) {
+double LinksCnt(int& LinksST, int& LinksSTc, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges/*=false*/) {
   LinksST = 0;
-  LinksSTInv = 0;
+  LinksSTc = 0;
 
   // iterate through S
   for (int s = 0; s < SubSNIdV.Len(); ++s) {
@@ -88,7 +88,7 @@ double LinksCnt(int& LinksST, int& LinksSTInv, const PUNGraph& Graph, const TInt
         }
 
       } else {  // endpoint is not inside T
-        LinksSTInv += 1;
+        LinksSTc += 1;
       }
     }
   }
@@ -96,8 +96,8 @@ double LinksCnt(int& LinksST, int& LinksSTInv, const PUNGraph& Graph, const TInt
   return LinksST;
 }
 double LinksCnt(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges/*=false*/) {
-  int LinksST, LinksSTInv;
-  return LinksCnt(LinksST, LinksSTInv, Graph, SubSNIdV, SubTNIdV, DoDelEdges);
+  int LinksST, LinksSTc;
+  return LinksCnt(LinksST, LinksSTc, Graph, SubSNIdV, SubTNIdV, DoDelEdges);
 }
 
 
@@ -123,19 +123,19 @@ double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTN
  * @param SubTN Number of nodes in subgraph on T
  * @param SubTNIdV List of node IDs in group T
  * @param LinksST Number of edges L(S,T) between groups S and T
- * @param LinksSTInv Number of edges L(S,T) between groups S and inverse T
+ * @param LinksSTc Number of edges L(S,T) between groups S and complement T
  * @param Graph Input graph
  * @param[out] G Output results of node group extraction (into S, T)
  * @return Value of group critetion W
  */
-double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTInv) {
+double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc) {
   // Normalization factor (geometric mean of |S| and |T|)
   double W2st = 2.0 * SubSN * SubTN;
   double Wnst = N * (SubSN + SubTN);
   double WNorm = W2st * (Wnst - W2st) / Wnst;
 
   // Main group criterion W
-  double WMain = ((double)LinksST / SubTN - (double)LinksSTInv / (N - SubTN)) / SubSN;
+  double WMain = ((double)LinksST / SubTN - (double)LinksSTc / (N - SubTN)) / SubSN;
   return WNorm * WMain;
 }
 double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
@@ -145,10 +145,10 @@ double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const T
   G.SubSN = SubSNIdV.Len();
   G.SubTNIdV = SubTNIdV;
   G.SubTN = SubTNIdV.Len();
-  LinksCnt(G.LinksST, G.LinksSTInv, Graph, SubSNIdV, SubTNIdV, false);
+  LinksCnt(G.LinksST, G.LinksSTc, Graph, SubSNIdV, SubTNIdV, false);
 
   // Group criterion W
-  G.W = GroupW(G.N, G.SubSN, G.SubTN, G.LinksST, G.LinksSTInv);
+  G.W = GroupW(G.N, G.SubSN, G.SubTN, G.LinksST, G.LinksSTc);
   return G.W;
 }
 
@@ -164,52 +164,52 @@ double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const T
  * @param AddTNIdV Proposed list of node IDs to add into T
  * @param DelTNIdV Proposed list of node IDs to delete from T
  * @param LinksST Number of edges L(S,T) between groups S and T
- * @param LinksSTInv Number of edges L(S,T) between groups S and inverse T
+ * @param LinksSTc Number of edges L(S,T) between groups S and complement T
  * @return Estimated value of group critetion W
  */
-double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTInv) {
+double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTc) {
   // Recompute essential fields
   G.N = Graph->GetNodes();
   G.SubSN = SubSNIdV.Len();
   G.SubTN = SubTNIdV.Len();
   G.LinksST = LinksST;
-  G.LinksSTInv = LinksSTInv;
-  int LinksSTDiff, LinksSTInvDiff;
+  G.LinksSTc = LinksSTc;
+  int LinksSTDiff, LinksSTcDiff;
 
   // Proposed add into S
   if (AddSNIdV.Len() > 0) {
     G.SubSN += AddSNIdV.Len();
-    LinksCnt(LinksSTDiff, LinksSTInvDiff, Graph, AddSNIdV, SubTNIdV, false);
+    LinksCnt(LinksSTDiff, LinksSTcDiff, Graph, AddSNIdV, SubTNIdV, false);
     G.LinksST += LinksSTDiff;
-    G.LinksSTInv += LinksSTInvDiff;
+    G.LinksSTc += LinksSTcDiff;
   }
 
   // Proposed delete from S
   if (DelSNIdV.Len() > 0) {
     G.SubSN -= DelSNIdV.Len();
-    LinksCnt(LinksSTDiff, LinksSTInvDiff, Graph, DelSNIdV, SubTNIdV, false);
+    LinksCnt(LinksSTDiff, LinksSTcDiff, Graph, DelSNIdV, SubTNIdV, false);
     G.LinksST -= LinksSTDiff;
-    G.LinksSTInv -= LinksSTInvDiff;
+    G.LinksSTc -= LinksSTcDiff;
   }
 
   // Proposed add into T
   if (AddTNIdV.Len() > 0) {
     G.SubTN += AddTNIdV.Len();
-    LinksCnt(LinksSTDiff, LinksSTInvDiff, Graph, AddTNIdV, SubSNIdV, false);
+    LinksCnt(LinksSTDiff, LinksSTcDiff, Graph, AddTNIdV, SubSNIdV, false);
     G.LinksST += LinksSTDiff;
-    G.LinksSTInv -= LinksSTDiff;
+    G.LinksSTc -= LinksSTDiff;
   }
 
   // Proposed delete from T
   if (DelTNIdV.Len() > 0) {
     G.SubTN -= DelTNIdV.Len();
-    LinksCnt(LinksSTDiff, LinksSTInvDiff, Graph, DelTNIdV, SubSNIdV, false);
+    LinksCnt(LinksSTDiff, LinksSTcDiff, Graph, DelTNIdV, SubSNIdV, false);
     G.LinksST -= LinksSTDiff;
-    G.LinksSTInv += LinksSTDiff;
+    G.LinksSTc += LinksSTDiff;
   }
 
   // Group criterion W
-  G.W = GroupW(G.N, G.SubSN, G.SubTN, G.LinksST, G.LinksSTInv);
+  G.W = GroupW(G.N, G.SubSN, G.SubTN, G.LinksST, G.LinksSTc);
   return G.W;
 }
 
@@ -237,16 +237,16 @@ double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps
       G.SubTNIdV.AddMerged(Graph->GetRndNId());
     }
   } else {  // initial size as all but specified
-    TIntV SubSInvNIdV, SubTInvNIdV;
+    TIntV SubSInvNIdV, SubTcNIdV;
     for (int i = 0; i < -OptInitSample; ++i) {
       SubSInvNIdV.AddMerged(Graph->GetRndNId());
-      SubTInvNIdV.AddMerged(Graph->GetRndNId());
+      SubTcNIdV.AddMerged(Graph->GetRndNId());
     }
     for (TUNGraph::TNodeI NI = Graph->BegNI(); NI < Graph->EndNI(); NI++) {
       if (!SubSInvNIdV.IsInBin(NI.GetId())) {
         G.SubSNIdV.AddMerged(NI.GetId());
       }
-      if (!SubTInvNIdV.IsInBin(NI.GetId())) {
+      if (!SubTcNIdV.IsInBin(NI.GetId())) {
         G.SubTNIdV.AddMerged(NI.GetId());
       }
     }
@@ -331,7 +331,7 @@ double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps
     }
 
     // Fast estimate of group criterion W after swapping
-    GroupWFast(G, Graph, GBest.SubSNIdV, GBest.SubTNIdV, AddSNIdV, DelSNIdV, AddTNIdV, DelTNIdV, GBest.LinksST, GBest.LinksSTInv);
+    GroupWFast(G, Graph, GBest.SubSNIdV, GBest.SubTNIdV, AddSNIdV, DelSNIdV, AddTNIdV, DelTNIdV, GBest.LinksST, GBest.LinksSTc);
 
     // Evaluate for best
     if (G.W > GBest.W) {
