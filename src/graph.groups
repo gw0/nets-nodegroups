@@ -1,462 +1,460 @@
 # Input: graph.edgelist
-# Nodes: 249    Edges: 802
-# Groups: 4
-#   0   N=249   M=802   N_S=59    M_S=290   N_T=197   M_T=712   N_ST=59    M_ST=290   L_ST=933   L_STc=0     W=1185.5119  Tau=0.2995 Mod_S=-2.3453 Mod_T=-5.9607
-#   1   N=236   M=394   N_S=71    M_S=124   N_T=154   M_T=260   N_ST=67    M_ST=124   L_ST=394   L_STc=0     W=463.4805   Tau=0.4241 Mod_S=-0.1714 Mod_T=-0.4714
-#   2   N=127   M=153   N_S=45    M_S=56    N_T=80    M_T=96    N_ST=39    M_ST=56    L_ST=163   L_STc=0     W=178.1449   Tau=0.4535 Mod_S=0.0291  Mod_T=-0.0149
-#   3   N=15    M=14    N_S=5     M_S=0     N_T=8     M_T=0     N_ST=0     M_ST=0     L_ST=12    L_STc=0     W=14.1538    Tau=0.0000 Mod_S=-0.1600 Mod_T=-0.2178
-# NId	GroupSId	GroupTId	NLabel
-8	0	0	com.bulletphysics.collision.broadphase.AxisSweep3
-11	0	0	com.bulletphysics.collision.broadphase.AxisSweep3Internal
-14	0	0	com.bulletphysics.collision.broadphase.AxisSweep3_32
-17	0	0	com.bulletphysics.collision.broadphase.BroadphaseInterface
-18	0	0	com.bulletphysics.collision.broadphase.BroadphaseNativeType
-19	0	0	com.bulletphysics.collision.broadphase.BroadphasePair
-21	0	0	com.bulletphysics.collision.broadphase.BroadphaseProxy
-22	0	0	com.bulletphysics.collision.broadphase.CollisionAlgorithm
-23	0	0	com.bulletphysics.collision.broadphase.CollisionAlgorithmConstructionInfo
-40	0	0	com.bulletphysics.collision.broadphase.Dispatcher
-41	0	0	com.bulletphysics.collision.broadphase.DispatcherInfo
-42	0	0	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache
-47	0	0	com.bulletphysics.collision.broadphase.OverlappingPairCache
-48	0	0	com.bulletphysics.collision.broadphase.OverlappingPairCallback
-52	0	0	com.bulletphysics.collision.dispatch.CollisionAlgorithmCreateFunc
-53	0	0	com.bulletphysics.collision.dispatch.CollisionConfiguration
-54	0	0	com.bulletphysics.collision.dispatch.CollisionDispatcher
-58	0	0	com.bulletphysics.collision.dispatch.CollisionObject
-60	0	0	com.bulletphysics.collision.dispatch.CollisionWorld
-65	0	0	com.bulletphysics.collision.dispatch.CollisionWorld$ConvexResultCallback
-69	0	0	com.bulletphysics.collision.dispatch.CollisionWorld$RayResultCallback
-73	0	0	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm
-77	0	0	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm
-79	0	0	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm
-84	0	0	com.bulletphysics.collision.dispatch.EmptyAlgorithm
-86	0	0	com.bulletphysics.collision.dispatch.GhostObject
-88	0	0	com.bulletphysics.collision.dispatch.ManifoldResult
-90	0	0	com.bulletphysics.collision.dispatch.PairCachingGhostObject
-94	0	0	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm
-102	0	0	com.bulletphysics.collision.narrowphase.ConvexPenetrationDepthSolver
-117	0	0	com.bulletphysics.collision.narrowphase.ManifoldPoint
-118	0	0	com.bulletphysics.collision.narrowphase.PersistentManifold
-137	0	0	com.bulletphysics.collision.shapes.CollisionShape
-140	0	0	com.bulletphysics.collision.shapes.ConcaveShape
-145	0	0	com.bulletphysics.collision.shapes.ConvexInternalShape
-146	0	0	com.bulletphysics.collision.shapes.ConvexShape
-171	0	0	com.bulletphysics.collision.shapes.TriangleCallback
-173	0	0	com.bulletphysics.collision.shapes.TriangleMeshShape
-181	0	0	com.bulletphysics.dynamics.DiscreteDynamicsWorld
-185	0	0	com.bulletphysics.dynamics.DynamicsWorld
-188	0	0	com.bulletphysics.dynamics.RigidBody
-190	0	0	com.bulletphysics.dynamics.SimpleDynamicsWorld
-196	0	0	com.bulletphysics.dynamics.constraintsolver.ConstraintSolver
-202	0	0	com.bulletphysics.dynamics.constraintsolver.ContactSolverFunc
-203	0	0	com.bulletphysics.dynamics.constraintsolver.ContactSolverInfo
-210	0	0	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver
-219	0	0	com.bulletphysics.dynamics.constraintsolver.TypedConstraint
-220	0	0	com.bulletphysics.dynamics.constraintsolver.TypedConstraintType
-224	0	0	com.bulletphysics.dynamics.vehicle.RaycastVehicle
-239	0	0	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever
-244	0	0	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm
-247	0	0	com.bulletphysics.extras.gimpact.GImpactMeshShape
-248	0	0	com.bulletphysics.extras.gimpact.GImpactMeshShapePart
-249	0	0	com.bulletphysics.extras.gimpact.GImpactShapeInterface
-257	0	0	com.bulletphysics.extras.gimpact.PrimitiveTriangle
-262	0	0	com.bulletphysics.extras.gimpact.TriangleShapeEx
-273	0	0	com.bulletphysics.linearmath.IDebugDraw
-279	0	0	com.bulletphysics.linearmath.Transform
-304	0	0	com.bulletphysics.util.ObjectArrayList
-0	-1	0	com.bulletphysics.$Stack
-5	-1	0	com.bulletphysics.ContactAddedCallback
-7	-1	0	com.bulletphysics.ContactProcessedCallback
-13	-1	0	com.bulletphysics.collision.broadphase.AxisSweep3Internal$Handle
-20	-1	0	com.bulletphysics.collision.broadphase.BroadphasePair$1
-25	-1	0	com.bulletphysics.collision.broadphase.Dbvt
-34	-1	0	com.bulletphysics.collision.broadphase.DbvtAabbMm
-35	-1	0	com.bulletphysics.collision.broadphase.DbvtBroadphase
-37	-1	0	com.bulletphysics.collision.broadphase.DbvtProxy
-39	-1	0	com.bulletphysics.collision.broadphase.DispatchFunc
-43	-1	0	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$CleanPairCallback
-44	-1	0	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$RemovePairCallback
-45	-1	0	com.bulletphysics.collision.broadphase.OverlapCallback
-46	-1	0	com.bulletphysics.collision.broadphase.OverlapFilterCallback
-49	-1	0	com.bulletphysics.collision.broadphase.SimpleBroadphase
-50	-1	0	com.bulletphysics.collision.broadphase.SimpleBroadphaseProxy
-56	-1	0	com.bulletphysics.collision.dispatch.CollisionDispatcher$CollisionPairCallback
-59	-1	0	com.bulletphysics.collision.dispatch.CollisionObjectType
-61	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$BridgeTriangleConvexcastCallback
-62	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$BridgeTriangleRaycastCallback
-63	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestConvexResultCallback
-64	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestRayResultCallback
-66	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$LocalConvexResult
-67	-1	0	com.bulletphysics.collision.dispatch.CollisionWorld$LocalRayResult
-70	-1	0	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm
-71	-1	0	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$CreateFunc
-72	-1	0	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$SwappedCreateFunc
-74	-1	0	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$CreateFunc
-75	-1	0	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$LocalTriangleSphereCastCallback
-76	-1	0	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$SwappedCreateFunc
-78	-1	0	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm$CreateFunc
-80	-1	0	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm$CreateFunc
-81	-1	0	com.bulletphysics.collision.dispatch.ConvexTriangleCallback
-82	-1	0	com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration
-83	-1	0	com.bulletphysics.collision.dispatch.DefaultNearCallback
-85	-1	0	com.bulletphysics.collision.dispatch.EmptyAlgorithm$CreateFunc
-87	-1	0	com.bulletphysics.collision.dispatch.GhostPairCallback
-89	-1	0	com.bulletphysics.collision.dispatch.NearCallback
-91	-1	0	com.bulletphysics.collision.dispatch.SimulationIslandManager
-92	-1	0	com.bulletphysics.collision.dispatch.SimulationIslandManager$1
-93	-1	0	com.bulletphysics.collision.dispatch.SimulationIslandManager$IslandCallback
-95	-1	0	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm$CreateFunc
-100	-1	0	com.bulletphysics.collision.narrowphase.ConvexCast
-101	-1	0	com.bulletphysics.collision.narrowphase.ConvexCast$CastResult
-103	-1	0	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface
-104	-1	0	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$ClosestPointInput
-105	-1	0	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$Result
-106	-1	0	com.bulletphysics.collision.narrowphase.GjkConvexCast
-107	-1	0	com.bulletphysics.collision.narrowphase.GjkEpaPenetrationDepthSolver
-108	-1	0	com.bulletphysics.collision.narrowphase.GjkEpaSolver
-111	-1	0	com.bulletphysics.collision.narrowphase.GjkEpaSolver$GJK
-116	-1	0	com.bulletphysics.collision.narrowphase.GjkPairDetector
-120	-1	0	com.bulletphysics.collision.narrowphase.SimplexSolverInterface
-121	-1	0	com.bulletphysics.collision.narrowphase.SubsimplexConvexCast
-122	-1	0	com.bulletphysics.collision.narrowphase.TriangleConvexcastCallback
-123	-1	0	com.bulletphysics.collision.narrowphase.TriangleRaycastCallback
-128	-1	0	com.bulletphysics.collision.shapes.BU_Simplex1to4
-129	-1	0	com.bulletphysics.collision.shapes.BoxShape
-131	-1	0	com.bulletphysics.collision.shapes.BvhTriangleMeshShape
-132	-1	0	com.bulletphysics.collision.shapes.BvhTriangleMeshShape$MyNodeOverlapCallback
-134	-1	0	com.bulletphysics.collision.shapes.CapsuleShape
-135	-1	0	com.bulletphysics.collision.shapes.CapsuleShapeX
-136	-1	0	com.bulletphysics.collision.shapes.CapsuleShapeZ
-138	-1	0	com.bulletphysics.collision.shapes.CompoundShape
-139	-1	0	com.bulletphysics.collision.shapes.CompoundShapeChild
-141	-1	0	com.bulletphysics.collision.shapes.ConeShape
-142	-1	0	com.bulletphysics.collision.shapes.ConeShapeX
-143	-1	0	com.bulletphysics.collision.shapes.ConeShapeZ
-144	-1	0	com.bulletphysics.collision.shapes.ConvexHullShape
-147	-1	0	com.bulletphysics.collision.shapes.CylinderShape
-148	-1	0	com.bulletphysics.collision.shapes.CylinderShapeX
-149	-1	0	com.bulletphysics.collision.shapes.CylinderShapeZ
-152	-1	0	com.bulletphysics.collision.shapes.MinkowskiSumShape
-156	-1	0	com.bulletphysics.collision.shapes.OptimizedBvh$NodeTriangleCallback
-159	-1	0	com.bulletphysics.collision.shapes.PolyhedralConvexShape
-162	-1	0	com.bulletphysics.collision.shapes.ScaledBvhTriangleMeshShape
-163	-1	0	com.bulletphysics.collision.shapes.ScaledBvhTriangleMeshShape$ScaledTriangleCallback
-164	-1	0	com.bulletphysics.collision.shapes.ShapeHull
-165	-1	0	com.bulletphysics.collision.shapes.SphereShape
-166	-1	0	com.bulletphysics.collision.shapes.StaticPlaneShape
-167	-1	0	com.bulletphysics.collision.shapes.StridingMeshInterface
-172	-1	0	com.bulletphysics.collision.shapes.TriangleIndexVertexArray
-174	-1	0	com.bulletphysics.collision.shapes.TriangleMeshShape$FilteredCallback
-175	-1	0	com.bulletphysics.collision.shapes.TriangleMeshShape$SupportVertexCallback
-176	-1	0	com.bulletphysics.collision.shapes.TriangleShape
-177	-1	0	com.bulletphysics.collision.shapes.UniformScalingShape
-180	-1	0	com.bulletphysics.dynamics.ActionInterface
-182	-1	0	com.bulletphysics.dynamics.DiscreteDynamicsWorld$1
-183	-1	0	com.bulletphysics.dynamics.DiscreteDynamicsWorld$ClosestNotMeConvexResultCallback
-184	-1	0	com.bulletphysics.dynamics.DiscreteDynamicsWorld$InplaceSolverIslandCallback
-186	-1	0	com.bulletphysics.dynamics.DynamicsWorldType
-187	-1	0	com.bulletphysics.dynamics.InternalTickCallback
-189	-1	0	com.bulletphysics.dynamics.RigidBodyConstructionInfo
-191	-1	0	com.bulletphysics.dynamics.character.KinematicCharacterController
-192	-1	0	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeConvexResultCallback
-193	-1	0	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeRayResultCallback
-194	-1	0	com.bulletphysics.dynamics.constraintsolver.ConeTwistConstraint
-195	-1	0	com.bulletphysics.dynamics.constraintsolver.ConstraintPersistentData
-197	-1	0	com.bulletphysics.dynamics.constraintsolver.ContactConstraint
-198	-1	0	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$1
-199	-1	0	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$2
-200	-1	0	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$3
-204	-1	0	com.bulletphysics.dynamics.constraintsolver.Generic6DofConstraint
-205	-1	0	com.bulletphysics.dynamics.constraintsolver.HingeConstraint
-207	-1	0	com.bulletphysics.dynamics.constraintsolver.Point2PointConstraint
-209	-1	0	com.bulletphysics.dynamics.constraintsolver.RotationalLimitMotor
-213	-1	0	com.bulletphysics.dynamics.constraintsolver.SliderConstraint
-214	-1	0	com.bulletphysics.dynamics.constraintsolver.SolverBody
-218	-1	0	com.bulletphysics.dynamics.constraintsolver.TranslationalLimitMotor
-223	-1	0	com.bulletphysics.dynamics.vehicle.DefaultVehicleRaycaster
-225	-1	0	com.bulletphysics.dynamics.vehicle.RaycastVehicle$WheelContactPoint
-226	-1	0	com.bulletphysics.dynamics.vehicle.VehicleRaycaster
-228	-1	0	com.bulletphysics.dynamics.vehicle.VehicleTuning
-229	-1	0	com.bulletphysics.dynamics.vehicle.WheelInfo
-232	-1	0	com.bulletphysics.extras.gimpact.BoxCollision
-233	-1	0	com.bulletphysics.extras.gimpact.BoxCollision$AABB
-234	-1	0	com.bulletphysics.extras.gimpact.BoxCollision$BoxBoxTransformCache
-238	-1	0	com.bulletphysics.extras.gimpact.ClipPolygon
-240	-1	0	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$ChildShapeRetriever
-241	-1	0	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$TetraShapeRetriever
-242	-1	0	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$TriangleShapeRetriever
-243	-1	0	com.bulletphysics.extras.gimpact.GImpactBvh
-245	-1	0	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm$CreateFunc
-250	-1	0	com.bulletphysics.extras.gimpact.GImpactTriangleCallback
-255	-1	0	com.bulletphysics.extras.gimpact.PlaneShape
-256	-1	0	com.bulletphysics.extras.gimpact.PrimitiveManagerBase
-260	-1	0	com.bulletphysics.extras.gimpact.TetrahedronShapeEx
-261	-1	0	com.bulletphysics.extras.gimpact.TriangleContact
-263	-1	0	com.bulletphysics.extras.gimpact.TrimeshPrimitiveManager
-265	-1	0	com.bulletphysics.linearmath.AabbUtil2
-271	-1	0	com.bulletphysics.linearmath.DefaultMotionState
-272	-1	0	com.bulletphysics.linearmath.GeometryUtil
-275	-1	0	com.bulletphysics.linearmath.MiscUtil
-276	-1	0	com.bulletphysics.linearmath.MotionState
-280	-1	0	com.bulletphysics.linearmath.TransformUtil
-282	-1	0	com.bulletphysics.linearmath.convexhull.HullDesc
-285	-1	0	com.bulletphysics.linearmath.convexhull.HullResult
-290	-1	0	com.bulletphysics.linearmath.convexhull.PHullResult
-17	1	1	com.bulletphysics.collision.broadphase.BroadphaseInterface
-18	1	1	com.bulletphysics.collision.broadphase.BroadphaseNativeType
-19	1	-1	com.bulletphysics.collision.broadphase.BroadphasePair
-21	1	1	com.bulletphysics.collision.broadphase.BroadphaseProxy
-22	1	-1	com.bulletphysics.collision.broadphase.CollisionAlgorithm
-23	1	-1	com.bulletphysics.collision.broadphase.CollisionAlgorithmConstructionInfo
-25	1	1	com.bulletphysics.collision.broadphase.Dbvt
-27	1	1	com.bulletphysics.collision.broadphase.Dbvt$ICollide
-29	1	1	com.bulletphysics.collision.broadphase.Dbvt$Node
-34	1	1	com.bulletphysics.collision.broadphase.DbvtAabbMm
-35	1	1	com.bulletphysics.collision.broadphase.DbvtBroadphase
-36	1	1	com.bulletphysics.collision.broadphase.DbvtLeafCollider
-37	1	1	com.bulletphysics.collision.broadphase.DbvtProxy
-38	1	1	com.bulletphysics.collision.broadphase.DbvtTreeCollider
-40	1	1	com.bulletphysics.collision.broadphase.Dispatcher
-45	1	-1	com.bulletphysics.collision.broadphase.OverlapCallback
-47	1	1	com.bulletphysics.collision.broadphase.OverlappingPairCache
-49	1	1	com.bulletphysics.collision.broadphase.SimpleBroadphase
-58	1	1	com.bulletphysics.collision.dispatch.CollisionObject
-60	1	1	com.bulletphysics.collision.dispatch.CollisionWorld
-61	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$BridgeTriangleConvexcastCallback
-63	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestConvexResultCallback
-64	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$ClosestRayResultCallback
-65	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$ConvexResultCallback
-66	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$LocalConvexResult
-67	1	1	com.bulletphysics.collision.dispatch.CollisionWorld$LocalRayResult
-86	1	1	com.bulletphysics.collision.dispatch.GhostObject
-90	1	1	com.bulletphysics.collision.dispatch.PairCachingGhostObject
-91	1	1	com.bulletphysics.collision.dispatch.SimulationIslandManager
-129	1	1	com.bulletphysics.collision.shapes.BoxShape
-131	1	1	com.bulletphysics.collision.shapes.BvhTriangleMeshShape
-132	1	1	com.bulletphysics.collision.shapes.BvhTriangleMeshShape$MyNodeOverlapCallback
-136	1	1	com.bulletphysics.collision.shapes.CapsuleShapeZ
-138	1	1	com.bulletphysics.collision.shapes.CompoundShape
-141	1	1	com.bulletphysics.collision.shapes.ConeShape
-145	1	1	com.bulletphysics.collision.shapes.ConvexInternalShape
-147	1	1	com.bulletphysics.collision.shapes.CylinderShape
-151	1	1	com.bulletphysics.collision.shapes.InternalTriangleIndexCallback
-152	1	1	com.bulletphysics.collision.shapes.MinkowskiSumShape
-154	1	1	com.bulletphysics.collision.shapes.OptimizedBvh
-159	1	1	com.bulletphysics.collision.shapes.PolyhedralConvexShape
-162	1	1	com.bulletphysics.collision.shapes.ScaledBvhTriangleMeshShape
-166	1	1	com.bulletphysics.collision.shapes.StaticPlaneShape
-167	1	1	com.bulletphysics.collision.shapes.StridingMeshInterface
-171	1	1	com.bulletphysics.collision.shapes.TriangleCallback
-176	1	1	com.bulletphysics.collision.shapes.TriangleShape
-178	1	1	com.bulletphysics.collision.shapes.VertexData
-180	1	1	com.bulletphysics.dynamics.ActionInterface
-181	1	1	com.bulletphysics.dynamics.DiscreteDynamicsWorld
-183	1	1	com.bulletphysics.dynamics.DiscreteDynamicsWorld$ClosestNotMeConvexResultCallback
-184	1	1	com.bulletphysics.dynamics.DiscreteDynamicsWorld$InplaceSolverIslandCallback
-185	1	1	com.bulletphysics.dynamics.DynamicsWorld
-190	1	1	com.bulletphysics.dynamics.SimpleDynamicsWorld
-191	1	1	com.bulletphysics.dynamics.character.KinematicCharacterController
-192	1	1	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeConvexResultCallback
-193	1	1	com.bulletphysics.dynamics.character.KinematicCharacterController$KinematicClosestNotMeRayResultCallback
-233	1	1	com.bulletphysics.extras.gimpact.BoxCollision$AABB
-234	1	1	com.bulletphysics.extras.gimpact.BoxCollision$BoxBoxTransformCache
-235	1	1	com.bulletphysics.extras.gimpact.BvhDataArray
-236	1	1	com.bulletphysics.extras.gimpact.BvhTree
-237	1	1	com.bulletphysics.extras.gimpact.BvhTreeNodeArray
-243	1	1	com.bulletphysics.extras.gimpact.GImpactBvh
-247	1	1	com.bulletphysics.extras.gimpact.GImpactMeshShape
-249	1	1	com.bulletphysics.extras.gimpact.GImpactShapeInterface
-256	1	1	com.bulletphysics.extras.gimpact.PrimitiveManagerBase
-262	1	1	com.bulletphysics.extras.gimpact.TriangleShapeEx
-263	1	1	com.bulletphysics.extras.gimpact.TrimeshPrimitiveManager
-279	1	1	com.bulletphysics.linearmath.Transform
-284	1	1	com.bulletphysics.linearmath.convexhull.HullLibrary
-303	1	1	com.bulletphysics.util.IntArrayList
-304	1	1	com.bulletphysics.util.ObjectArrayList
-0	-1	1	com.bulletphysics.$Stack
-13	-1	1	com.bulletphysics.collision.broadphase.AxisSweep3Internal$Handle
-14	-1	1	com.bulletphysics.collision.broadphase.AxisSweep3_32
-26	-1	1	com.bulletphysics.collision.broadphase.Dbvt$IClone
-28	-1	1	com.bulletphysics.collision.broadphase.Dbvt$IWriter
-30	-1	1	com.bulletphysics.collision.broadphase.Dbvt$sStkCLN
-31	-1	1	com.bulletphysics.collision.broadphase.Dbvt$sStkNN
-32	-1	1	com.bulletphysics.collision.broadphase.Dbvt$sStkNP
-33	-1	1	com.bulletphysics.collision.broadphase.Dbvt$sStkNPS
-42	-1	1	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache
-43	-1	1	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$CleanPairCallback
-44	-1	1	com.bulletphysics.collision.broadphase.HashedOverlappingPairCache$RemovePairCallback
-46	-1	1	com.bulletphysics.collision.broadphase.OverlapFilterCallback
-50	-1	1	com.bulletphysics.collision.broadphase.SimpleBroadphaseProxy
-52	-1	1	com.bulletphysics.collision.dispatch.CollisionAlgorithmCreateFunc
-53	-1	1	com.bulletphysics.collision.dispatch.CollisionConfiguration
-56	-1	1	com.bulletphysics.collision.dispatch.CollisionDispatcher$CollisionPairCallback
-59	-1	1	com.bulletphysics.collision.dispatch.CollisionObjectType
-68	-1	1	com.bulletphysics.collision.dispatch.CollisionWorld$LocalShapeInfo
-69	-1	1	com.bulletphysics.collision.dispatch.CollisionWorld$RayResultCallback
-71	-1	1	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$CreateFunc
-73	-1	1	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm
-76	-1	1	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$SwappedCreateFunc
-78	-1	1	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm$CreateFunc
-80	-1	1	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm$CreateFunc
-81	-1	1	com.bulletphysics.collision.dispatch.ConvexTriangleCallback
-82	-1	1	com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration
-85	-1	1	com.bulletphysics.collision.dispatch.EmptyAlgorithm$CreateFunc
-87	-1	1	com.bulletphysics.collision.dispatch.GhostPairCallback
-93	-1	1	com.bulletphysics.collision.dispatch.SimulationIslandManager$IslandCallback
-95	-1	1	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm$CreateFunc
-96	-1	1	com.bulletphysics.collision.dispatch.UnionFind
-100	-1	1	com.bulletphysics.collision.narrowphase.ConvexCast
-104	-1	1	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$ClosestPointInput
-107	-1	1	com.bulletphysics.collision.narrowphase.GjkEpaPenetrationDepthSolver
-118	-1	1	com.bulletphysics.collision.narrowphase.PersistentManifold
-122	-1	1	com.bulletphysics.collision.narrowphase.TriangleConvexcastCallback
-123	-1	1	com.bulletphysics.collision.narrowphase.TriangleRaycastCallback
-128	-1	1	com.bulletphysics.collision.shapes.BU_Simplex1to4
-133	-1	1	com.bulletphysics.collision.shapes.ByteBufferVertexData
-134	-1	1	com.bulletphysics.collision.shapes.CapsuleShape
-137	-1	1	com.bulletphysics.collision.shapes.CollisionShape
-139	-1	1	com.bulletphysics.collision.shapes.CompoundShapeChild
-140	-1	1	com.bulletphysics.collision.shapes.ConcaveShape
-142	-1	1	com.bulletphysics.collision.shapes.ConeShapeX
-143	-1	1	com.bulletphysics.collision.shapes.ConeShapeZ
-144	-1	1	com.bulletphysics.collision.shapes.ConvexHullShape
-146	-1	1	com.bulletphysics.collision.shapes.ConvexShape
-148	-1	1	com.bulletphysics.collision.shapes.CylinderShapeX
-149	-1	1	com.bulletphysics.collision.shapes.CylinderShapeZ
-153	-1	1	com.bulletphysics.collision.shapes.NodeOverlapCallback
-156	-1	1	com.bulletphysics.collision.shapes.OptimizedBvh$NodeTriangleCallback
-157	-1	1	com.bulletphysics.collision.shapes.OptimizedBvh$QuantizedNodeTriangleCallback
-164	-1	1	com.bulletphysics.collision.shapes.ShapeHull
-165	-1	1	com.bulletphysics.collision.shapes.SphereShape
-169	-1	1	com.bulletphysics.collision.shapes.StridingMeshInterface$AabbCalculationCallback
-172	-1	1	com.bulletphysics.collision.shapes.TriangleIndexVertexArray
-173	-1	1	com.bulletphysics.collision.shapes.TriangleMeshShape
-174	-1	1	com.bulletphysics.collision.shapes.TriangleMeshShape$FilteredCallback
-175	-1	1	com.bulletphysics.collision.shapes.TriangleMeshShape$SupportVertexCallback
-177	-1	1	com.bulletphysics.collision.shapes.UniformScalingShape
-186	-1	1	com.bulletphysics.dynamics.DynamicsWorldType
-187	-1	1	com.bulletphysics.dynamics.InternalTickCallback
-189	-1	1	com.bulletphysics.dynamics.RigidBodyConstructionInfo
-194	-1	1	com.bulletphysics.dynamics.constraintsolver.ConeTwistConstraint
-203	-1	1	com.bulletphysics.dynamics.constraintsolver.ContactSolverInfo
-205	-1	1	com.bulletphysics.dynamics.constraintsolver.HingeConstraint
-223	-1	1	com.bulletphysics.dynamics.vehicle.DefaultVehicleRaycaster
-224	-1	1	com.bulletphysics.dynamics.vehicle.RaycastVehicle
-232	-1	1	com.bulletphysics.extras.gimpact.BoxCollision
-238	-1	1	com.bulletphysics.extras.gimpact.ClipPolygon
-244	-1	1	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm
-245	-1	1	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm$CreateFunc
-248	-1	1	com.bulletphysics.extras.gimpact.GImpactMeshShapePart
-250	-1	1	com.bulletphysics.extras.gimpact.GImpactTriangleCallback
-253	-1	1	com.bulletphysics.extras.gimpact.PairSet
-254	-1	1	com.bulletphysics.extras.gimpact.PlaneIntersectionType
-255	-1	1	com.bulletphysics.extras.gimpact.PlaneShape
-257	-1	1	com.bulletphysics.extras.gimpact.PrimitiveTriangle
-265	-1	1	com.bulletphysics.linearmath.AabbUtil2
-272	-1	1	com.bulletphysics.linearmath.GeometryUtil
-273	-1	1	com.bulletphysics.linearmath.IDebugDraw
-275	-1	1	com.bulletphysics.linearmath.MiscUtil
-276	-1	1	com.bulletphysics.linearmath.MotionState
-282	-1	1	com.bulletphysics.linearmath.convexhull.HullDesc
-285	-1	1	com.bulletphysics.linearmath.convexhull.HullResult
-290	-1	1	com.bulletphysics.linearmath.convexhull.PHullResult
-2	2	2	com.bulletphysics.BulletGlobals
-6	2	2	com.bulletphysics.ContactDestroyedCallback
-22	2	-1	com.bulletphysics.collision.broadphase.CollisionAlgorithm
-23	2	2	com.bulletphysics.collision.broadphase.CollisionAlgorithmConstructionInfo
-58	2	2	com.bulletphysics.collision.dispatch.CollisionObject
-71	2	2	com.bulletphysics.collision.dispatch.CompoundCollisionAlgorithm$CreateFunc
-79	2	-1	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm
-88	2	2	com.bulletphysics.collision.dispatch.ManifoldResult
-91	2	-1	com.bulletphysics.collision.dispatch.SimulationIslandManager
-95	2	2	com.bulletphysics.collision.dispatch.SphereSphereCollisionAlgorithm$CreateFunc
-100	2	2	com.bulletphysics.collision.narrowphase.ConvexCast
-101	2	2	com.bulletphysics.collision.narrowphase.ConvexCast$CastResult
-102	2	2	com.bulletphysics.collision.narrowphase.ConvexPenetrationDepthSolver
-103	2	2	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface
-104	2	2	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$ClosestPointInput
-105	2	2	com.bulletphysics.collision.narrowphase.DiscreteCollisionDetectorInterface$Result
-106	2	2	com.bulletphysics.collision.narrowphase.GjkConvexCast
-107	2	2	com.bulletphysics.collision.narrowphase.GjkEpaPenetrationDepthSolver
-108	2	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver
-109	2	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver$EPA
-111	2	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver$GJK
-113	2	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver$Mkv
-116	2	2	com.bulletphysics.collision.narrowphase.GjkPairDetector
-120	2	2	com.bulletphysics.collision.narrowphase.SimplexSolverInterface
-121	2	2	com.bulletphysics.collision.narrowphase.SubsimplexConvexCast
-126	2	-1	com.bulletphysics.collision.narrowphase.VoronoiSimplexSolver$UsageBitfield
-146	2	2	com.bulletphysics.collision.shapes.ConvexShape
-165	2	2	com.bulletphysics.collision.shapes.SphereShape
-177	2	2	com.bulletphysics.collision.shapes.UniformScalingShape
-184	2	2	com.bulletphysics.dynamics.DiscreteDynamicsWorld$InplaceSolverIslandCallback
-188	2	2	com.bulletphysics.dynamics.RigidBody
-189	2	2	com.bulletphysics.dynamics.RigidBodyConstructionInfo
-194	2	2	com.bulletphysics.dynamics.constraintsolver.ConeTwistConstraint
-198	2	2	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$1
-200	2	2	com.bulletphysics.dynamics.constraintsolver.ContactConstraint$3
-202	2	2	com.bulletphysics.dynamics.constraintsolver.ContactSolverFunc
-204	2	2	com.bulletphysics.dynamics.constraintsolver.Generic6DofConstraint
-207	2	2	com.bulletphysics.dynamics.constraintsolver.Point2PointConstraint
-219	2	2	com.bulletphysics.dynamics.constraintsolver.TypedConstraint
-220	2	2	com.bulletphysics.dynamics.constraintsolver.TypedConstraintType
-240	2	-1	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$ChildShapeRetriever
-243	2	-1	com.bulletphysics.extras.gimpact.GImpactBvh
-273	2	2	com.bulletphysics.linearmath.IDebugDraw
-276	2	2	com.bulletphysics.linearmath.MotionState
-279	2	2	com.bulletphysics.linearmath.Transform
-5	-1	2	com.bulletphysics.ContactAddedCallback
-7	-1	2	com.bulletphysics.ContactProcessedCallback
-52	-1	2	com.bulletphysics.collision.dispatch.CollisionAlgorithmCreateFunc
-60	-1	2	com.bulletphysics.collision.dispatch.CollisionWorld
-61	-1	2	com.bulletphysics.collision.dispatch.CollisionWorld$BridgeTriangleConvexcastCallback
-76	-1	2	com.bulletphysics.collision.dispatch.ConvexConcaveCollisionAlgorithm$SwappedCreateFunc
-77	-1	2	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm
-78	-1	2	com.bulletphysics.collision.dispatch.ConvexConvexAlgorithm$CreateFunc
-80	-1	2	com.bulletphysics.collision.dispatch.ConvexPlaneCollisionAlgorithm$CreateFunc
-84	-1	2	com.bulletphysics.collision.dispatch.EmptyAlgorithm
-86	-1	2	com.bulletphysics.collision.dispatch.GhostObject
-93	-1	2	com.bulletphysics.collision.dispatch.SimulationIslandManager$IslandCallback
-110	-1	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver$Face
-114	-1	2	com.bulletphysics.collision.narrowphase.GjkEpaSolver$Results
-118	-1	2	com.bulletphysics.collision.narrowphase.PersistentManifold
-119	-1	2	com.bulletphysics.collision.narrowphase.PointCollector
-124	-1	2	com.bulletphysics.collision.narrowphase.VoronoiSimplexSolver
-125	-1	2	com.bulletphysics.collision.narrowphase.VoronoiSimplexSolver$SubSimplexClosestResult
-129	-1	2	com.bulletphysics.collision.shapes.BoxShape
-137	-1	2	com.bulletphysics.collision.shapes.CollisionShape
-139	-1	2	com.bulletphysics.collision.shapes.CompoundShapeChild
-143	-1	2	com.bulletphysics.collision.shapes.ConeShapeZ
-145	-1	2	com.bulletphysics.collision.shapes.ConvexInternalShape
-149	-1	2	com.bulletphysics.collision.shapes.CylinderShapeZ
-181	-1	2	com.bulletphysics.dynamics.DiscreteDynamicsWorld
-191	-1	2	com.bulletphysics.dynamics.character.KinematicCharacterController
-195	-1	2	com.bulletphysics.dynamics.constraintsolver.ConstraintPersistentData
-208	-1	2	com.bulletphysics.dynamics.constraintsolver.Point2PointConstraint$ConstraintSetting
-209	-1	2	com.bulletphysics.dynamics.constraintsolver.RotationalLimitMotor
-210	-1	2	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver
-211	-1	2	com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver$1
-214	-1	2	com.bulletphysics.dynamics.constraintsolver.SolverBody
-218	-1	2	com.bulletphysics.dynamics.constraintsolver.TranslationalLimitMotor
-224	-1	2	com.bulletphysics.dynamics.vehicle.RaycastVehicle
-225	-1	2	com.bulletphysics.dynamics.vehicle.RaycastVehicle$WheelContactPoint
-241	-1	2	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$TetraShapeRetriever
-242	-1	2	com.bulletphysics.extras.gimpact.GIM_ShapeRetriever$TriangleShapeRetriever
-244	-1	2	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm
-253	-1	2	com.bulletphysics.extras.gimpact.PairSet
-257	-1	2	com.bulletphysics.extras.gimpact.PrimitiveTriangle
-271	-1	2	com.bulletphysics.linearmath.DefaultMotionState
-62	3	-1	com.bulletphysics.collision.dispatch.CollisionWorld$BridgeTriangleRaycastCallback
-151	3	-1	com.bulletphysics.collision.shapes.InternalTriangleIndexCallback
-160	3	-1	com.bulletphysics.collision.shapes.QuantizedBvhNodes
-171	3	-1	com.bulletphysics.collision.shapes.TriangleCallback
-244	3	-1	com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm
-88	-1	3	com.bulletphysics.collision.dispatch.ManifoldResult
-123	-1	3	com.bulletphysics.collision.narrowphase.TriangleRaycastCallback
-130	-1	3	com.bulletphysics.collision.shapes.BvhSubtreeInfo
-140	-1	3	com.bulletphysics.collision.shapes.ConcaveShape
-157	-1	3	com.bulletphysics.collision.shapes.OptimizedBvh$QuantizedNodeTriangleCallback
-169	-1	3	com.bulletphysics.collision.shapes.StridingMeshInterface$AabbCalculationCallback
-174	-1	3	com.bulletphysics.collision.shapes.TriangleMeshShape$FilteredCallback
-250	-1	3	com.bulletphysics.extras.gimpact.GImpactTriangleCallback
+# Nodes: 115    Edges: 613
+# Groups: 31
+#   0   N=115   M=613   N_S=9     M_S=36    N_T=9     M_T=36    N_ST=9     M_ST=36    L_ST=36    L_STc=25    W=0.0302     Tau=1.0000 Mod_S=0.1352  Mod_T=0.1352 
+#   1   N=115   M=589   N_S=9     M_S=36    N_T=9     M_T=36    N_ST=9     M_ST=36    L_ST=36    L_STc=30    W=0.0298     Tau=1.0000 Mod_S=0.1164  Mod_T=0.1164 
+#   2   N=115   M=567   N_S=10    M_S=40    N_T=10    M_T=40    N_ST=10    M_ST=40    L_ST=40    L_STc=30    W=0.0295     Tau=1.0000 Mod_S=0.1191  Mod_T=0.1191 
+#   3   N=115   M=542   N_S=12    M_S=48    N_T=12    M_T=48    N_ST=12    M_ST=48    L_ST=48    L_STc=32    W=0.0287     Tau=1.0000 Mod_S=0.1077  Mod_T=0.1077 
+#   4   N=115   M=514   N_S=11    M_S=44    N_T=11    M_T=44    N_ST=11    M_ST=44    L_ST=44    L_STc=36    W=0.0287     Tau=1.0000 Mod_S=0.0919  Mod_T=0.0919 
+#   5   N=115   M=488   N_S=15    M_S=40    N_T=17    M_T=49    N_ST=10    M_ST=32    L_ST=73    L_STc=56    W=0.0296     Tau=0.4545 Mod_S=-0.1483 Mod_T=-0.1796
+#   6   N=115   M=438   N_S=13    M_S=50    N_T=14    M_T=54    N_ST=13    M_ST=50    L_ST=54    L_STc=31    W=0.0283     Tau=0.9286 Mod_S=0.0903  Mod_T=0.0884 
+#   7   N=115   M=405   N_S=9     M_S=31    N_T=9     M_T=31    N_ST=8     M_ST=28    L_ST=33    L_STc=34    W=0.0268     Tau=0.8000 Mod_S=0.0917  Mod_T=0.0917 
+#   8   N=115   M=385   N_S=9     M_S=30    N_T=11    M_T=35    N_ST=8     M_ST=28    L_ST=39    L_STc=27    W=0.0287     Tau=0.6667 Mod_S=0.0938  Mod_T=0.0756 
+#   9   N=115   M=360   N_S=9     M_S=2     N_T=12    M_T=7     N_ST=1     M_ST=0     L_ST=37    L_STc=23    W=0.0259     Tau=0.0500 Mod_S=-0.0507 Mod_T=-0.0632
+#   10  N=115   M=336   N_S=9     M_S=1     N_T=10    M_T=4     N_ST=0     M_ST=0     L_ST=34    L_STc=22    W=0.0268     Tau=0.0000 Mod_S=-0.0506 Mod_T=-0.0501
+#   11  N=114   M=312   N_S=10    M_S=1     N_T=13    M_T=4     N_ST=0     M_ST=0     L_ST=36    L_STc=18    W=0.0231     Tau=0.0000 Mod_S=-0.0473 Mod_T=-0.0646
+#   12  N=114   M=290   N_S=10    M_S=18    N_T=10    M_T=20    N_ST=6     M_ST=15    L_ST=31    L_STc=25    W=0.0229     Tau=0.4286 Mod_S=0.0582  Mod_T=0.0523 
+#   13  N=114   M=270   N_S=9     M_S=2     N_T=13    M_T=4     N_ST=0     M_ST=0     L_ST=35    L_STc=15    W=0.0239     Tau=0.0000 Mod_S=-0.0305 Mod_T=-0.0674
+#   14  N=114   M=249   N_S=9     M_S=2     N_T=9     M_T=2     N_ST=0     M_ST=0     L_ST=29    L_STc=22    W=0.0243     Tau=0.0000 Mod_S=-0.0325 Mod_T=-0.0345
+#   15  N=114   M=227   N_S=13    M_S=2     N_T=16    M_T=3     N_ST=0     M_ST=0     L_ST=44    L_STc=25    W=0.0211     Tau=0.0000 Mod_S=-0.0740 Mod_T=-0.0848
+#   16  N=114   M=198   N_S=8     M_S=1     N_T=6     M_T=0     N_ST=0     M_ST=0     L_ST=18    L_STc=15    W=0.0202     Tau=0.0000 Mod_S=-0.0122 Mod_T=-0.0140
+#   17  N=113   M=183   N_S=3     M_S=1     N_T=2     M_T=0     N_ST=0     M_ST=0     L_ST=6     L_STc=8     W=0.0203     Tau=0.0000 Mod_S=0.0050  Mod_T=-0.0024
+#   18  N=113   M=179   N_S=7     M_S=0     N_T=8     M_T=1     N_ST=0     M_ST=0     L_ST=19    L_STc=12    W=0.0199     Tau=0.0000 Mod_S=-0.0188 Mod_T=-0.0125
+#   19  N=111   M=166   N_S=9     M_S=1     N_T=9     M_T=1     N_ST=0     M_ST=0     L_ST=23    L_STc=11    W=0.0203     Tau=0.0000 Mod_S=-0.0144 Mod_T=-0.0188
+#   20  N=111   M=153   N_S=5     M_S=0     N_T=6     M_T=0     N_ST=0     M_ST=0     L_ST=13    L_STc=5     W=0.0198     Tau=0.0000 Mod_S=-0.0066 Mod_T=-0.0107
+#   21  N=111   M=146   N_S=4     M_S=0     N_T=5     M_T=0     N_ST=0     M_ST=0     L_ST=10    L_STc=4     W=0.0189     Tau=0.0000 Mod_S=-0.0040 Mod_T=-0.0066
+#   22  N=108   M=137   N_S=4     M_S=0     N_T=4     M_T=0     N_ST=0     M_ST=0     L_ST=9     L_STc=3     W=0.0198     Tau=0.0000 Mod_S=-0.0031 Mod_T=-0.0062
+#   23  N=108   M=131   N_S=8     M_S=0     N_T=7     M_T=0     N_ST=0     M_ST=0     L_ST=17    L_STc=7     W=0.0190     Tau=0.0000 Mod_S=-0.0123 Mod_T=-0.0134
+#   24  N=106   M=120   N_S=9     M_S=0     N_T=18    M_T=2     N_ST=0     M_ST=0     L_ST=28    L_STc=0     W=0.0174     Tau=0.0000 Mod_S=-0.0174 Mod_T=-0.0282
+#   25  N=72    M=77    N_S=3     M_S=0     N_T=8     M_T=0     N_ST=0     M_ST=0     L_ST=10    L_STc=0     W=0.0237     Tau=0.0000 Mod_S=-0.0048 Mod_T=-0.0123
+#   26  N=67    M=69    N_S=4     M_S=0     N_T=7     M_T=1     N_ST=0     M_ST=0     L_ST=11    L_STc=0     W=0.0276     Tau=0.0000 Mod_S=-0.0067 Mod_T=0.0007 
+#   27  N=58    M=58    N_S=4     M_S=0     N_T=7     M_T=0     N_ST=0     M_ST=0     L_ST=10    L_STc=0     W=0.0286     Tau=0.0000 Mod_S=-0.0074 Mod_T=-0.0146
+#   28  N=32    M=32    N_S=2     M_S=0     N_T=6     M_T=0     N_ST=0     M_ST=0     L_ST=7     L_STc=0     W=0.0496     Tau=0.0000 Mod_S=-0.0120 Mod_T=-0.0549
+#   29  N=9     M=8     N_S=1     M_S=0     N_T=4     M_T=0     N_ST=0     M_ST=0     L_ST=4     L_STc=0     W=0.1462     Tau=0.0000 Mod_S=-0.0494 Mod_T=-0.0772
+#   30  N=5     M=4     N_S=1     M_S=0     N_T=2     M_T=0     N_ST=0     M_ST=0     L_ST=2     L_STc=0     W=0.1956     Tau=0.0000 Mod_S=-0.0400 Mod_T=-0.0900
+# NId	GroupS	GroupT	NLabel
+2	0	0	FloridaState (Atlantic Coast)
+26	0	0	NorthCarolinaState (Atlantic Coast)
+34	0	0	Virginia (Atlantic Coast)
+38	0	0	GeorgiaTech (Atlantic Coast)
+46	0	0	Duke (Atlantic Coast)
+90	0	0	NorthCarolina (Atlantic Coast)
+104	0	0	Clemson (Atlantic Coast)
+106	0	0	WakeForest (Atlantic Coast)
+110	0	0	Maryland (Atlantic Coast)
+47	1	1	FresnoState (Western Athletic)
+50	1	1	Rice (Western Athletic)
+54	1	1	SouthernMethodist (Western Athletic)
+68	1	1	Nevada (Western Athletic)
+74	1	1	SanJoseState (Western Athletic)
+84	1	1	TexasElPaso (Western Athletic)
+89	1	1	Tulsa (Western Athletic)
+111	1	1	TexasChristian (Conference USA)
+115	1	1	Hawaii (Western Athletic)
+8	2	2	SouthernCalifornia (Pacific Ten)
+9	2	2	ArizonaState (Pacific Ten)
+22	2	2	UCLA (Pacific Ten)
+23	2	2	Arizona (Pacific Ten)
+52	2	2	Washington (Pacific Ten)
+69	2	2	Oregon (Pacific Ten)
+78	2	2	Stanford (Pacific Ten)
+79	2	2	WashingtonState (Pacific Ten)
+109	2	2	OregonState (Pacific Ten)
+112	2	2	California (Pacific Ten)
+18	3	3	Auburn (Southeastern)
+21	3	3	Alabama (Southeastern)
+28	3	3	Florida (Southeastern)
+57	3	3	Kentucky (Southeastern)
+63	3	3	Vanderbilt (Southeastern)
+66	3	3	MississippiState (Southeastern)
+71	3	3	SouthCarolina (Southeastern)
+77	3	3	Tennessee (Southeastern)
+88	3	3	Mississippi (Southeastern)
+96	3	3	Georgia (Southeastern)
+97	3	3	LouisianaState (Southeastern)
+114	3	3	Arkansas (Southeastern)
+3	4	4	Iowa (Big Ten)
+7	4	4	PennState (Big Ten)
+14	4	4	Northwestern (Big Ten)
+16	4	4	Wisconsin (Big Ten)
+33	4	4	Michigan (Big Ten)
+40	4	4	Purdue (Big Ten)
+48	4	4	OhioState (Big Ten)
+61	4	4	Minnesota (Big Ten)
+65	4	4	Illinois (Big Ten)
+101	4	4	MichiganState (Big Ten)
+107	4	4	Indiana (Big Ten)
+6	5	-1	TexasTech (Big Twelve)
+41	5	-1	Colorado (Big Twelve)
+45	5	5	EastCarolina (Conference USA)
+49	5	5	Houston (Conference USA)
+58	5	5	Louisville (Conference USA)
+67	5	5	Memphis (Conference USA)
+73	5	-1	IowaState (Big Twelve)
+76	5	5	SouthernMississippi (Conference USA)
+85	5	-1	Oklahoma (Big Twelve)
+87	5	5	Tulane (Conference USA)
+92	5	5	Army (Conference USA)
+93	5	5	Cincinnati (Conference USA)
+99	5	5	Texas (Big Twelve)
+103	5	-1	Missouri (Big Twelve)
+113	5	5	AlabamaBirmingham (Conference USA)
+4	-1	5	KansasState (Big Twelve)
+11	-1	5	Baylor (Big Twelve)
+53	-1	5	Kansas (Big Twelve)
+75	-1	5	Nebraska (Big Twelve)
+82	-1	5	TexasA&M (Big Twelve)
+98	-1	5	LouisianaLafayette (Sun Belt)
+108	-1	5	OklahomaState (Big Twelve)
+13	6	6	NorthernIllinois (Mid-American)
+15	6	6	WesternMichigan (Mid-American)
+19	6	6	Akron (Mid-American)
+27	6	6	BallState (Mid-American)
+32	6	6	BowlingGreenState (Mid-American)
+35	6	6	Buffalo (Mid-American)
+39	6	6	CentralMichigan (Mid-American)
+44	6	6	EasternMichigan (Mid-American)
+55	6	6	Kent (Mid-American)
+62	6	6	MiamiOhio (Mid-American)
+72	6	6	Ohio (Mid-American)
+86	6	6	Toledo (Mid-American)
+100	6	6	Marshall (Mid-American)
+43	-1	6	Connecticut (Independents)
+20	7	7	VirginiaTech (Big East)
+30	7	7	BostonCollege (Big East)
+31	7	7	WestVirginia (Big East)
+36	7	7	Syracuse (Big East)
+56	7	7	Pittsburgh (Big East)
+80	7	7	Temple (Big East)
+81	7	-1	Navy (Independents)
+95	7	7	Rutgers (Big East)
+102	7	7	MiamiFlorida (Big East)
+83	-1	7	NotreDame (Independents)
+1	8	8	BrighamYoung (Mountain West)
+5	8	8	NewMexico (Mountain West)
+9	8	-1	ArizonaState (Pacific Ten)
+10	8	8	SanDiegoState (Mountain West)
+17	8	8	Wyoming (Mountain West)
+24	8	8	Utah (Mountain West)
+42	8	8	ColoradoState (Mountain West)
+94	8	8	AirForce (Mountain West)
+105	8	8	NevadaLasVegas (Mountain West)
+23	-1	8	Arizona (Pacific Ten)
+68	-1	8	Nevada (Western Athletic)
+91	-1	8	UtahState (Independents)
+4	9	-1	KansasState (Big Twelve)
+11	9	-1	Baylor (Big Twelve)
+22	9	-1	UCLA (Pacific Ten)
+41	9	-1	Colorado (Big Twelve)
+48	9	-1	OhioState (Big Ten)
+73	9	9	IowaState (Big Twelve)
+74	9	-1	SanJoseState (Western Athletic)
+83	9	-1	NotreDame (Independents)
+112	9	-1	California (Pacific Ten)
+3	-1	9	Iowa (Big Ten)
+8	-1	9	SouthernCalifornia (Pacific Ten)
+12	-1	9	NorthTexas (Sun Belt)
+33	-1	9	Michigan (Big Ten)
+47	-1	9	FresnoState (Western Athletic)
+52	-1	9	Washington (Pacific Ten)
+75	-1	9	Nebraska (Big Twelve)
+78	-1	9	Stanford (Pacific Ten)
+82	-1	9	TexasA&M (Big Twelve)
+101	-1	9	MichiganState (Big Ten)
+103	-1	9	Missouri (Big Twelve)
+18	10	-1	Auburn (Southeastern)
+37	10	-1	CentralFlorida (Independents)
+57	10	-1	Kentucky (Southeastern)
+63	10	-1	Vanderbilt (Southeastern)
+64	10	-1	MiddleTennesseeState (Sun Belt)
+67	10	-1	Memphis (Conference USA)
+76	10	-1	SouthernMississippi (Conference USA)
+97	10	-1	LouisianaState (Southeastern)
+114	10	-1	Arkansas (Southeastern)
+13	-1	10	NorthernIllinois (Mid-American)
+21	-1	10	Alabama (Southeastern)
+28	-1	10	Florida (Southeastern)
+49	-1	10	Houston (Conference USA)
+59	-1	10	LouisianaTech (Western Athletic)
+60	-1	10	LouisianaMonroe (Sun Belt)
+66	-1	10	MississippiState (Southeastern)
+77	-1	10	Tennessee (Southeastern)
+96	-1	10	Georgia (Southeastern)
+113	-1	10	AlabamaBirmingham (Conference USA)
+4	11	-1	KansasState (Big Twelve)
+17	11	-1	Wyoming (Mountain West)
+50	11	-1	Rice (Western Athletic)
+54	11	-1	SouthernMethodist (Western Athletic)
+73	11	-1	IowaState (Big Twelve)
+75	11	-1	Nebraska (Big Twelve)
+84	11	-1	TexasElPaso (Western Athletic)
+99	11	-1	Texas (Big Twelve)
+108	11	-1	OklahomaState (Big Twelve)
+115	11	-1	Hawaii (Western Athletic)
+6	-1	11	TexasTech (Big Twelve)
+11	-1	11	Baylor (Big Twelve)
+49	-1	11	Houston (Conference USA)
+53	-1	11	Kansas (Big Twelve)
+59	-1	11	LouisianaTech (Western Athletic)
+68	-1	11	Nevada (Western Athletic)
+74	-1	11	SanJoseState (Western Athletic)
+82	-1	11	TexasA&M (Big Twelve)
+85	-1	11	Oklahoma (Big Twelve)
+89	-1	11	Tulsa (Western Athletic)
+103	-1	11	Missouri (Big Twelve)
+105	-1	11	NevadaLasVegas (Mountain West)
+111	-1	11	TexasChristian (Conference USA)
+6	12	-1	TexasTech (Big Twelve)
+12	12	12	NorthTexas (Sun Belt)
+23	12	-1	Arizona (Pacific Ten)
+25	12	12	ArkansasState (Sun Belt)
+29	12	12	BoiseState (Western Athletic)
+51	12	12	Idaho (Sun Belt)
+70	12	12	NewMexicoState (Sun Belt)
+91	12	12	UtahState (Independents)
+105	12	-1	NevadaLasVegas (Mountain West)
+109	12	-1	OregonState (Pacific Ten)
+5	-1	12	NewMexico (Mountain West)
+10	-1	12	SanDiegoState (Mountain West)
+69	-1	12	Oregon (Pacific Ten)
+79	-1	12	WashingtonState (Pacific Ten)
+19	13	-1	Akron (Mid-American)
+20	13	-1	VirginiaTech (Big East)
+28	13	-1	Florida (Southeastern)
+38	13	-1	GeorgiaTech (Atlantic Coast)
+44	13	-1	EasternMichigan (Mid-American)
+63	13	-1	Vanderbilt (Southeastern)
+90	13	-1	NorthCarolina (Atlantic Coast)
+104	13	-1	Clemson (Atlantic Coast)
+110	13	-1	Maryland (Atlantic Coast)
+2	-1	13	FloridaState (Atlantic Coast)
+26	-1	13	NorthCarolinaState (Atlantic Coast)
+27	-1	13	BallState (Mid-American)
+31	-1	13	WestVirginia (Big East)
+34	-1	13	Virginia (Atlantic Coast)
+37	-1	13	CentralFlorida (Independents)
+46	-1	13	Duke (Atlantic Coast)
+62	-1	13	MiamiOhio (Mid-American)
+71	-1	13	SouthCarolina (Southeastern)
+80	-1	13	Temple (Big East)
+96	-1	13	Georgia (Southeastern)
+100	-1	13	Marshall (Mid-American)
+106	-1	13	WakeForest (Atlantic Coast)
+31	14	-1	WestVirginia (Big East)
+32	14	-1	BowlingGreenState (Mid-American)
+36	14	-1	Syracuse (Big East)
+49	14	-1	Houston (Conference USA)
+58	14	-1	Louisville (Conference USA)
+76	14	-1	SouthernMississippi (Conference USA)
+81	14	-1	Navy (Independents)
+92	14	-1	Army (Conference USA)
+102	14	-1	MiamiFlorida (Big East)
+2	-1	14	FloridaState (Atlantic Coast)
+30	-1	14	BostonCollege (Big East)
+45	-1	14	EastCarolina (Conference USA)
+56	-1	14	Pittsburgh (Big East)
+80	-1	14	Temple (Big East)
+87	-1	14	Tulane (Conference USA)
+93	-1	14	Cincinnati (Conference USA)
+94	-1	14	AirForce (Mountain West)
+95	-1	14	Rutgers (Big East)
+3	15	-1	Iowa (Big Ten)
+7	15	-1	PennState (Big Ten)
+14	15	-1	Northwestern (Big Ten)
+16	15	-1	Wisconsin (Big Ten)
+18	15	-1	Auburn (Southeastern)
+19	15	-1	Akron (Mid-American)
+26	15	-1	NorthCarolinaState (Atlantic Coast)
+34	15	-1	Virginia (Atlantic Coast)
+39	15	-1	CentralMichigan (Mid-American)
+45	15	-1	EastCarolina (Conference USA)
+55	15	-1	Kent (Mid-American)
+64	15	-1	MiddleTennesseeState (Sun Belt)
+81	15	-1	Navy (Independents)
+15	-1	15	WesternMichigan (Mid-American)
+17	-1	15	Wyoming (Mountain West)
+20	-1	15	VirginiaTech (Big East)
+35	-1	15	Buffalo (Mid-American)
+38	-1	15	GeorgiaTech (Atlantic Coast)
+40	-1	15	Purdue (Big Ten)
+43	-1	15	Connecticut (Independents)
+46	-1	15	Duke (Atlantic Coast)
+56	-1	15	Pittsburgh (Big East)
+59	-1	15	LouisianaTech (Western Athletic)
+65	-1	15	Illinois (Big Ten)
+86	-1	15	Toledo (Mid-American)
+92	-1	15	Army (Conference USA)
+107	-1	15	Indiana (Big Ten)
+110	-1	15	Maryland (Atlantic Coast)
+111	-1	15	TexasChristian (Conference USA)
+4	16	-1	KansasState (Big Twelve)
+18	16	-1	Auburn (Southeastern)
+29	16	-1	BoiseState (Western Athletic)
+60	16	-1	LouisianaMonroe (Sun Belt)
+66	16	-1	MississippiState (Southeastern)
+97	16	-1	LouisianaState (Southeastern)
+98	16	-1	LouisianaLafayette (Sun Belt)
+105	16	-1	NevadaLasVegas (Mountain West)
+12	-1	16	NorthTexas (Sun Belt)
+59	-1	16	LouisianaTech (Western Athletic)
+64	-1	16	MiddleTennesseeState (Sun Belt)
+77	-1	16	Tennessee (Southeastern)
+88	-1	16	Mississippi (Southeastern)
+114	-1	16	Arkansas (Southeastern)
+10	17	-1	SanDiegoState (Mountain West)
+24	17	-1	Utah (Mountain West)
+94	17	-1	AirForce (Mountain West)
+1	-1	17	BrighamYoung (Mountain West)
+42	-1	17	ColoradoState (Mountain West)
+25	18	-1	ArkansasState (Sun Belt)
+52	18	-1	Washington (Pacific Ten)
+54	18	-1	SouthernMethodist (Western Athletic)
+59	18	-1	LouisianaTech (Western Athletic)
+70	18	-1	NewMexicoState (Sun Belt)
+74	18	-1	SanJoseState (Western Athletic)
+99	18	-1	Texas (Big Twelve)
+26	-1	18	NorthCarolinaState (Atlantic Coast)
+47	-1	18	FresnoState (Western Athletic)
+51	-1	18	Idaho (Sun Belt)
+53	-1	18	Kansas (Big Twelve)
+78	-1	18	Stanford (Pacific Ten)
+89	-1	18	Tulsa (Western Athletic)
+98	-1	18	LouisianaLafayette (Sun Belt)
+102	-1	18	MiamiFlorida (Big East)
+8	19	-1	SouthernCalifornia (Pacific Ten)
+9	19	-1	ArizonaState (Pacific Ten)
+10	19	-1	SanDiegoState (Mountain West)
+16	19	-1	Wisconsin (Big Ten)
+22	19	-1	UCLA (Pacific Ten)
+24	19	-1	Utah (Mountain West)
+58	19	-1	Louisville (Conference USA)
+107	19	-1	Indiana (Big Ten)
+112	19	-1	California (Pacific Ten)
+7	-1	19	PennState (Big Ten)
+40	-1	19	Purdue (Big Ten)
+42	-1	19	ColoradoState (Mountain West)
+57	-1	19	Kentucky (Southeastern)
+65	-1	19	Illinois (Big Ten)
+69	-1	19	Oregon (Pacific Ten)
+79	-1	19	WashingtonState (Pacific Ten)
+93	-1	19	Cincinnati (Conference USA)
+109	-1	19	OregonState (Pacific Ten)
+32	20	-1	BowlingGreenState (Mid-American)
+35	20	-1	Buffalo (Mid-American)
+80	20	-1	Temple (Big East)
+101	20	-1	MichiganState (Big Ten)
+102	20	-1	MiamiFlorida (Big East)
+33	-1	20	Michigan (Big Ten)
+36	-1	20	Syracuse (Big East)
+44	-1	20	EasternMichigan (Mid-American)
+72	-1	20	Ohio (Mid-American)
+95	-1	20	Rutgers (Big East)
+100	-1	20	Marshall (Mid-American)
+21	21	-1	Alabama (Southeastern)
+47	21	-1	FresnoState (Western Athletic)
+62	21	-1	MiamiOhio (Mid-American)
+87	21	-1	Tulane (Conference USA)
+22	-1	21	UCLA (Pacific Ten)
+48	-1	21	OhioState (Big Ten)
+54	-1	21	SouthernMethodist (Western Athletic)
+88	-1	21	Mississippi (Southeastern)
+93	-1	21	Cincinnati (Conference USA)
+3	22	-1	Iowa (Big Ten)
+33	22	-1	Michigan (Big Ten)
+85	22	-1	Oklahoma (Big Twelve)
+111	22	-1	TexasChristian (Conference USA)
+14	-1	22	Northwestern (Big Ten)
+25	-1	22	ArkansasState (Sun Belt)
+50	-1	22	Rice (Western Athletic)
+75	-1	22	Nebraska (Big Twelve)
+7	23	-1	PennState (Big Ten)
+14	23	-1	Northwestern (Big Ten)
+27	23	-1	BallState (Mid-American)
+44	23	-1	EasternMichigan (Mid-American)
+55	23	-1	Kent (Mid-American)
+63	23	-1	Vanderbilt (Southeastern)
+81	23	-1	Navy (Independents)
+90	23	-1	NorthCarolina (Atlantic Coast)
+13	-1	23	NorthernIllinois (Mid-American)
+39	-1	23	CentralMichigan (Mid-American)
+56	-1	23	Pittsburgh (Big East)
+62	-1	23	MiamiOhio (Mid-American)
+65	-1	23	Illinois (Big Ten)
+86	-1	23	Toledo (Mid-American)
+106	-1	23	WakeForest (Atlantic Coast)
+11	24	-1	Baylor (Big Twelve)
+12	24	-1	NorthTexas (Sun Belt)
+29	24	-1	BoiseState (Western Athletic)
+50	24	-1	Rice (Western Athletic)
+60	24	-1	LouisianaMonroe (Sun Belt)
+85	24	-1	Oklahoma (Big Twelve)
+92	24	-1	Army (Conference USA)
+96	24	-1	Georgia (Southeastern)
+104	24	-1	Clemson (Atlantic Coast)
+6	-1	24	TexasTech (Big Twelve)
+18	-1	24	Auburn (Southeastern)
+28	-1	24	Florida (Southeastern)
+33	-1	24	Michigan (Big Ten)
+34	-1	24	Virginia (Atlantic Coast)
+37	-1	24	CentralFlorida (Independents)
+39	-1	24	CentralMichigan (Mid-American)
+61	-1	24	Minnesota (Big Ten)
+67	-1	24	Memphis (Conference USA)
+68	-1	24	Nevada (Western Athletic)
+70	-1	24	NewMexicoState (Sun Belt)
+71	-1	24	SouthCarolina (Southeastern)
+75	-1	24	Nebraska (Big Twelve)
+84	-1	24	TexasElPaso (Western Athletic)
+91	-1	24	UtahState (Independents)
+98	-1	24	LouisianaLafayette (Sun Belt)
+103	-1	24	Missouri (Big Twelve)
+110	-1	24	Maryland (Atlantic Coast)
+65	25	-1	Illinois (Big Ten)
+72	25	-1	Ohio (Mid-American)
+105	25	-1	NevadaLasVegas (Mountain West)
+3	-1	25	Iowa (Big Ten)
+7	-1	25	PennState (Big Ten)
+10	-1	25	SanDiegoState (Mountain West)
+14	-1	25	Northwestern (Big Ten)
+55	-1	25	Kent (Mid-American)
+61	-1	25	Minnesota (Big Ten)
+73	-1	25	IowaState (Big Twelve)
+107	-1	25	Indiana (Big Ten)
+40	26	-1	Purdue (Big Ten)
+78	26	-1	Stanford (Pacific Ten)
+94	26	-1	AirForce (Mountain West)
+112	26	-1	California (Pacific Ten)
+24	-1	26	Utah (Mountain West)
+52	-1	26	Washington (Pacific Ten)
+74	-1	26	SanJoseState (Western Athletic)
+79	-1	26	WashingtonState (Pacific Ten)
+83	-1	26	NotreDame (Independents)
+99	-1	26	Texas (Big Twelve)
+107	-1	26	Indiana (Big Ten)
+35	27	-1	Buffalo (Mid-American)
+44	27	-1	EasternMichigan (Mid-American)
+100	27	-1	Marshall (Mid-American)
+102	27	-1	MiamiFlorida (Big East)
+19	-1	27	Akron (Mid-American)
+20	-1	27	VirginiaTech (Big East)
+32	-1	27	BowlingGreenState (Mid-American)
+55	-1	27	Kent (Mid-American)
+80	-1	27	Temple (Big East)
+95	-1	27	Rutgers (Big East)
+101	-1	27	MichiganState (Big Ten)
+16	28	-1	Wisconsin (Big Ten)
+89	28	-1	Tulsa (Western Athletic)
+47	-1	28	FresnoState (Western Athletic)
+61	-1	28	Minnesota (Big Ten)
+90	-1	28	NorthCarolina (Atlantic Coast)
+93	-1	28	Cincinnati (Conference USA)
+108	-1	28	OklahomaState (Big Twelve)
+115	-1	28	Hawaii (Western Athletic)
+93	29	-1	Cincinnati (Conference USA)
+16	-1	29	Wisconsin (Big Ten)
+49	-1	29	Houston (Conference USA)
+58	-1	29	Louisville (Conference USA)
+76	-1	29	SouthernMississippi (Conference USA)
+43	30	-1	Connecticut (Independents)
+30	-1	30	BostonCollege (Big East)
+58	-1	30	Louisville (Conference USA)
