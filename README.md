@@ -1,10 +1,12 @@
 nodegroups - Node group structures
 ==================================
 
-Implementation of the *node group extraction framework* enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
+Implementation of the *node group extraction framework* (into S, T) enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
 
 - L. Šubelj, N. Blagus, and M. Bajec, "Group extraction for real-world networks: The case of communities, modules, and hubs and spokes," in Proc. of NetSci '13, 2013, p. 152.
 - L. Šubelj, S. Žitnik, N. Blagus, and M. Bajec, "Node mixing and group structure of complex software networks," Adv. Complex Syst., 2014. (in review)
+
+The adopted group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
 
 
 Compile
@@ -39,13 +41,40 @@ Usage
 
 Parameters:
 
-    -i: Input graph (list of undirected edges) (default:'graph.edgelist')
-    -l: Optional input node labels (node ID, node label)  (default:'graph.labels')
-    -o: Output extracted group assignments (default:'graph.groups')
+    -o:  Input and output file name prefix (can be overriden) (default:'graph')
+    -i:  Input graph edges (undirected edge per line) (default:'graph.edgelist')
+    -l:  Optional input node labels (node ID, node label) (default:'graph.labels')
+    -og: Output group assignments (for S and T) (default:'graph.groups')
+    -n:  Number of restarts of the optimization algorithm (default:1000)
+    -sm: Maximal number of steps in each optimization run (default:100000)
+    -sw: Stop optimization if no W improvement in steps (default:1000)
+    -rn: Number of restarts on Erdos-Renyi random graphs (default:100)
+    -rf: Force recomputation on random graphs if relative W difference smaller (default:1.1)
+    -rw: Stop group extraction if relative W difference smaller (default:1.01)
 
-Example:
+Example command:
 
-    ./nodegroups -i:graph.edgelist
+    ./nodegroups -o:graph
+
+Example input `graph.edgelist` (`-i:`):
+
+    0 1
+    0 2
+    1 2
+    2 3
+    3 4
+    3 5
+    ...
+
+Example output `graph.groups` (`-og:`):
+
+    # NId GroupSId GroupTId NLabel
+    0      0        0       foo
+    1      0        0       bar
+    2      0        0       foobar
+    3      1       -1       -
+    2     -1        1       -
+    ...
 
 
 Feedback

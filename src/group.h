@@ -12,8 +12,8 @@
 /////////////////////////////////////////////////
 
 #define DEF_OptRestarts 1000  /* 1000 */
-#define DEF_OptMxSteps 10000  /* 100000 */
-#define DEF_OptStopSteps 10000  /* 1000, disable: DEF_OptMxSteps */
+#define DEF_OptMxSteps 100000  /* 100000 */
+#define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
 #define DEF_RndRestarts 100  /* 100 */
 #define DEF_RndRecompW 1.1  /* 1.1, disable: INFINITY */
 #define DEF_RndStopW 1.01  /* 1.01 */
