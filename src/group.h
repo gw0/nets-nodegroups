@@ -43,20 +43,20 @@ public:
   double ModularityT;  // modularity measure on group T
 
   TStr GetStr(bool Verbose=true);
-  void RecomputeAll(PUNGraph& Graph, TIntV& NewSubSNIdV, TIntV& NewSubTNIdV);
+  void RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, const TIntV& NewSubTNIdV);
 };
 typedef TVec<TGroupST> TGroupSTV;
 
 /////////////////////////////////////////////////
 
-double LinksCnt(int& LinksST, int& LinksSTInv, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, bool DoDelEdges=false);
-double LinksCnt(PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, bool DoDelEdges=false);
-double GroupTau(PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV);
+double LinksCnt(int& LinksST, int& LinksSTInv, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
+double LinksCnt(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
+double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
 double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTInv);
-double GroupW(TGroupST& G, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV);
-double GroupWFast(TGroupST& G, PUNGraph& Graph, TIntV& SubSNIdV, TIntV& SubTNIdV, TIntV& AddSNIdV, TIntV& DelSNIdV, TIntV& AddTNIdV, TIntV& DelTNIdV, int LinksST, int LinksSTInv);
-double GroupExtractSingle(TGroupST& GBest, PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
-double GroupExtractRestarter(TGroupST& GBest, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
+double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
+double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTInv);
+double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
+double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
 double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps);
 int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
 
