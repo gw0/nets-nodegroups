@@ -7,6 +7,7 @@ DEPH = group.h
 DEPCPP = group.cpp
 
 TEST1 = test1
+TEST2 = test2
 
 #
 # Global configuration for SNAP makefiles
@@ -71,7 +72,7 @@ endif
 # Makefile for non-Microsoft compilers
 #
 
-all: $(MAIN) $(TEST1)
+all: $(MAIN) $(TEST1) $(TEST2)
 
 # COMPILE
 $(MAIN): $(MAIN).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o 
@@ -79,6 +80,9 @@ $(MAIN): $(MAIN).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o
 
 $(TEST1): $(TEST1).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o
 	$(CC) $(CXXFLAGS) -o $(TEST1) $(TEST1).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
+
+$(TEST2): $(TEST2).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o
+	$(CC) $(CXXFLAGS) -o $(TEST2) $(TEST2).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
 
 $(EXSNAP)/Snap.o: 
 	make -C $(EXSNAP)

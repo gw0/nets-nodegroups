@@ -1,5 +1,8 @@
 /**
- * nodegroups - Test1
+ * nodegroups - Test1: Compute W for given groups S and T
+ *
+ * Example:
+ *   ./test1 -o:../data_nets/football
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version (see group_h_VERSION)
@@ -85,7 +88,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // Test1 "./test1 -o:../data_nets/football"
+  // Test1
   TGroupSTV GroupV;
   TGroupST G = {};
   TStr LovroSStr = "Florida State,North Carolina,Virginia,Duke,Georgia Tech,Clemson,Maryland,North Carolina State,Wake Forest";

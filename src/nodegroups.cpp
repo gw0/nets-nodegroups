@@ -28,9 +28,9 @@ int main(int argc, char* argv[]) {
 
   // Parameters
   const TStr PrefixFNm = Env.GetIfArgPrefixStr("-o:", "graph", "Input and output file name prefix (can be overriden)");
-  const TStr InFNm = Env.GetIfArgPrefixStr("-i:", PrefixFNm + ".edgelist", "Input graph edges (undirected edge per line)");
-  const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Optional input node labels (node ID, node label)");
-  const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output group assignments (for S and T)");
+  const TStr InFNm = Env.GetIfArgPrefixStr("-i:", PrefixFNm + ".edgelist", "Input file with graph edges (undirected edge per line)");
+  const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Optional input file with node labels (node ID, node label)");
+  const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output file with group assignments (for S and T)");
   const TInt OptRestarts = Env.GetIfArgPrefixInt("-n:", DEF_OptRestarts, "Number of restarts of the optimization algorithm");
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TFlt OptStopSteps = Env.GetIfArgPrefixFlt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
