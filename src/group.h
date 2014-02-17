@@ -45,6 +45,9 @@ public:
   double ModularityS;  // Mod_S - modularity measure on group S (not used)
   double ModularityT;  // Mod_T - modularity measure on group T (not used)
 
+  bool operator== (const TGroupST& B) const { return this->W == B.W; };
+  bool operator< (const TGroupST& B) const { return this->W < B.W; };
+
   TStr GetStr(bool Verbose=true);
   void RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, const TIntV& NewSubTNIdV);
 };
