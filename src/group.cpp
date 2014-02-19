@@ -399,29 +399,31 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
  * @param[out] RAvg Output results of average node group extraction (into S, T)
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
- * @param RndRestarts Number of restarts on Erdos-Renyi random graphs
+ * @param RndGraphs Number of different Erdos-Renyi random graphs
+ * @param RndRestarts Number of restarts on each Erdos-Renyi random graph
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
  * @return Average value of group critetion W
  */
-double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF_RndRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
+double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
   PUNGraph GraphER;
-  TGroupST R = {};
   double WSum = 0.0;
   double WDiff;
   double WAvgDiff = INFINITY;
 
-  for (int i = 0; i < RndRestarts; ++i) {
+  for (int i = 0; i < RndGraphs; ++i) {
     // Generate a Erdos-Renyi random graph
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
+    //XXX: GraphER = TSnap::GetMxWcc(GraphER);  // largest weakly-connected component
 
     // Find node group extraction (into S, T)
-    GroupExtractSingle(R, GraphER, OptMxSteps, OptStopSteps, OptInitSample);
+    TGroupST R = {};
+    GroupExtractRestarter(R, GraphER, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Evaluate for average
     WSum += R.W;
-    if (i > RndRestarts / 5) {  // when enough data is available
+    if (i > RndGraphs / 5) {  // when enough data is available
       WDiff = R.W - WSum / (i + 1);
       if (WDiff < 0.0)
         WDiff = -WDiff;
@@ -432,7 +434,7 @@ double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF
     }
   }
 
-  return WSum / RndRestarts;
+  return WSum / RndGraphs;
 }
 
 
@@ -445,12 +447,13 @@ double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts/*=DEF
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
- * @param RndRestarts Number of restarts on Erdos-Renyi random graphs
+ * @param RndGraphs Number of different Erdos-Renyi random graphs
+ * @param RndRestarts Number of restarts on each Erdos-Renyi random graph
  * @param RndRecompW Force recomputation on random graphs if relative W difference smaller
  * @param RndStopW Stop group extraction if relative W difference smaller
  * @return Number of extracted groups
  */
-int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/, double RndStopW/*=DEF_RndStopW*/) {
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/, double RndStopW/*=DEF_RndStopW*/) {
   Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
   TGroupST G = {}, R = {};
   R.W = INFINITY;
@@ -461,7 +464,7 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
 
     // Recompute on corresponding Erdos-Renyi random graphs
     if (G.W < RndRecompW * R.W || G.LinksST > R.LinksST) {
-      R.W = GroupExtractAvgRndGnm(R, G.N, G.M, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
+      R.W = GroupExtractAvgRndGnm(R, G.N, G.M, RndGraphs, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
       if (R.W < 0.0)
         R.W = 0.0;
     }

@@ -17,7 +17,8 @@
 #define DEF_OptMxSteps 100000  /* 100000 */
 #define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
 #define DEF_OptInitSample 1  /* random: 0, specified: >0, all but specified: <0 */
-#define DEF_RndRestarts (DEF_OptRestarts / 10)  /* 200 */
+#define DEF_RndGraphs (DEF_OptRestarts / 10)  /* 200 */
+#define DEF_RndRestarts 1  /* 1 */
 #define DEF_RndRecompW INFINITY  /* 1.1, disable: INFINITY */
 #define DEF_RndStopW 1.1  /* 1.1 */
 
@@ -63,8 +64,8 @@ double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const T
 double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTc);
 double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
 double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
-double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
-int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
+double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndGraphs=DEF_RndGraphs, int RndRestarts=DEF_RndRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample);
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts=DEF_OptRestarts, int OptMxSteps=DEF_OptMxSteps, int OptStopSteps=DEF_OptStopSteps, int OptInitSample=DEF_OptInitSample, int RndGraphs=DEF_RndGraphs, int RndRestarts=DEF_RndRestarts, double RndRecompW=DEF_RndRecompW, double RndStopW=DEF_RndStopW);
 
 /////////////////////////////////////////////////
 

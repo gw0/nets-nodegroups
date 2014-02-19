@@ -35,7 +35,8 @@ int main(int argc, char* argv[]) {
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
-  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on Erdos-Renyi random graphs");
+  const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Number of different Erdos-Renyi random graphs");
+  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on each Erdos-Renyi random graph");
   const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Force recomputation on random graphs if relative W difference smaller");
   const TFlt RndStopW = Env.GetIfArgPrefixFlt("-rw:", DEF_RndStopW, "Stop group extraction if relative W difference smaller");
 
@@ -53,7 +54,7 @@ int main(int argc, char* argv[]) {
 
   // Run node group extraction framework
   TGroupSTV GroupV;
-  GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, RndRestarts, RndRecompW, RndStopW);
+  GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, RndGraphs, RndRestarts, RndRecompW, RndStopW);
 
   // Output
   FILE *F = fopen(OutFNm.CStr(), "wt");
