@@ -2,9 +2,9 @@
 # Makefile for nodegroups
 #
 
-MAIN = nodegroups
-DEPH = group.h
-DEPCPP = group.cpp
+EXPERIMENTS = ex01 ex02
+DEPH = ../group.h
+DEPCPP = ../group.cpp
 
 
 #
@@ -17,14 +17,14 @@ GLIBADV = glib-adv
 SNAPADV = snap-adv
 SNAPEXP = snap-exp
 
-CGLIB = ../snap/$(GLIB)
-CSNAP = ../snap/$(SNAP)
+CGLIB = ../../snap/$(GLIB)
+CSNAP = ../../snap/$(SNAP)
 
-EXGLIB = ../snap/$(GLIB)
-EXSNAP = ../snap/$(SNAP)
-EXGLIBADV = ../snap/$(GLIBADV)
-EXSNAPADV = ../snap/$(SNAPADV)
-EXSNAPEXP = ../snap/$(SNAPEXP)
+EXGLIB = ../../snap/$(GLIB)
+EXSNAP = ../../snap/$(SNAP)
+EXGLIBADV = ../../snap/$(GLIBADV)
+EXSNAPADV = ../../snap/$(SNAPADV)
+EXSNAPEXP = ../../snap/$(SNAPEXP)
 
 UNAME := $(shell uname)
 
@@ -70,17 +70,15 @@ endif
 # Makefile for non-Microsoft compilers
 #
 
-all: $(MAIN)
-	make -C experiments
+all: $(EXPERIMENTS)
 
 # COMPILE
-$(MAIN): $(MAIN).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o 
-	$(CC) $(CXXFLAGS) -o $(MAIN) $(MAIN).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
+%: %.cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o
+	$(CC) $(CXXFLAGS) -o $@ $@.cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) -I$(EXSNAPEXP) $(LDFLAGS) $(LIBS)
 
 $(EXSNAP)/Snap.o: 
 	make -C $(EXSNAP)
 
 clean:
-	make clean -C experiments
-	rm -f *.o $(MAIN) $(MAIN).exe *.user
+	rm -f *.o $(foreach name,$(EXPERIMENTS),$(name)) $(foreach name,$(EXPERIMENTS),$(name).exe) *.user
 	rm -rf Debug Release

@@ -1,18 +1,18 @@
 /**
- * nodegroups - Test1: Compute W for given groups S and T
+ * nodegroups/ex01 - Compute W for given labels in groups S and T
  *
  * Example:
- *   ./test1 -o:../data_nets/football
+ *   ./ex01 -o:../../data_nets/football -is:"Florida State,North Carolina,Virginia,Duke,Georgia Tech,Clemson,Maryland,North Carolina State,Wake Forest" -it:"Florida State,North Carolina,Virginia,Duke,Clemson,Maryland,Georgia Tech,North Carolina State,Wake Forest"
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version (see group_h_VERSION)
  */
 
 #include "Snap.h"
-#include "group.h"
+#include "../group.h"
 
 
-void test_lovro(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdLabelH, const TStr& LovroSStr, const TStr& LovroTStr) {
+void ComputeWForLabelST(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdLabelH, const TStr& LabelSStr, const TStr& LabelTStr) {
   TStr CurStr, TmpStr;
 
   // Prepare inverse mapping (till first space)
@@ -24,9 +24,9 @@ void test_lovro(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdLabelH, c
 
   // Populate group S (match without spaces)
   printf("\nGroup S:\n");
-  TStrV LovroSStrV;
-  LovroSStr.SplitOnAllCh(',', LovroSStrV);
-  for (TStrV::TIter I = LovroSStrV.BegI(); I != LovroSStrV.EndI(); I++) {
+  TStrV LabelSStrV;
+  LabelSStr.SplitOnAllCh(',', LabelSStrV);
+  for (TStrV::TIter I = LabelSStrV.BegI(); I != LabelSStrV.EndI(); I++) {
     CurStr = *I;
     CurStr.DelChAll(' ');
 
@@ -36,9 +36,9 @@ void test_lovro(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdLabelH, c
 
   // Populate group T (match without spaces)
   printf("\nGroup T:\n");
-  TStrV LovroTStrV;
-  LovroTStr.SplitOnAllCh(',', LovroTStrV);
-  for (TStrV::TIter I = LovroTStrV.BegI(); I != LovroTStrV.EndI(); I++) {
+  TStrV LabelTStrV;
+  LabelTStr.SplitOnAllCh(',', LabelTStrV);
+  for (TStrV::TIter I = LabelTStrV.BegI(); I != LabelTStrV.EndI(); I++) {
     CurStr = *I;
     CurStr.DelChAll(' ');
 
@@ -66,7 +66,7 @@ void test_lovro(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdLabelH, c
 int main(int argc, char* argv[]) {
   // Header
   Env = TEnv(argc, argv, TNotify::StdNotify);
-  Env.PrepArgs(TStr::Fmt("test1. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
+  Env.PrepArgs(TStr::Fmt("ex01. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
   TExeTm ExeTm;
   Try
 
@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
   const TStr InFNm = Env.GetIfArgPrefixStr("-i:", PrefixFNm + ".edgelist", "Input graph edges (undirected edge per line)");
   const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Optional input node labels (node ID, node label)");
   const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output group assignments (for S and T)");
+  const TStr LabelSStr = Env.GetIfArgPrefixStr("-is:", "", "Comma separated labels for group S");
+  const TStr LabelTStr = Env.GetIfArgPrefixStr("-it:", "", "Comma separated labels for group T");
 
   // Input
   PUNGraph Graph = TSnap::LoadEdgeList<PUNGraph>(InFNm, false);
@@ -88,18 +90,21 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // Test1
+  // Experiment
   TGroupSTV GroupV;
   TGroupST G = {};
-  TStr LovroSStr = "Florida State,North Carolina,Virginia,Duke,Georgia Tech,Clemson,Maryland,North Carolina State,Wake Forest";
-  TStr LovroTStr = "Florida State,North Carolina,Virginia,Duke,Clemson,Maryland,Georgia Tech,North Carolina State,Wake Forest";
-  test_lovro(G, Graph, NIdLabelH, LovroSStr, LovroTStr);
+  ComputeWForLabelST(G, Graph, NIdLabelH, LabelSStr, LabelTStr);
   GroupV.Add(G);
 
   // Output
   FILE *F = fopen(OutFNm.CStr(), "wt");
-  fprintf(F, "# Input: %s\n", InFNm.CStr());
-  fprintf(F, "# Nodes: %d    Edges: %d\n", GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# ex01. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+  fprintf(F, "#");
+  for (int i = 0; i < argc; ++i) {
+    fprintf(F, " %s", argv[i]);
+  }
+  fprintf(F, "\n");
+  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
   fprintf(F, "# Groups: %d\n", GroupV.Len());
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroupST& G = GroupV[j];
