@@ -48,7 +48,7 @@ public:
   bool operator== (const TGroupST& B) const { return this->W == B.W; };
   bool operator< (const TGroupST& B) const { return this->W < B.W; };
 
-  TStr GetStr(bool Verbose=true);
+  TStr GetStr(int Type=10);
   void RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, const TIntV& NewSubTNIdV);
 };
 typedef TVec<TGroupST> TGroupSTV;

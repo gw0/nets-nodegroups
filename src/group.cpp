@@ -12,15 +12,18 @@
  * Convert to string
  *
  * @param this Input TGroupST object
- * @param Verbose Switch output verbose level
+ * @param Type Select output format type
  */
-TStr TGroupST::GetStr(bool Verbose/*=true*/) {
-  if (Verbose) {
-    return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_STc=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
-
-  } else {
-    return TStr::Fmt("W=%-10.4f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5d Tau=%-6.4f Mod(S)=%-7.4f", W, N, M, SubSN, SubTN, LinksST, Tau, ModularityS);
+TStr TGroupST::GetStr(int Type/*=10*/) {
+  switch (Type) {
+    case 0:
+      return TStr::Fmt("W=%-10.4f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5d Tau=%-6.4f Mod(S)=%-7.4f", W, N, M, SubSN, SubTN, LinksST, Tau, ModularityS);
+    case 10:
+      return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_STc=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
+    case 11:
+      return TStr::Fmt("%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%.4f\t%.4f\t%.4f\t%.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
   }
+  return "";
 }
 
 
