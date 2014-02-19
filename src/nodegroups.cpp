@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output file with group assignments (for S and T)");
   const TInt OptRestarts = Env.GetIfArgPrefixInt("-n:", DEF_OptRestarts, "Number of restarts of the optimization algorithm");
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
-  const TFlt OptStopSteps = Env.GetIfArgPrefixFlt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
+  const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
   const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on Erdos-Renyi random graphs");
   const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Force recomputation on random graphs if relative W difference smaller");
@@ -57,8 +57,13 @@ int main(int argc, char* argv[]) {
 
   // Output
   FILE *F = fopen(OutFNm.CStr(), "wt");
-  fprintf(F, "# Input: %s\n", InFNm.CStr());
-  fprintf(F, "# Nodes: %d    Edges: %d\n", GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+  fprintf(F, "#");
+  for (int i = 0; i < argc; ++i) {
+    fprintf(F, " %s", argv[i]);
+  }
+  fprintf(F, "\n");
+  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
   fprintf(F, "# Groups: %d\n", GroupV.Len());
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroupST& G = GroupV[j];
