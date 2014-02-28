@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
   const TStr InFNm = Env.GetIfArgPrefixStr("-i:", PrefixFNm + ".edgelist", "Input file with graph edges (undirected edge per line)");
   const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Optional input file with node labels (node ID, node label)");
   const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output file with group assignments (for S and T)");
+  const TStr OutReportFNm = Env.GetIfArgPrefixStr("-or:", PrefixFNm + ".groupsreport", "Output file with only group reports (for S and T)");
   const TInt OptRestarts = Env.GetIfArgPrefixInt("-n:", DEF_OptRestarts, "Number of restarts of the optimization algorithm");
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
@@ -57,57 +58,78 @@ int main(int argc, char* argv[]) {
   TGroupSTV GroupV;
   GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, FinishCnt, FinishRndW, RndGraphs, RndRestarts, RndRecompW);
 
-  // Output
-  FILE *F = fopen(OutFNm.CStr(), "wt");
-  fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
-  fprintf(F, "#");
-  for (int i = 0; i < argc; ++i) {
-    fprintf(F, " %s", argv[i]);
-  }
-  fprintf(F, "\n");
-  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
-  fprintf(F, "# Groups: %d\n", GroupV.Len());
-  for (int j = 0; j < GroupV.Len(); ++j) {
-    TGroupST& G = GroupV[j];
-    fprintf(F, "#   %-3d %s\n", j, G.GetStr().CStr());
-  }
-  fprintf(F, "# NId\tGroupS\tGroupT\tNLabel\n");
-  for (int j = 0; j < GroupV.Len(); ++j) {
-    // in S and T
-    for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
-      int NId = GroupV[j].SubSNIdV[i].Val;
-      TStr NIdLabel = TStr("-");
-      if (NIdLabelH.IsKey(NId))
-        NIdLabel = NIdLabelH.GetDat(NId);
+  // Output "*.groups"
+  if(OutFNm.Len() > 0) {
+    FILE* F = fopen(OutFNm.CStr(), "wt");
+    fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+    fprintf(F, "#");
+    for (int i = 0; i < argc; ++i) {
+      fprintf(F, " %s", argv[i]);
+    }
+    fprintf(F, "\n");
+    fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
+    fprintf(F, "# Groups: %d\n", GroupV.Len());
+    for (int j = 0; j < GroupV.Len(); ++j) {
+      TGroupST& G = GroupV[j];
+      fprintf(F, "#   %-3d %s\n", j, G.GetStr().CStr());
+    }
+    fprintf(F, "# NId\tGroupS\tGroupT\tNLabel\n");
+    for (int j = 0; j < GroupV.Len(); ++j) {
+      // in S and T
+      for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
+        int NId = GroupV[j].SubSNIdV[i].Val;
+        TStr NIdLabel = TStr("-");
+        if (NIdLabelH.IsKey(NId))
+          NIdLabel = NIdLabelH.GetDat(NId);
 
-      if (GroupV[j].SubTNIdV.IsInBin(NId)) {  // in S and T
-        fprintf(F, "%d\t%d\t%d\t%s\n", NId, j, j, NIdLabel.CStr());
+        if (GroupV[j].SubTNIdV.IsInBin(NId)) {
+          fprintf(F, "%d\t%d\t%d\t%s\n", NId, j, j, NIdLabel.CStr());
+        }
+      }
+      // in S, but not T
+      for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
+        int NId = GroupV[j].SubSNIdV[i].Val;
+        TStr NIdLabel = TStr("-");
+        if (NIdLabelH.IsKey(NId))
+          NIdLabel = NIdLabelH.GetDat(NId);
+
+        if (!GroupV[j].SubTNIdV.IsInBin(NId)) {
+          fprintf(F, "%d\t%d\t-1\t%s\n", NId, j, NIdLabel.CStr());
+        }
+      }
+      // in T, but not S
+      for (int i = 0; i < GroupV[j].SubTNIdV.Len(); ++i) {
+        int NId = GroupV[j].SubTNIdV[i].Val;
+        TStr NIdLabel = TStr("-");
+        if (NIdLabelH.IsKey(NId))
+          NIdLabel = NIdLabelH.GetDat(NId);
+
+        if (!GroupV[j].SubSNIdV.IsInBin(NId)) {
+          fprintf(F, "%d\t-1\t%d\t%s\n", NId, j, NIdLabel.CStr());
+        }
       }
     }
-    // in S, but not T
-    for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
-      int NId = GroupV[j].SubSNIdV[i].Val;
-      TStr NIdLabel = TStr("-");
-      if (NIdLabelH.IsKey(NId))
-        NIdLabel = NIdLabelH.GetDat(NId);
-
-      if (!GroupV[j].SubTNIdV.IsInBin(NId)) {
-        fprintf(F, "%d\t%d\t-1\t%s\n", NId, j, NIdLabel.CStr());
-      }
-    }
-    // in T, but not S
-    for (int i = 0; i < GroupV[j].SubTNIdV.Len(); ++i) {
-      int NId = GroupV[j].SubTNIdV[i].Val;
-      TStr NIdLabel = TStr("-");
-      if (NIdLabelH.IsKey(NId))
-        NIdLabel = NIdLabelH.GetDat(NId);
-
-      if (!GroupV[j].SubSNIdV.IsInBin(NId)) {
-        fprintf(F, "%d\t-1\t%d\t%s\n", NId, j, NIdLabel.CStr());
-      }
-    }
+    fclose(F);
   }
-  fclose(F);
+
+  // Output "*.groupsreport"
+  if(OutReportFNm.Len() > 0) {
+    FILE* F = fopen(OutReportFNm.CStr(), "wt");
+    fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+    fprintf(F, "#");
+    for (int i = 0; i < argc; ++i) {
+      fprintf(F, " %s", argv[i]);
+    }
+    fprintf(F, "\n");
+    fprintf(F, "# Graphs: %d  Nodes: %d  Edges: %d\n", GroupV.Len(), GroupV[0].N, GroupV[0].M);
+    fprintf(F, "N\tM\tN_S\tM_S\tN_T\tM_T\tN_ST\tM_ST\tL_ST\tL_STc\tW\tTau\tMod_S\tMod_T\tType\n");
+    for (int j = 0; j < GroupV.Len(); ++j) {
+      TGroupST& G = GroupV[j];
+      fprintf(F, "%s\n", G.GetStr(21).CStr());
+    }
+    fprintf(F, "#\n");
+    fclose(F);
+  }
 
   // Footer
   Catch

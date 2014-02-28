@@ -7,7 +7,7 @@
 
 #ifndef group_h
 #define group_h
-#define group_h_VERSION 0.31
+#define group_h_VERSION 0.32
 
 #include "Snap.h"
 
@@ -18,7 +18,7 @@
 #define DEF_OptStopSteps 1000  /* 1000, disable: DEF_OptMxSteps */
 #define DEF_OptInitSample 1  /* random: 0, specified: >0, all but specified: <0 */
 #define DEF_FinishCnt 0  /* 0, infinity: 0 */
-#define DEF_FinishRndW 1.0  /* 1.0 */
+#define DEF_FinishRndW 1.0  /* 1.0 for 1% */
 #define DEF_RndGraphs 500  /* 500 */
 #define DEF_RndRestarts (DEF_OptRestarts / 200)  /* 10 */
 #define DEF_RndRecompW INFINITY  /* 1.1, disable: INFINITY */

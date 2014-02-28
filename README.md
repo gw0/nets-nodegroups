@@ -45,6 +45,7 @@ Parameters:
     -i: Input file with graph edges (undirected edge per line) (default:'graph.edgelist')
     -l: Optional input file with node labels (node ID, node label) (default:'graph.labels')
     -og: Output file with group assignments (for S and T) (default:'graph.groups')
+    -or: Output file with only group reports (for S and T) (default:'graph.groupsreport')
     -n: Number of restarts of the optimization algorithm (default:2000)
     -sm: Maximal number of steps in each optimization run (default:100000)
     -sw: Stop optimization if no W improvement in steps (default:1000)
@@ -78,6 +79,21 @@ Example output `graph.groups` (`-og:`):
     3     1      -1     -
     2     -1     1      -
     ...
+
+Example output `graph.groupsreport` (`-or:`):
+
+    # Graphs: 12  Nodes: 115  Edges: 613
+    N   M   N_S M_S N_T M_T N_ST    M_ST    L_ST    L_STc   W   Tau Mod_S   Mod_T   Type
+    115 613 9   36  9   36  9   36  72  25  823.0000    1.0000  0.1352  0.1352  COM
+    ...
+
+Description of group type names:
+
+- "COM": community (S = T)
+- "MOD": module (S inters T = 0)
+- "HSD": hub&spokes module (module and |T| = 1)
+- "MIX": mixture (else)
+- "CPX": core/periphery mixture (S subset T or T subset S)
 
 
 Feedback
