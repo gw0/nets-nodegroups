@@ -3,8 +3,11 @@
 *.swp
 *~
 
+README.html
 snap/
 java_*/
+data_*/
+ex02_*/
 
 *.o
 src/nodegroups
