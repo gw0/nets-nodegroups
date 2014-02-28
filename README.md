@@ -41,17 +41,19 @@ Usage
 
 Parameters:
 
-    -o:  Input and output file name prefix (can be overriden) (default:'graph')
-    -i:  Input graph edges (undirected edge per line) (default:'graph.edgelist')
-    -l:  Optional input node labels (node ID, node label) (default:'graph.labels')
-    -og: Output group assignments (for S and T) (default:'graph.groups')
-    -n:  Number of restarts of the optimization algorithm (default:2000)
+    -o: Input and output file name prefix (can be overriden) (default:'graph')
+    -i: Input file with graph edges (undirected edge per line) (default:'graph.edgelist')
+    -l: Optional input file with node labels (node ID, node label) (default:'graph.labels')
+    -og: Output file with group assignments (for S and T) (default:'graph.groups')
+    -n: Number of restarts of the optimization algorithm (default:2000)
     -sm: Maximal number of steps in each optimization run (default:100000)
     -sw: Stop optimization if no W improvement in steps (default:1000)
-    -ss: Initial random sample size of S ant T (0=random) (default:1)
-    -rn: Number of restarts on Erdos-Renyi random graphs (default:200)
-    -rf: Force recomputation on random graphs if relative W difference smaller (default:inf)
-    -rw: Stop group extraction if relative W difference smaller (default:1.1)
+    -ss: Initial random-sample size of S ant T (0=random) (default:1)
+    -fn: Finish after extracting so many groups (default:0)
+    -fw: Finish if W smaller than top percentile on random graphs (default:1.0)
+    -rg: Number of different Erdos-Renyi random graphs (default:500)
+    -rn: Number of restarts on each Erdos-Renyi random graph (default:10)
+    -rf: Force W recomputation on random graphs when relative difference smaller (default:inf)
 
 Example command:
 

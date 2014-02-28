@@ -51,7 +51,11 @@ void ComputeWForLabelST(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdL
 
   // Recompute on corresponding Erdos-Renyi random graphs
   TGroupST R;
-  R.W = GroupExtractAvgRndGnm(R, G.N, G.M);
+  TGroupSTV GroupERV;
+  GroupExtractRndGnms(GroupERV, G.N, G.M);
+  R = GroupERV[(int)(GroupERV.Len() * (100.0 - DEF_FinishRndW) / 100.0)];
+  if (R.W < 0.0)
+    R.W = 0.0;
 
   // Print status
   printf("\n");

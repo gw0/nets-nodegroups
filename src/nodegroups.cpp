@@ -35,10 +35,11 @@ int main(int argc, char* argv[]) {
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
+  const TInt FinishCnt = Env.GetIfArgPrefixInt("-fn:", DEF_FinishCnt, "Finish after extracting so many groups");
+  const TFlt FinishRndW = Env.GetIfArgPrefixFlt("-fw:", DEF_FinishRndW, "Finish if W smaller than top percentile on random graphs");
   const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Number of different Erdos-Renyi random graphs");
   const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on each Erdos-Renyi random graph");
-  const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Force recomputation on random graphs if relative W difference smaller");
-  const TFlt RndStopW = Env.GetIfArgPrefixFlt("-rw:", DEF_RndStopW, "Stop group extraction if relative W difference smaller");
+  const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Force W recomputation on random graphs when relative difference smaller");
 
   // Input
   PUNGraph Graph = TSnap::LoadEdgeList<PUNGraph>(InFNm, false);
@@ -54,7 +55,7 @@ int main(int argc, char* argv[]) {
 
   // Run node group extraction framework
   TGroupSTV GroupV;
-  GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, RndGraphs, RndRestarts, RndRecompW, RndStopW);
+  GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, FinishCnt, FinishRndW, RndGraphs, RndRestarts, RndRecompW);
 
   // Output
   FILE *F = fopen(OutFNm.CStr(), "wt");
@@ -72,6 +73,7 @@ int main(int argc, char* argv[]) {
   }
   fprintf(F, "# NId\tGroupS\tGroupT\tNLabel\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
+    // in S and T
     for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
       int NId = GroupV[j].SubSNIdV[i].Val;
       TStr NIdLabel = TStr("-");
@@ -80,17 +82,27 @@ int main(int argc, char* argv[]) {
 
       if (GroupV[j].SubTNIdV.IsInBin(NId)) {  // in S and T
         fprintf(F, "%d\t%d\t%d\t%s\n", NId, j, j, NIdLabel.CStr());
-      } else {  // in S, but not T
+      }
+    }
+    // in S, but not T
+    for (int i = 0; i < GroupV[j].SubSNIdV.Len(); ++i) {
+      int NId = GroupV[j].SubSNIdV[i].Val;
+      TStr NIdLabel = TStr("-");
+      if (NIdLabelH.IsKey(NId))
+        NIdLabel = NIdLabelH.GetDat(NId);
+
+      if (!GroupV[j].SubTNIdV.IsInBin(NId)) {
         fprintf(F, "%d\t%d\t-1\t%s\n", NId, j, NIdLabel.CStr());
       }
     }
+    // in T, but not S
     for (int i = 0; i < GroupV[j].SubTNIdV.Len(); ++i) {
       int NId = GroupV[j].SubTNIdV[i].Val;
       TStr NIdLabel = TStr("-");
       if (NIdLabelH.IsKey(NId))
         NIdLabel = NIdLabelH.GetDat(NId);
 
-      if (!GroupV[j].SubSNIdV.IsInBin(NId)) {  // in T, but not S
+      if (!GroupV[j].SubSNIdV.IsInBin(NId)) {
         fprintf(F, "%d\t-1\t%d\t%s\n", NId, j, NIdLabel.CStr());
       }
     }

@@ -394,9 +394,9 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
 
 
 /**
- * Estimate average W on Erdos-Renyi random graphs
+ * Estimate group extraction results on random Erdos-Renyi graphs
  *
- * @param[out] RAvg Output results of average node group extraction (into S, T)
+ * @param[out] GroupERV List of results of node group extraction (into S, T)
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
  * @param RndGraphs Number of different Erdos-Renyi random graphs
@@ -404,37 +404,25 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
- * @return Average value of group critetion W
+ * @return Number of estimated group extraction results
  */
-double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/) {
+int GroupExtractRndGnms(TGroupSTV& GroupERV, int N, int M, int RndGraphs, int RndRestarts, int OptMxSteps, int OptStopSteps, int OptInitSample) {
   PUNGraph GraphER;
-  double WSum = 0.0;
-  double WDiff;
-  double WAvgDiff = INFINITY;
 
   for (int i = 0; i < RndGraphs; ++i) {
     // Generate a Erdos-Renyi random graph
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
-    //XXX: GraphER = TSnap::GetMxWcc(GraphER);  // largest weakly-connected component
+    GraphER = TSnap::GetMxWcc(GraphER);  // largest weakly-connected component
 
     // Find node group extraction (into S, T)
     TGroupST R = {};
     GroupExtractRestarter(R, GraphER, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
-    // Evaluate for average
-    WSum += R.W;
-    if (i > RndGraphs / 5) {  // when enough data is available
-      WDiff = R.W - WSum / (i + 1);
-      if (WDiff < 0.0)
-        WDiff = -WDiff;
-      if (WDiff < WAvgDiff) {  // better estimate of average
-        WAvgDiff = WDiff;
-        RAvg = R;
-      }
-    }
+    // Add to list
+    GroupERV.AddSorted(R);
   }
 
-  return WSum / RndGraphs;
+  return GroupERV.Len();
 }
 
 
@@ -447,13 +435,14 @@ double GroupExtractAvgRndGnm(TGroupST& RAvg, int N, int M, int RndGraphs/*=DEF_R
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
+ * @param FinishCnt Finish after extracting so many groups
+ * @param FinishRndW Finish if W smaller than top percentile on random graphs
  * @param RndGraphs Number of different Erdos-Renyi random graphs
  * @param RndRestarts Number of restarts on each Erdos-Renyi random graph
- * @param RndRecompW Force recomputation on random graphs if relative W difference smaller
- * @param RndStopW Stop group extraction if relative W difference smaller
+ * @param RndRecompW Force W recomputation on random graphs when relative difference smaller
  * @return Number of extracted groups
  */
-int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/, double RndStopW/*=DEF_RndStopW*/) {
+int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int FinishCnt/*=DEF_FinishCnt*/, double FinishRndW/*=DEF_FinishRndW*/, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/) {
   Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
   TGroupST G = {}, R = {};
   R.W = INFINITY;
@@ -464,7 +453,9 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
 
     // Recompute on corresponding Erdos-Renyi random graphs
     if (G.W < RndRecompW * R.W || G.LinksST > R.LinksST) {
-      R.W = GroupExtractAvgRndGnm(R, G.N, G.M, RndGraphs, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
+      TGroupSTV GroupERV;
+      GroupExtractRndGnms(GroupERV, G.N, G.M, RndGraphs, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
+      R = GroupERV[(int)((GroupERV.Len() - 1) * (100.0 - FinishRndW) / 100.0)];
       if (R.W < 0.0)
         R.W = 0.0;
     }
@@ -473,12 +464,15 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
     printf("\n");
     printf("%-3d %s\n", GroupV.Len(), G.GetStr().CStr());
     printf("  r %s\n", R.GetStr().CStr());
+
+    if(G.W < R.W)
+      break;
     GroupV.Add(G);
 
     // Delete links between S and T
     LinksCnt(Graph, G.SubSNIdV, G.SubTNIdV, true);
     Graph = TSnap::GetMxWcc(Graph);  // largest weakly-connected component
-  } while(G.W > RndStopW * R.W);
+  } while(FinishCnt == 0 || GroupV.Len() < FinishCnt);
 
   return GroupV.Len();
 }
