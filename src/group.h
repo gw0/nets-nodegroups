@@ -2,12 +2,12 @@
  * nodegroups - Group structures header file
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
- * @version 0.22
+ * @version 0.34
  */
 
 #ifndef group_h
 #define group_h
-#define group_h_VERSION 0.32
+#define group_h_VERSION 0.34
 
 #include "Snap.h"
 
@@ -23,7 +23,7 @@
 #define DEF_RndRestarts (DEF_OptRestarts / 200)  /* 10 */
 #define DEF_RndRecompW INFINITY  /* 1.1, disable: INFINITY */
 
-/** Results of node group extraction (into S, T) */
+/** ST-group extraction results */
 class TGroupST {
 public:
   int N;  // N - number of nodes in graph

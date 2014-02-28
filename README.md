@@ -1,12 +1,12 @@
 nodegroups - Node group structures
 ==================================
 
-Implementation of the *node group extraction framework* (into S, T) enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
+Implementation of the *ST-group extraction framework* enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
 
 - L. Šubelj, N. Blagus, and M. Bajec, "Group extraction for real-world networks: The case of communities, modules, and hubs and spokes," in Proc. of NetSci '13, 2013, p. 152.
 - L. Šubelj, S. Žitnik, N. Blagus, and M. Bajec, "Node mixing and group structure of complex software networks," Adv. Complex Syst., 2014. (in review)
 
-The adopted group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
+The adopted ST-group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
 
 
 Compile
@@ -44,8 +44,8 @@ Parameters:
     -o: Input and output file name prefix (can be overriden) (default:'graph')
     -i: Input file with graph edges (undirected edge per line) (default:'graph.edgelist')
     -l: Optional input file with node labels (node ID, node label) (default:'graph.labels')
-    -og: Output file with group assignments (for S and T) (default:'graph.groups')
-    -or: Output file with only group reports (for S and T) (default:'graph.groupsreport')
+    -og: Output file with ST-group assignments (default:'graph.groups')
+    -os: Output file with only ST-group extraction summary (default:'graph.groupssum')
     -n: Number of restarts of the optimization algorithm (default:2000)
     -sm: Maximal number of steps in each optimization run (default:100000)
     -sw: Stop optimization if no W improvement in steps (default:1000)

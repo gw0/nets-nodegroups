@@ -15,7 +15,7 @@
 /**
  * Estimate samples of random Erdos-Renyi graphs
  *
- * @param[out] GroupV List of results of node group extraction (into S, T)
+ * @param[out] GroupV Output list of ST-group extraction results
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
  * @param RndGraphs Number of different Erdos-Renyi random graphs
@@ -35,7 +35,7 @@ int GroupExtractRndGnms(TGroupSTV& GroupV, int N, int M, int RndGraphs, int OptM
       GraphER = TSnap::GetMxWcc(GraphER);
     }
 
-    // Find node group extraction (into S, T)
+    // Find ST-group extraction
     TGroupST R = {};
     GroupExtractRestarter(R, GraphER, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
@@ -82,13 +82,13 @@ int main(int argc, char* argv[]) {
     fprintf(F, " %s", argv[i]);
   }
   fprintf(F, "\n");
-  fprintf(F, "# Graphs: %d  Nodes: %d  Edges: %d\n", GroupV.Len(), GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# Input: (Erdos-Renyi random graphs)  Nodes: %d  Edges: %d\n", GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# Group results: %d\n", GroupV.Len());
   fprintf(F, "N\tM\tN_S\tM_S\tN_T\tM_T\tN_ST\tM_ST\tL_ST\tL_STc\tW\tTau\tMod_S\tMod_T\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroupST& G = GroupV[j];
     fprintf(F, "%s\n", G.GetStr(21).CStr());
   }
-  fprintf(F, "#\n");
   fclose(F);
 
   // Footer

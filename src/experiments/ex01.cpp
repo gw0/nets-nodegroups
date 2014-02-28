@@ -46,7 +46,7 @@ void ComputeWForLabelST(TGroupST& G, const PUNGraph& Graph, const TIntStrH& NIdL
     printf("%d\t%s\t%s\n", LabelNIdH.GetDat(CurStr).Val, CurStr.CStr(), NIdLabelH.GetDat(LabelNIdH.GetDat(CurStr).Val).CStr());
   }
 
-  // Populate results of node group extraction
+  // Populate all ST-group extraction results
   G.RecomputeAll(Graph, G.SubSNIdV, G.SubTNIdV);
 
   // Recompute on corresponding Erdos-Renyi random graphs

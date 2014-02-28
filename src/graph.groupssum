@@ -1,6 +1,7 @@
-# nodegroups. Build: 0.32, 15:12:57, Feb 28 2014. Time: 15:14:48
+# nodegroups. Build: 0.33, 17:32:58, Feb 28 2014. Time: 17:35:55
 # ./nodegroups
-# Graphs: 12  Nodes: 115  Edges: 613
+# Input: graph.edgelist  Nodes: 115  Edges: 613
+# Group results: 12
 N	M	N_S	M_S	N_T	M_T	N_ST	M_ST	L_ST	L_STc	W	Tau	Mod_S	Mod_T	Type
 115	613	9	36	9	36	9	36	72	25	823.0000	1.0000	0.1352	0.1352	COM
 115	582	9	36	9	36	9	36	72	30	818.0000	1.0000	0.1164	0.1164	COM
@@ -14,4 +15,3 @@ N	M	N_S	M_S	N_T	M_T	N_ST	M_ST	L_ST	L_STc	W	Tau	Mod_S	Mod_T	Type
 115	293	9	31	9	31	9	31	62	34	696.2222	1.0000	0.0953	0.0953	COM
 115	265	6	15	6	15	6	15	30	28	517.0000	1.0000	0.0668	0.0668	COM
 115	251	7	12	7	12	7	12	24	20	350.2857	1.0000	0.0678	0.0678	COM
-#

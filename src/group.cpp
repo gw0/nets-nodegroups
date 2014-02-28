@@ -32,9 +32,9 @@ TStr TGroupST::GetStr(int Type/*=20*/) {
 
 
 /**
- * Recompute all results of node group extraction (except W)
+ * Recompute all ST-group extraction results (except W)
  *
- * @param[out] this Output TGroupST object
+ * @param[out] this Output ST-group extraction results (except W)
  * @param Graph Input graph
  * @param NewSubSNIdV List of node IDs in group S
  * @param NewSubTNIdV List of node IDs in group T
@@ -70,8 +70,8 @@ void TGroupST::RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, con
 /**
  * Count edges L(S,T) between groups S and T
  *
- * @param[out] LinksST Number of edges L(S,T) between groups S and T
- * @param[out] LinksSTc Number of edges L(S,T) between groups S and complement T
+ * @param[out] LinksST Output number of edges L(S,T) between groups S and T
+ * @param[out] LinksSTc Output number of edges L(S,T) between groups S and complement T
  * @param Graph Input graph
  * @param SubSNIdV List of node IDs in group S
  * @param SubTNIdV List of node IDs in group T
@@ -171,7 +171,7 @@ TStr GroupName(const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
  * @param LinksST Number of edges L(S,T) between groups S and T
  * @param LinksSTc Number of edges L(S,T) between groups S and complement T
  * @param Graph Input graph
- * @param[out] G Output results of node group extraction (into S, T)
+ * @param[out] G Output ST-group extraction results
  * @return Value of group critetion W
  */
 double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc) {
@@ -200,7 +200,7 @@ double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const T
 /**
  * Fast estimate of group criterion W after swapping
  *
- * @param[out] G Output estimate of node group extraction (into S, T)
+ * @param[out] G Output estimate of ST-group extraction results
  * @param SubSNIdV List of node IDs in group S
  * @param SubTNIdV List of node IDs in group T
  * @param AddSNIdV Proposed list of node IDs to add into S
@@ -259,9 +259,9 @@ double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, con
 
 
 /**
- * Node group extraction algorithm (into S, T)
+ * ST-group extraction algorithm
  *
- * @param[out] GBest Output results of node group extraction (into S, T)
+ * @param[out] GBest Output best ST-group extraction results
  * @param Graph Input graph
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
@@ -396,16 +396,16 @@ double GroupExtractSingle(TGroupST& GBest, const PUNGraph& Graph, int OptMxSteps
     }
   }
 
-  // Populate results of node group extraction
+  // Populate all ST-group extraction results
   GBest.RecomputeAll(Graph, GBest.SubSNIdV, GBest.SubTNIdV);
   return GBest.W;
 }
 
 
 /**
- * Restarter for finding best node group extraction (into S, T)
+ * Restarter for finding best ST-group extraction
  *
- * @param[out] GBest Output results of best node group extraction (into S, T)
+ * @param[out] GBest Output best ST-group extraction results
  * @param Graph Input graph
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
@@ -418,7 +418,7 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
   GBest.W = -INFINITY;
 
   for (int i = 0; i < OptRestarts; ++i) {
-    // Find node group extraction (into S, T)
+    // Find ST-group extraction
     GroupExtractSingle(G, Graph, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Evaluate for best
@@ -432,9 +432,9 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
 
 
 /**
- * Estimate group extraction results on random Erdos-Renyi graphs
+ * Estimate ST-group extraction results on random Erdos-Renyi graphs
  *
- * @param[out] GroupERV List of results of node group extraction (into S, T)
+ * @param[out] GroupERV Output list of ST-group extraction results
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
  * @param RndGraphs Number of different Erdos-Renyi random graphs
@@ -442,7 +442,7 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
- * @return Number of estimated group extraction results
+ * @return Number of estimated ST-group extraction results
  */
 int GroupExtractRndGnms(TGroupSTV& GroupERV, int N, int M, int RndGraphs, int RndRestarts, int OptMxSteps, int OptStopSteps, int OptInitSample) {
   PUNGraph GraphER;
@@ -452,7 +452,7 @@ int GroupExtractRndGnms(TGroupSTV& GroupERV, int N, int M, int RndGraphs, int Rn
     GraphER = TSnap::GenRndGnm<PUNGraph>(N, M, false);
     GraphER = TSnap::GetMxWcc(GraphER);  // largest weakly-connected component
 
-    // Find node group extraction (into S, T)
+    // Find ST-group extraction
     TGroupST R = {};
     GroupExtractRestarter(R, GraphER, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
@@ -465,9 +465,9 @@ int GroupExtractRndGnms(TGroupSTV& GroupERV, int N, int M, int RndGraphs, int Rn
 
 
 /**
- * Group extraction framework (into S, T)
+ * ST-group extraction framework
  *
- * @param[out] GroupV Output list of results of node group extraction (into S, T)
+ * @param[out] GroupV Output list of ST-group extraction results
  * @param[in,out] Graph Input graph
  * @param OptRestarts Number of restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
@@ -486,7 +486,7 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
   R.W = INFINITY;
 
   do {
-    // Find node group extraction (into S, T)
+    // Find ST-group extraction
     GroupExtractRestarter(G, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Recompute on corresponding Erdos-Renyi random graphs
