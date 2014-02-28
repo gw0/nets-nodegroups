@@ -2,7 +2,7 @@
  * nodegroups/ex02 - Analyze random Erdos-Renyi graph probability distribution
  *
  * Example:
- *   ./ex02 -dd:ex02_lwcc_n100_m1000.distw -dn:100 -dm:1000 -rn:100000
+ *   ./ex02 -dd:ex02_lwcc_n100_m1000.distw -dn:100 -dm:1000 -rg:100000 -rn:1
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version (see group_h_VERSION)
@@ -18,6 +18,7 @@
  * @param[out] GroupV List of results of node group extraction (into S, T)
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
+ * @param RndGraphs Number of different Erdos-Renyi random graphs
  * @param RndRestarts Number of restarts on Erdos-Renyi random graphs
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
@@ -63,8 +64,8 @@ int main(int argc, char* argv[]) {
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
-  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", 1, "Number of restarts on each Erdos-Renyi random graph");
-  const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndRestarts, "Number of different Erdos-Renyi random graphs");
+  const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Number of different Erdos-Renyi random graphs");
+  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on each Erdos-Renyi random graph");
   const TBool RndMxWcc = Env.GetIfArgPrefixBool("-rc:", true, "Always strip to largest weakly-connected component");
   if (RndDistFNm.Empty())
     exit(-1);
