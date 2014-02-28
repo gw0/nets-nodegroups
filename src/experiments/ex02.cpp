@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
   fprintf(F, "N\tM\tN_S\tM_S\tN_T\tM_T\tN_ST\tM_ST\tL_ST\tL_STc\tW\tTau\tMod_S\tMod_T\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroupST& G = GroupV[j];
-    fprintf(F, "%s\n", G.GetStr(11).CStr());
+    fprintf(F, "%s\n", G.GetStr(21).CStr());
   }
   fprintf(F, "#\n");
   fclose(F);

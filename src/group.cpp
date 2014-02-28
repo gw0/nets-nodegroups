@@ -14,7 +14,7 @@
  * @param this Input TGroupST object
  * @param Type Select output format type
  */
-TStr TGroupST::GetStr(int Type/*=10*/) {
+TStr TGroupST::GetStr(int Type/*=20*/) {
   switch (Type) {
     case 0:
       return TStr::Fmt("W=%-10.4f N=%-5d M=%-5d |S|=%-5d |T|=%-5d L(S,T)=%-5d Tau=%-6.4f Mod(S)=%-7.4f", W, N, M, SubSN, SubTN, LinksST, Tau, ModularityS);
@@ -22,6 +22,10 @@ TStr TGroupST::GetStr(int Type/*=10*/) {
       return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_STc=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
     case 11:
       return TStr::Fmt("%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%.4f\t%.4f\t%.4f\t%.4f", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT);
+    case 20:
+      return TStr::Fmt("N=%-5d M=%-5d N_S=%-5d M_S=%-5d N_T=%-5d M_T=%-5d N_ST=%-5d M_ST=%-5d L_ST=%-5d L_STc=%-5d W=%-10.4f Tau=%-6.4f Mod_S=%-7.4f Mod_T=%-7.4f Type=%s", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT, GroupName(SubSNIdV, SubTNIdV).CStr());
+    case 21:
+      return TStr::Fmt("%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%.4f\t%.4f\t%.4f\t%.4f\t%s", N, M, SubSN, SubSM, SubTN, SubTM, SubSTN, SubSTM, LinksST, LinksSTc, W, Tau, ModularityS, ModularityT, GroupName(SubSNIdV, SubTNIdV).CStr());
   }
   return "";
 }
@@ -56,7 +60,7 @@ void TGroupST::RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, con
   SubSTM = SubST->GetEdges();
   LinksCnt(LinksST, LinksSTc, Graph, SubSNIdV, SubTNIdV, false);
 
-  Tau = GroupTau(Graph, SubSNIdV, SubTNIdV);
+  Tau = GroupTau(SubSNIdV, SubTNIdV);
   W = GroupW(N, SubSN, SubTN, LinksST, LinksSTc);
   ModularityS = TSnap::GetModularity(Graph, SubSNIdV, N);
   ModularityT = TSnap::GetModularity(Graph, SubTNIdV, N);
@@ -112,13 +116,47 @@ double LinksCnt(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTN
 /**
  * Group type parameter Tau(S,T)
  *
- * @param Graph Input graph
  * @param SubSNIdV List of node IDs in group S
  * @param SubTNIdV List of node IDs in group T
  * @return Value of group type parameter Tau
  */
-double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
+double GroupTau(const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
   return (double)SubSNIdV.IntrsLen(SubTNIdV) / SubSNIdV.UnionLen(SubTNIdV);
+}
+
+
+/**
+ * Group type name
+ *
+ * Values:
+ *   - "COM": community (S = T)
+ *   - "MOD": module (S inters T = 0)
+ *   - "HSD": hub&spokes module (module and |T| = 1)
+ *   - "MIX": mixture (else)
+ *   - "CPX": core/periphery mixture (S subset T or T subset S)
+ *
+ * @param SubSNIdV List of node IDs in group S
+ * @param SubTNIdV List of node IDs in group T
+ * @return Name of group type
+ */
+TStr GroupName(const TIntV& SubSNIdV, const TIntV& SubTNIdV) {
+  int IntrsLen = SubSNIdV.IntrsLen(SubTNIdV);
+
+  if(SubSNIdV == SubTNIdV) {  // community
+    return "COM";
+
+  } else if(IntrsLen == 0) {  // module
+    if(SubTNIdV.Len() == 1)  // hub&spokes module
+      return "HSD";
+    else
+      return "MOD";
+
+  } else {  // mixture
+    if(IntrsLen == SubSNIdV.Len() || IntrsLen == SubTNIdV.Len())  // core/periphery mixture
+      return "CPX";
+    else
+      return "MIX";
+  }
 }
 
 

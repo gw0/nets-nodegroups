@@ -7,7 +7,7 @@
 
 #ifndef group_h
 #define group_h
-#define group_h_VERSION 0.3
+#define group_h_VERSION 0.31
 
 #include "Snap.h"
 
@@ -50,7 +50,7 @@ public:
   bool operator== (const TGroupST& B) const { return this->W == B.W; };
   bool operator< (const TGroupST& B) const { return this->W < B.W; };
 
-  TStr GetStr(int Type=10);
+  TStr GetStr(int Type=20);
   void RecomputeAll(const PUNGraph& Graph, const TIntV& NewSubSNIdV, const TIntV& NewSubTNIdV);
 };
 typedef TVec<TGroupST> TGroupSTV;
@@ -59,7 +59,8 @@ typedef TVec<TGroupST> TGroupSTV;
 
 double LinksCnt(int& LinksST, int& LinksSTc, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
 double LinksCnt(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, bool DoDelEdges=false);
-double GroupTau(const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
+double GroupTau(const TIntV& SubSNIdV, const TIntV& SubTNIdV);
+TStr GroupName(const TIntV& SubSNIdV, const TIntV& SubTNIdV);
 double GroupW(int N, int SubSN, int SubTN, int LinksST, int LinksSTc);
 double GroupW(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV);
 double GroupWFast(TGroupST& G, const PUNGraph& Graph, const TIntV& SubSNIdV, const TIntV& SubTNIdV, const TIntV& AddSNIdV, const TIntV& DelSNIdV, const TIntV& AddTNIdV, const TIntV& DelTNIdV, int LinksST, int LinksSTc);
