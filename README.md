@@ -8,6 +8,10 @@ To research and explore node group structure of various networks, we introduced 
 
 The adopted network node group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
 
+Cite this code repository by using DOI:
+
+[![DOI:10.5281/zenodo.11589](https://zenodo.org/badge/doi/10.5281/zenodo.11589.png)](http://dx.doi.org/10.5281/zenodo.11589)
+
 
 Compile
 -------
@@ -111,7 +115,7 @@ If you encounter any bugs or have feature requests, please file them in the [iss
 License
 -------
 
-Copyright (c) 2014 - *gw0* [<http://gw.tnode.com/>] &lt;<gw.2014@tnode.com>&gt;
+Copyright (c) 2014 *gw0* [<http://gw.tnode.com/>] &lt;<gw.2014@tnode.com>&gt;
 
 This library is licensed under the [GNU Affero General Public License 3.0+](LICENSE_AGPL-3.0.txt) (AGPL-3.0+). Note that it is mandatory to make all modifications and complete source code of this library publicly available to any user.
 
