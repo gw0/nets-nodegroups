@@ -1,5 +1,5 @@
 /**
- * nodegroups/ex01 - Compute W for given labels in groups S and T
+ * nets-nodegroups/ex01 - Compute W for given labels in groups S and T
  *
  * Example:
  *   ./ex01 -o:../../data_nets/football -is:"Florida State,North Carolina,Virginia,Duke,Georgia Tech,Clemson,Maryland,North Carolina State,Wake Forest" -it:"Florida State,North Carolina,Virginia,Duke,Clemson,Maryland,Georgia Tech,North Carolina State,Wake Forest"

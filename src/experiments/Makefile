@@ -1,5 +1,5 @@
 #
-# Makefile for nodegroups
+# Makefile for nets-nodegroups/experiments/
 #
 
 EXPERIMENTS = ex01 ex02

@@ -1,12 +1,12 @@
 /**
- * nodegroups - Main code for node group structures
+ * nets-nodegroups - Research node group structure of networks
  *
- * Implementation of the *ST-group extraction framework* enables the exploration of node group structures of different networks, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Description of the algorithm can be found in:
+ * To research and explore node group structure of various networks, we introduced the *group type parameter Tau* and implemented a *node group extraction framework*. The framework is capable of identifying groups, such as communities, modules, core/periphery, hubs&spokes, or similar structures. Detailed description of the algorithm can be found in:
  *
  * - L. Šubelj, N. Blagus, and M. Bajec, "Group extraction for real-world networks: The case of communities, modules, and hubs and spokes," in Proc. of NetSci '13, 2013, p. 152.
- * - L. Šubelj, S. Žitnik, N. Blagus, and M. Bajec, "Node mixing and group structure of complex software networks," Adv. Complex Syst., 2014. (in review)
+ * - L. Šubelj, S. Žitnik, N. Blagus, and M. Bajec, “Node mixing and group structure of complex software networks,” Adv. Complex Syst., vol. 17, 2014.
  *
- * The adopted ST-group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
+ * The adopted network node group extraction framework extracts groups from a simple undirected graph sequentially. An optimization method (currently random-restart hill climbing) is used to maximize the group criterion *W(S,T)* and extract group *S* with the corresponding linking pattern *T*. After extraction edges between *S* and *T* are removed and the whole process repeated on the largest weakly-connected component until the group criterion *W* is larger than expected on a Erdös-Rényi random graph.
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version (see group_h_VERSION)
@@ -28,7 +28,7 @@
  */
 void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
   FILE* F = fopen(OutFNm.CStr(), OutMode.CStr());
-  fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+  fprintf(F, "# nets-nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
   fprintf(F, "#");
   for (int i = 0; i < argc; ++i) {
     fprintf(F, " %s", argv[i]);
@@ -92,7 +92,7 @@ void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*con
  */
 void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
   FILE* F = fopen(OutSumFNm.CStr(), OutMode.CStr());
-  fprintf(F, "# nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
+  fprintf(F, "# nets-nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
   fprintf(F, "#");
   for (int i = 0; i < argc; ++i) {
     fprintf(F, " %s", argv[i]);
@@ -115,7 +115,7 @@ void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc,
 int main(int argc, char* argv[]) {
   // Header
   Env = TEnv(argc, argv, TNotify::StdNotify);
-  Env.PrepArgs(TStr::Fmt("nodegroups. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
+  Env.PrepArgs(TStr::Fmt("nets-nodegroups. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
   TExeTm ExeTm;
   Try
 

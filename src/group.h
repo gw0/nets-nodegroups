@@ -1,5 +1,5 @@
 /**
- * nodegroups - Group structures header file
+ * nets-nodegroups - Group structure functions header file
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version 0.34

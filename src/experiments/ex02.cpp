@@ -1,5 +1,5 @@
 /**
- * nodegroups/ex02 - Analyze random Erdos-Renyi graph probability distribution
+ * nets-nodegroups/ex02 - Analyze random Erdos-Renyi graph probability distribution
  *
  * Example:
  *   ./ex02 -dd:ex02_lwcc_n100_m1000.distw -dn:100 -dm:1000 -rg:100000 -rn:1

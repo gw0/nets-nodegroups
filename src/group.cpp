@@ -1,5 +1,5 @@
 /**
- * nodegroups - Group structures functions
+ * nets-nodegroups - Group structure functions
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
  * @version (see group_h_VERSION)

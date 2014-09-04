@@ -1,5 +1,5 @@
 #
-# Makefile for nodegroups
+# Makefile for nets-nodegroups
 #
 
 MAIN = nodegroups
