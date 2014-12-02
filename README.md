@@ -70,6 +70,10 @@ Example command (read from `graph.edgelist` and output to `graph.groups` and `gr
 
     ./nodegroups -o:graph
 
+Example command to extract first 12 groups (ignoring their W significance):
+
+    ./nodegroups -o:graph -fn:12
+
 Input file `graph.edgelist` with graph edges (`-i:`):
 
     0 1

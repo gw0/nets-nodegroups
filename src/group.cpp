@@ -490,7 +490,7 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
     GroupExtractRestarter(G, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample);
 
     // Recompute on corresponding Erdos-Renyi random graphs
-    if (G.W < RndRecompW * R.W || G.LinksST > R.LinksST) {
+    if (FinishCnt == 0 && (G.W < RndRecompW * R.W || G.LinksST > R.LinksST)) {
       TGroupSTV GroupERV;
       GroupExtractRndGnms(GroupERV, G.N, G.M, RndGraphs, RndRestarts, OptMxSteps, OptStopSteps, OptInitSample);
       R = GroupERV[(int)((GroupERV.Len() - 1) * (100.0 - FinishRndW) / 100.0)];
@@ -503,7 +503,7 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
     printf("%-3d %s\n", GroupV.Len(), G.GetStr().CStr());
     printf("  r %s\n", R.GetStr().CStr());
 
-    if(G.W < R.W)
+    if(FinishCnt == 0 && G.W < R.W)
       break;
     GroupV.Add(G);
 
