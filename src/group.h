@@ -2,12 +2,12 @@
  * nets-nodegroups - Group structure functions header file
  *
  * @author  gw0 [http://gw.tnode.com/] <gw.2014@tnode.com>
- * @version 0.34
+ * @version 0.4
  */
 
 #ifndef group_h
 #define group_h
-#define group_h_VERSION 0.34
+#define group_h_VERSION 0.4
 
 #include "Snap.h"
 
@@ -26,26 +26,26 @@
 /** ST-group extraction results */
 class TGroupST {
 public:
-  int N;  // N - number of nodes in graph
-  int M;  // M - number of edges in graph
+  int N;  // N - number of nodes left in graph
+  int M;  // M - number of edges left in graph
 
-  int SubSN;  // N_S - number of nodes in subgraph on S
-  int SubSM;  // M_S - number of edges in subgraph on S (not used)
+  int SubSN;  // N_S - number of nodes in subgraph on group *S*
+  int SubSM;  // M_S - number of edges in subgraph on group *S* (not used)
   TIntV SubSNIdV;  // list of node IDs in group S
 
-  int SubTN;  // N_T - number of nodes in subgraph on T
-  int SubTM;  // M_T - number of edges in subgraph on T (not used)
-  TIntV SubTNIdV;  // list of node IDs in group T
+  int SubTN;  // N_T - number of nodes in subgraph on linking pattern *T*
+  int SubTM;  // M_T - number of edges in subgraph on linking pattern *T* (not used)
+  TIntV SubTNIdV;  // list of node IDs in linking pattern T
 
-  int SubSTN;  // N_ST - number of nodes in subgraph on S and T intersection (not used)
-  int SubSTM;  // M_ST - number of edges in subgraph on S and T intersection (not used)
-  int LinksST;  // L_ST - number of edges L(S,T) between groups S and T
-  int LinksSTc;  // L_STc - number of edges L(S,-T) between groups S and complement T
+  int SubSTN;  // N_ST - number of nodes in subgraph on intersection of *S* and *T* (not used)
+  int SubSTM;  // M_ST - number of edges in subgraph on intersection of *S* and *T* (not used)
+  int LinksST;  // L_ST - number of edges *L(S,T)* between groups *S* and *T*
+  int LinksSTc;  // L_STc - number of edges *L(S,Tc)* between groups *S* and complement of *T*
 
-  double Tau;  // Tau - group type parameter Tau(S,T)
-  double W;  // W - group critetion W(S,T)
-  double ModularityS;  // Mod_S - modularity measure on group S (not used)
-  double ModularityT;  // Mod_T - modularity measure on group T (not used)
+  double Tau;  // Tau - group type parameter *Tau(S,T)*
+  double W;  // W - group critetion *W(S,T)*
+  double ModularityS;  // Mod_S - modularity measure on group *S* (not used)
+  double ModularityT;  // Mod_T - modularity measure on group *T* (not used)
 
   bool operator== (const TGroupST& B) const { return this->W == B.W; };
   bool operator< (const TGroupST& B) const { return this->W < B.W; };

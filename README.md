@@ -18,7 +18,7 @@ Compile
 
 This code should work on any platform using any standard C++ compiler (eg. GCC, Visual Studio), but it has only been extensively tested in one environment.
 
-- Debian 7.3
+- Debian 7.3, 8.0
 - *build-essential* (~11.5)
 - *g++* (~4:4.7.2-1)
 - *SNAP* (~2.1) (newest from <https://github.com/snap-stanford/snap>)
@@ -51,30 +51,30 @@ Usage
 
 Parameters:
 
-    -o: Input and output file name prefix (can be overriden) (default:'graph')
-    -i: Input file with graph edges (undirected edge per line) (default:'graph.edgelist')
-    -l: Optional input file with node labels (node ID, node label) (default:'graph.labels')
-    -og: Output file with ST-group assignments (default:'graph.groups')
-    -os: Output file with only ST-group extraction summary (default:'graph.groupssum')
-    -n: Number of restarts of the optimization algorithm (default:2000)
-    -sm: Maximal number of steps in each optimization run (default:100000)
-    -sw: Stop optimization if no W improvement in steps (default:1000)
-    -ss: Initial random-sample size of S ant T (0=random) (default:1)
-    -fn: Finish after extracting so many groups (default:0)
-    -fw: Finish if W smaller than top percentile on random graphs (default:1.0)
-    -rg: Number of different Erdos-Renyi random graphs (default:500)
-    -rn: Number of restarts on each Erdos-Renyi random graph (default:10)
-    -rf: Force W recomputation on random graphs when relative difference smaller (default:inf)
+    -o:Prefix for all file names (simplified usage) (default:'graph')
+    -i:Input file with graph edges (undirected edge per line) (default:'graph.edgelist')
+    -l:Input file (optional) with node labels (node ID, node label) (default:'graph.labels')
+    -og:Output file with ST-group assignments (default:'graph.groups')
+    -os:Output file with only ST-group extraction summary (default:'graph.groupssum')
+    -n:Number of restarts of the optimization algorithm (default:2000)
+    -sm:Maximal number of steps in each optimization run (default:100000)
+    -sw:Stop optimization if no W improvement in steps (default:1000)
+    -ss:Initial random-sample size of S ant T (0=random) (default:1)
+    -fn:Finish after extracting so many groups (default:0)
+    -fw:Finish if W smaller than top percentile on random graphs (default:1)
+    -rg:Random graphs (Erdos-Renyi) to construct for estimating W (default:500)
+    -rn:Random graph restarts of the optimization algorithm (default:10)
+    -rf:Random graph re-estimation of W if relative difference smaller (default:inf)
 
-Example command (read from `graph.edgelist` and output to `graph.groups` and `graph.groupsreport`):
+Example to read from `graph.edgelist` and output to `graph.groups` and `graph.groupsreport`:
 
     ./nodegroups -o:graph
 
-Example command to extract first 12 groups (ignoring their W significance):
+Same example but extract only first 12 groups (ignoring estimated W on random graphs):
 
     ./nodegroups -o:graph -fn:12
 
-Input file `graph.edgelist` with graph edges (`-i:`):
+Input file `graph.edgelist` contains undirected graph edges (`-i:`):
 
     0 1
     0 2
@@ -84,7 +84,7 @@ Input file `graph.edgelist` with graph edges (`-i:`):
     3 5
     ...
 
-Output file `graph.groups` with extracted groups *S* and linking patterns *T* (`-og:`):
+Output file `graph.groups` contains extracted node groups *S* and linking patterns *T* (`-og:`):
 
     # NId GroupS GroupT NLabel
     0     0      0      foo
@@ -94,20 +94,37 @@ Output file `graph.groups` with extracted groups *S* and linking patterns *T* (`
     2     -1     1      -
     ...
 
-Output file `graph.groupsreport` with report on extracted groups (`-or:`):
+Output file `graph.groupsreport` contains a summary of extracted node groups (`-or:`):
 
     # Graphs: 12  Nodes: 115  Edges: 613
-    N   M   N_S M_S N_T M_T N_ST    M_ST    L_ST    L_STc   W   Tau Mod_S   Mod_T   Type
-    115 613 9   36  9   36  9   36  72  25  823.0000    1.0000  0.1352  0.1352  COM
+    N   M   N_S M_S N_T M_T N_ST M_ST L_ST L_STc W        Tau    Mod_S  Mod_T  Type
+    115 613 9   36  9   36  9    36   72   25    823.0000 1.0000 0.1352 0.1352 COM
+    115 582 9   36  9   36  9    36   72   30    818.0000 1.0000 0.1164 0.1164 COM
+    115 550 10  40  10  40  10   40   80   30    810.0000 1.0000 0.1191 0.1191 COM
     ...
 
-Description of group type parameter Tau names (column `Type`):
+Description of columns:
 
-- `COM`: community (*S = T*)
-- `MOD`: module (*S intersection with T = 0*)
-- `HSD`: hub&spokes module (module and *|T| = 1*)
-- `MIX`: mixture (otherwise)
-- `CPX`: core/periphery mixture (*S subset of T* or *T subset of S*)
+- `N`: number of nodes left in graph
+- `M`: number of edges left in graph
+- `N_S`: number of nodes in subgraph on group *S*
+- `M_S`: number of edges in subgraph on group *S*
+- `N_T`: number of nodes in subgraph on linking pattern *T*
+- `M_T`: number of edges in subgraph on linking pattern *T*
+- `N_ST`: number of nodes in subgraph on intersection of *S* and *T*
+- `M_ST`: number of edges in subgraph on intersection of *S* and *T*
+- `L_ST`: number of edges *L(S,T)* between groups *S* and *T*
+- `L_STc`: number of edges *L(S,Tc)* between groups *S* and complement of *T*
+- `W`: group critetion *W(S,T)*
+- `Tau`: group type parameter *Tau(S,T)*
+- `Mod_S`: modularity measure on group *S*
+- `Mod_T`: modularity measure on linking pattern *T*
+- `Type`: human name for group type parameter *Tau*:
+  - `COM`: community (*S = T*)
+  - `MOD`: module (*S intersection with T = 0*)
+  - `HSD`: hub&spokes module (module and *|T| = 1*)
+  - `MIX`: mixture (otherwise)
+  - `CPX`: core/periphery mixture (*S subset of T* or *T subset of S*)
 
 
 Feedback
