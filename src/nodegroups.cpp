@@ -26,7 +26,7 @@
  * @param InFNm Input file name
  * @param GroupV List of ST-group extraction results
  */
-void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
+void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const int GraphN, const int GraphM, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
   FILE* F = fopen(OutFNm.CStr(), OutMode.CStr());
   fprintf(F, "# nets-nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
   fprintf(F, "#");
@@ -34,7 +34,7 @@ void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*con
     fprintf(F, " %s", argv[i]);
   }
   fprintf(F, "\n");
-  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GraphN, GraphM);
   fprintf(F, "# Group results: %d\n", GroupV.Len());
   for (int j = 0; j < GroupV.Len(); ++j) {
     TGroupST& G = GroupV[j];
@@ -90,7 +90,7 @@ void OutputGroups(const TStr& OutFNm, const TStr& OutMode, const int argc, /*con
  * @param InFNm Input file name
  * @param GroupV List of ST-group extraction results
  */
-void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
+void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc, /*const*/ char* argv[], const TStr& InFNm, const int GraphN, const int GraphM, const TIntStrH& NIdLabelH, /*const*/ TGroupSTV& GroupV) {
   FILE* F = fopen(OutSumFNm.CStr(), OutMode.CStr());
   fprintf(F, "# nets-nodegroups. Build: %.2f, %s, %s. Time: %s\n", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm());
   fprintf(F, "#");
@@ -98,7 +98,7 @@ void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc,
     fprintf(F, " %s", argv[i]);
   }
   fprintf(F, "\n");
-  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GroupV[0].N, GroupV[0].M);
+  fprintf(F, "# Input: %s  Nodes: %d  Edges: %d\n", InFNm.CStr(), GraphN, GraphM);
   fprintf(F, "# Group results: %d\n", GroupV.Len());
   fprintf(F, "N\tM\tN_S\tM_S\tN_T\tM_T\tN_ST\tM_ST\tL_ST\tL_STc\tW\tTau\tMod_S\tMod_T\tType\n");
   for (int j = 0; j < GroupV.Len(); ++j) {
@@ -120,9 +120,9 @@ int main(int argc, char* argv[]) {
   Try
 
   // Parameters
-  const TStr PrefixFNm = Env.GetIfArgPrefixStr("-o:", "graph", "Input and output file name prefix (can be overriden)");
+  const TStr PrefixFNm = Env.GetIfArgPrefixStr("-o:", "graph", "Prefix for all file names (simplified usage)");
   const TStr InFNm = Env.GetIfArgPrefixStr("-i:", PrefixFNm + ".edgelist", "Input file with graph edges (undirected edge per line)");
-  const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Optional input file with node labels (node ID, node label)");
+  const TStr LabelFNm = Env.GetIfArgPrefixStr("-l:", PrefixFNm + ".labels", "Input file (optional) with node labels (node ID, node label)");
   const TStr OutFNm = Env.GetIfArgPrefixStr("-og:", PrefixFNm + ".groups", "Output file with ST-group assignments");
   const TStr OutSumFNm = Env.GetIfArgPrefixStr("-os:", PrefixFNm + ".groupssum", "Output file with only ST-group extraction summary");
   const TInt OptRestarts = Env.GetIfArgPrefixInt("-n:", DEF_OptRestarts, "Number of restarts of the optimization algorithm");
@@ -131,9 +131,9 @@ int main(int argc, char* argv[]) {
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
   const TInt FinishCnt = Env.GetIfArgPrefixInt("-fn:", DEF_FinishCnt, "Finish after extracting so many groups");
   const TFlt FinishRndW = Env.GetIfArgPrefixFlt("-fw:", DEF_FinishRndW, "Finish if W smaller than top percentile on random graphs");
-  const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Number of different Erdos-Renyi random graphs");
-  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Number of restarts on each Erdos-Renyi random graph");
-  const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Force W recomputation on random graphs when relative difference smaller");
+  const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Random graphs (Erdos-Renyi) to construct for estimating W");
+  const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Random graph restarts of the optimization algorithm");
+  const TFlt RndRecompW = Env.GetIfArgPrefixFlt("-rf:", DEF_RndRecompW, "Random graph reestimation of W if relative difference smaller");
 
   // Input
   PUNGraph Graph = TSnap::LoadEdgeList<PUNGraph>(InFNm, false);
@@ -153,12 +153,12 @@ int main(int argc, char* argv[]) {
 
   // Output ST-group assignments (*.groups)
   if(OutFNm.Len() > 0) {
-    OutputGroups(OutFNm, "wt", argc, argv, InFNm, NIdLabelH, GroupV);
+    OutputGroups(OutFNm, "wt", argc, argv, InFNm, Graph->GetNodes(), Graph->GetEdges(), NIdLabelH, GroupV);
   }
 
   // Output ST-group extraction results summary (*.groupssum)
   if(OutSumFNm.Len() > 0) {
-    OutputGroupsSum(OutSumFNm, "wt", argc, argv, InFNm, NIdLabelH, GroupV);
+    OutputGroupsSum(OutSumFNm, "wt", argc, argv, InFNm, Graph->GetNodes(), Graph->GetEdges(), NIdLabelH, GroupV);
   }
 
   // Footer
