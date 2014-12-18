@@ -126,6 +126,12 @@ Description of columns:
   - `MIX`: mixture (otherwise)
   - `CPX`: core/periphery mixture (*S subset of T* or *T subset of S*)
 
+Exit status codes:
+
+- `-1`: error, file not found or crash
+- `0` : success, groups extracted
+- `1` : no groups extracted
+
 
 Feedback
 --------

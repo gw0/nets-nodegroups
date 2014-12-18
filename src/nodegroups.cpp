@@ -111,12 +111,18 @@ void OutputGroupsSum(const TStr& OutSumFNm, const TStr& OutMode, const int argc,
 
 /**
  * Console application entry point
+ *
+ * Return codes:
+ *   - `-1`: error, file not found or crash
+ *   - `0` : success, groups extracted
+ *   - `1` : no groups extracted 
  */
 int main(int argc, char* argv[]) {
   // Header
   Env = TEnv(argc, argv, TNotify::StdNotify);
   Env.PrepArgs(TStr::Fmt("nets-nodegroups. Build: %.2f, %s, %s. Time: %s", group_h_VERSION, __TIME__, __DATE__, TExeTm::GetCurTm()), 1);
   TExeTm ExeTm;
+  int ret = -1;
   Try
 
   // Parameters
@@ -150,6 +156,7 @@ int main(int argc, char* argv[]) {
   // Run ST-group extraction framework
   TGroupSTV GroupV;
   GroupExtractFramework(GroupV, Graph, OptRestarts, OptMxSteps, OptStopSteps, OptInitSample, FinishCnt, FinishRndW, RndGraphs, RndRestarts, RndRecompW);
+  ret = !(GroupV.Len() > 0);
 
   // Output ST-group assignments (*.groups)
   if(OutFNm.Len() > 0) {
@@ -164,5 +171,5 @@ int main(int argc, char* argv[]) {
   // Footer
   Catch
   printf("\nrun time: %s (%s)\n", ExeTm.GetTmStr(), TSecTm::GetCurTm().GetTmStr().CStr());
-  return 0;
+  return ret;
 }
