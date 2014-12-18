@@ -437,8 +437,8 @@ double GroupExtractRestarter(TGroupST& GBest, const PUNGraph& Graph, int OptRest
  * @param[out] GroupERV Output list of ST-group extraction results
  * @param N Number of nodes in random graphs
  * @param M Number of edges in random graphs
- * @param RndGraphs Number of different Erdos-Renyi random graphs
- * @param RndRestarts Number of restarts on each Erdos-Renyi random graph
+ * @param RndGraphs Random graphs (Erdos-Renyi) to construct for estimating W
+ * @param RndRestarts Random graph restarts of the optimization algorithm
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
@@ -473,11 +473,11 @@ int GroupExtractRndGnms(TGroupSTV& GroupERV, int N, int M, int RndGraphs, int Rn
  * @param OptMxSteps Maximal number of steps in each optimization run
  * @param OptStopSteps Stop optimization if no W improvement in steps
  * @param OptInitSample Initial random-sample size of S ant T (0 for random)
- * @param FinishCnt Finish after extracting so many groups
+ * @param FinishCnt Finish after extracting so many groups (turn off random graphs)
  * @param FinishRndW Finish if W smaller than top percentile on random graphs
- * @param RndGraphs Number of different Erdos-Renyi random graphs
- * @param RndRestarts Number of restarts on each Erdos-Renyi random graph
- * @param RndRecompW Force W recomputation on random graphs when relative difference smaller
+ * @param RndGraphs Random graphs (Erdos-Renyi) to construct for estimating W
+ * @param RndRestarts Random graph restarts of the optimization algorithm
+ * @param RndRecompW Random graph re-estimation of W if relative difference smaller
  * @return Number of extracted groups
  */
 int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=DEF_OptRestarts*/, int OptMxSteps/*=DEF_OptMxSteps*/, int OptStopSteps/*=DEF_OptStopSteps*/, int OptInitSample/*=DEF_OptInitSample*/, int FinishCnt/*=DEF_FinishCnt*/, double FinishRndW/*=DEF_FinishRndW*/, int RndGraphs/*=DEF_RndGraphs*/, int RndRestarts/*=DEF_RndRestarts*/, double RndRecompW/*=DEF_RndRecompW*/) {
@@ -501,9 +501,11 @@ int GroupExtractFramework(TGroupSTV& GroupV, PUNGraph& Graph, int OptRestarts/*=
     // Print status
     printf("\n");
     printf("%-3d %s\n", GroupV.Len(), G.GetStr().CStr());
-    printf("  r %s\n", R.GetStr().CStr());
+    if (FinishCnt == 0) {  // using random graphs
+      printf("  r %s\n", R.GetStr().CStr());
+    }
 
-    if(FinishCnt == 0 && G.W < R.W)
+    if(FinishCnt == 0 && G.W < R.W)  // compare with random graphs
       break;
     GroupV.Add(G);
 

@@ -60,7 +60,7 @@ Parameters:
     -sm:Maximal number of steps in each optimization run (default:100000)
     -sw:Stop optimization if no W improvement in steps (default:1000)
     -ss:Initial random-sample size of S ant T (0=random) (default:1)
-    -fn:Finish after extracting so many groups (default:0)
+    -fn:Finish after extracting so many groups (turn off random graphs) (default:0)
     -fw:Finish if W smaller than top percentile on random graphs (default:1)
     -rg:Random graphs (Erdos-Renyi) to construct for estimating W (default:500)
     -rn:Random graph restarts of the optimization algorithm (default:10)

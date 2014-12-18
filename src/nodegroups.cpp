@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
   const TInt OptMxSteps = Env.GetIfArgPrefixInt("-sm:", DEF_OptMxSteps, "Maximal number of steps in each optimization run");
   const TInt OptStopSteps = Env.GetIfArgPrefixInt("-sw:", DEF_OptStopSteps, "Stop optimization if no W improvement in steps");
   const TInt OptInitSample = Env.GetIfArgPrefixInt("-ss:", DEF_OptInitSample, "Initial random-sample size of S ant T (0=random)");
-  const TInt FinishCnt = Env.GetIfArgPrefixInt("-fn:", DEF_FinishCnt, "Finish after extracting so many groups");
+  const TInt FinishCnt = Env.GetIfArgPrefixInt("-fn:", DEF_FinishCnt, "Finish after extracting so many groups (turn off random graphs)");
   const TFlt FinishRndW = Env.GetIfArgPrefixFlt("-fw:", DEF_FinishRndW, "Finish if W smaller than top percentile on random graphs");
   const TInt RndGraphs = Env.GetIfArgPrefixInt("-rg:", DEF_RndGraphs, "Random graphs (Erdos-Renyi) to construct for estimating W");
   const TInt RndRestarts = Env.GetIfArgPrefixInt("-rn:", DEF_RndRestarts, "Random graph restarts of the optimization algorithm");
